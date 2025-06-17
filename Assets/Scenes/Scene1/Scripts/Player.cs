@@ -1,4 +1,4 @@
-using UnityEngine;
+﻿using UnityEngine;
 
 public class Player : MonoBehaviour
 {
@@ -7,6 +7,8 @@ public class Player : MonoBehaviour
     private Rigidbody2D rb;
     private SpriteRenderer spriteRenderer;
     private Animator animator;
+    [SerializeField] private float maxHp = 100f;
+    private float currentHP;
     private void Awake()
     {
         rb = GetComponent<Rigidbody2D>();
@@ -15,7 +17,7 @@ public class Player : MonoBehaviour
     }
     void Start()
     {
-        
+        currentHP = maxHp;
     }
 
     // Update is called once per frame
@@ -44,5 +46,22 @@ public class Player : MonoBehaviour
             animator.SetBool("isRun", false);
         }
 
+    }
+    private void Die()
+    {
+        Destroy(gameObject);
+
+    }
+    public void TakeDamage(float damage)
+    {
+        Debug.Log("Máu hiện tại" + currentHP);
+        currentHP -= damage;
+        currentHP = Mathf.Max(currentHP, 0);
+        Debug.Log("Máu hiện tại" + currentHP);
+        
+        if (currentHP <= 0)
+        {
+            Die();
+        }
     }
 }

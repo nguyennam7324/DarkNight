@@ -7,12 +7,13 @@ public abstract class Enemy : MonoBehaviour
     protected Player player;
     [SerializeField] protected float maxHP = 50f;
     protected float currentHP;
-
+    [SerializeField] protected float enterDamage = 10f;
+    [SerializeField] protected float stayDamage = 1f;
 
     protected virtual void Start()
     {
         player = FindAnyObjectByType<Player>();
-        
+        currentHP=maxHP;
         
     }
     protected virtual void Update()
