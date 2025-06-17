@@ -3,7 +3,8 @@
 --- !u!78 &1
 TagManager:
   serializedVersion: 3
-  tags: []
+  tags:
+  - Enemy
   layers:
   - Default
   - TransparentFX
@@ -58,6 +59,9 @@ TagManager:
     locked: 0
   - name: Bullet
     uniqueID: 3808361857
+    locked: 0
+  - name: Zombie
+    uniqueID: 3918308659
     locked: 0
   m_RenderingLayers:
   - Default
