@@ -54,10 +54,10 @@ TagManager:
     uniqueID: 3108980923
     locked: 0
   - name: Gun
-    uniqueID: 2966073115
+    uniqueID: 1981068335
     locked: 0
   - name: Bullet
-    uniqueID: 2715942283
+    uniqueID: 3808361857
     locked: 0
   m_RenderingLayers:
   - Default
