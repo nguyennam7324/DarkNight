@@ -66,5 +66,8 @@ TagManager:
   - name: UI
     uniqueID: 808886111
     locked: 0
+  - name: HpBar
+    uniqueID: 2270300085
+    locked: 0
   m_RenderingLayers:
   - Default
