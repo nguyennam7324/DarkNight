@@ -1,5 +1,5 @@
 ﻿using UnityEngine;
-
+using UnityEngine.UI;
 public class Player : MonoBehaviour
 {
     // Start is called once before the first execution of Update after the MonoBehaviour is created
@@ -8,6 +8,7 @@ public class Player : MonoBehaviour
     private SpriteRenderer spriteRenderer;
     private Animator animator;
     [SerializeField] private float maxHp = 100f;
+    [SerializeField] private Image hpBar;
     private float currentHP;
     private void Awake()
     {
@@ -18,6 +19,7 @@ public class Player : MonoBehaviour
     void Start()
     {
         currentHP = maxHp;
+        UpdateHpBar();
     }
 
     // Update is called once per frame
@@ -58,10 +60,14 @@ public class Player : MonoBehaviour
         currentHP -= damage;
         currentHP = Mathf.Max(currentHP, 0);
         Debug.Log("Máu hiện tại" + currentHP);
-        
+        UpdateHpBar();
         if (currentHP <= 0)
         {
             Die();
         }
+    }
+    private void UpdateHpBar()
+    {
+        hpBar.fillAmount = currentHP / maxHp;
     }
 }
