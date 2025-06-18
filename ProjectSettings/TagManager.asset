@@ -63,5 +63,8 @@ TagManager:
   - name: Zombie
     uniqueID: 3918308659
     locked: 0
+  - name: UI
+    uniqueID: 808886111
+    locked: 0
   m_RenderingLayers:
   - Default

@@ -359,6 +359,17 @@ TextureImporter:
     secondaryTextures: []
     spriteCustomMetadata:
       entries: []
+    nameFileIdTable:
+      ZombieHard_0: -3469022681943204534
+      ZombieHard_1: -2035700809101988696
+      ZombieHard_2: 7887455800229619659
+      ZombieHard_3: -2363825415850276148
+      ZombieHard_4: -8602077058783528827
+      ZombieHard_5: 1420125055492893238
+      ZombieHard_6: -726111434852820618
+      ZombieHard_7: -6196653531108100686
+      ZombieHard_8: 8015934628271296389
+      ZombieHard_9: -2446502386576481023
     nameFileIdTable: {}
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
