@@ -23,9 +23,9 @@ public class GameManager : MonoBehaviour
         Time.timeScale = 1;
         SceneManager.LoadScene("Scene1");
     }
-        public void GotoMenu()
+    public void GotoMenu()
     {
-        SceneManager.LoadScene("Menu");
         Time.timeScale = 1;
+        SceneManager.LoadScene("Menu");
     }
 }
