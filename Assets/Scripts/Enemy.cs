@@ -9,12 +9,12 @@ public abstract class Enemy : MonoBehaviour
     protected float currentHP;
     [SerializeField] protected float enterDamage = 10f;
     [SerializeField] protected float stayDamage = 1f;
-
+    [SerializeField] protected Image hpBar;
     protected virtual void Start()
     {
         player = FindAnyObjectByType<Player>();
         currentHP=maxHP;
-        
+        UpdateHpBar();
     }
     protected virtual void Update()
     {
@@ -46,11 +46,15 @@ public abstract class Enemy : MonoBehaviour
         currentHP = Mathf.Max(currentHP, 0);
         Debug.Log("Máu Enemy hiện tại:" + currentHP);
 
-        
+        UpdateHpBar();
         if (currentHP <= 0)
         {
             Die();
         }
+    }
+    protected void UpdateHpBar()
+    {
+        hpBar.fillAmount = currentHP / maxHP;
     }
 
 
