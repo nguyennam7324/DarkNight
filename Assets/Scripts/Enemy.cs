@@ -39,21 +39,28 @@ public abstract class Enemy : MonoBehaviour
     }
     protected virtual void Die()
     {
-        Destroy(gameObject);
+        if (animator != null)
+        {
+            animator.Play("Death");
+        }
+        this.enabled = false; // Dừng script
+        Destroy(gameObject, 0.5f); // Huỷ sau khi animation xong
     }
+
     public void TakeDamage(float damage)
     {
-        Debug.Log("Máu Enemy hiện tại:" + currentHP);
+        if (currentHP <= 0) return ; // Đã chết thì không nhận damage
+
         currentHP -= damage;
         currentHP = Mathf.Max(currentHP, 0);
-        Debug.Log("Máu Enemy hiện tại:" + currentHP);
-
         UpdateHpBar();
+
         if (currentHP <= 0)
         {
             Die();
         }
     }
+
     protected void UpdateHpBar()
     {
         hpBar.fillAmount = currentHP / maxHP;
