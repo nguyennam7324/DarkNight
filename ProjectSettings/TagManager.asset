@@ -69,5 +69,8 @@ TagManager:
   - name: HpBar
     uniqueID: 2270300085
     locked: 0
+  - name: skeleton1
+    uniqueID: 811911521
+    locked: 0
   m_RenderingLayers:
   - Default
