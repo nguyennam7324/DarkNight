@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System.Collections;
+using UnityEngine;
 using UnityEngine.UI;
 public class Player : MonoBehaviour
 {
@@ -10,6 +11,13 @@ public class Player : MonoBehaviour
     [SerializeField] private float maxHp = 100f;
     [SerializeField] private Image hpBar;
     private float currentHP;
+    public float dashBoost;
+    public float dashTime;
+    private float _dashTime;
+    bool isDashing = false;
+    public GameObject ghostEffect;
+    public float ghostDelaySeconds;
+    private Coroutine dashEffectCoroutine;
     private void Awake()
     {
         rb = GetComponent<Rigidbody2D>();
@@ -26,6 +34,7 @@ public class Player : MonoBehaviour
     void Update()
     {
         MovePlayer();
+        Dash();
     }
     void MovePlayer()
     {
@@ -48,6 +57,49 @@ public class Player : MonoBehaviour
             animator.SetBool("isRun", false);
         }
 
+    }
+
+    void Dash()
+    {
+        if (Input.GetKeyDown(KeyCode.Q) && _dashTime <= 0 && isDashing == false)
+        {
+            moveSpeed += dashBoost;
+            _dashTime = dashTime;
+            isDashing = true;
+            StartDashEffect();
+
+        }
+        if (_dashTime <= 0 && isDashing == true)
+        {
+            moveSpeed -= dashBoost;
+            isDashing = false;
+            StopDashEffect();
+        }
+        else
+        {
+            _dashTime -= Time.deltaTime;
+        }
+    }
+    void StopDashEffect()
+    {
+        if (dashEffectCoroutine != null) StopCoroutine(dashEffectCoroutine);
+
+    }
+    void StartDashEffect()
+    {
+        if (dashEffectCoroutine != null) StopCoroutine(dashEffectCoroutine);
+        dashEffectCoroutine = StartCoroutine(DashEffectCoroutine());
+    }
+    IEnumerator DashEffectCoroutine()
+    {
+        while (true)
+        {
+            GameObject ghost = Instantiate(ghostEffect, transform.position, transform.rotation);
+            Sprite currentSprite=GetComponent<SpriteRenderer>().sprite;
+            ghost.GetComponent<SpriteRenderer>().sprite = currentSprite;
+            Destroy(ghost,0.5f);
+            yield return new WaitForSeconds(ghostDelaySeconds);
+        }
     }
     private void Die()
     {
