@@ -1,25 +1,25 @@
 fileFormatVersion: 2
-guid: c25084a85a061884aac3e51b2c998938
+guid: 96312f6e1a558cb408246372bdc4178b
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: -510194180926327622
-    second: enemies-skeleton1_idle_0
+      213: -371990891160990251
+    second: enemies-vampire_idle_0
   - first:
-      213: -7148033356025965787
-    second: enemies-skeleton1_idle_1
+      213: -2674972448465584468
+    second: enemies-vampire_idle_1
   - first:
-      213: 4621585145735685512
-    second: enemies-skeleton1_idle_2
+      213: 8789874126356521907
+    second: enemies-vampire_idle_2
   - first:
-      213: 7781542403348788821
-    second: enemies-skeleton1_idle_3
+      213: -3127965267752196778
+    second: enemies-vampire_idle_3
   - first:
-      213: 3229803179337962931
-    second: enemies-skeleton1_idle_4
+      213: -2148743222624937830
+    second: enemies-vampire_idle_4
   - first:
-      213: 1462905188528721055
-    second: enemies-skeleton1_idle_5
+      213: -3865281036853105448
+    second: enemies-vampire_idle_5
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -115,13 +115,13 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: enemies-skeleton1_idle_0
+      name: enemies-vampire_idle_0
       rect:
         serializedVersion: 2
         x: 6
         y: 2
-        width: 17
-        height: 17
+        width: 14
+        height: 18
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -130,20 +130,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: ab43a67781d6be8f0800000000000000
-      internalID: -510194180926327622
+      spriteID: 5dd0ba0614c66daf0800000000000000
+      internalID: -371990891160990251
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: enemies-skeleton1_idle_1
+      name: enemies-vampire_idle_1
       rect:
         serializedVersion: 2
         x: 38
         y: 2
-        width: 17
-        height: 17
+        width: 14
+        height: 18
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -152,20 +152,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 523dd6bd8851dcc90800000000000000
-      internalID: -7148033356025965787
+      spriteID: cae70411bb690ead0800000000000000
+      internalID: -2674972448465584468
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: enemies-skeleton1_idle_2
+      name: enemies-vampire_idle_2
       rect:
         serializedVersion: 2
         x: 70
         y: 2
-        width: 17
-        height: 18
+        width: 14
+        height: 19
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -174,19 +174,41 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 8852cce243b232040800000000000000
-      internalID: 4621585145735685512
+      spriteID: 3b3a0e972f7ebf970800000000000000
+      internalID: 8789874126356521907
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: enemies-skeleton1_idle_3
+      name: enemies-vampire_idle_3
       rect:
         serializedVersion: 2
         x: 102
         y: 2
-        width: 17
+        width: 14
+        height: 19
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 655eed1692c3794d0800000000000000
+      internalID: -3127965267752196778
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: enemies-vampire_idle_4
+      rect:
+        serializedVersion: 2
+        x: 134
+        y: 2
+        width: 14
         height: 18
       alignment: 0
       pivot: {x: 0, y: 0}
@@ -196,42 +218,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 5567e3466979dfb60800000000000000
-      internalID: 7781542403348788821
+      spriteID: a9899ed6c612e22e0800000000000000
+      internalID: -2148743222624937830
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: enemies-skeleton1_idle_4
-      rect:
-        serializedVersion: 2
-        x: 134
-        y: 2
-        width: 17
-        height: 17
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: -1
-      bones: []
-      spriteID: 3b5ddde11e092dc20800000000000000
-      internalID: 3229803179337962931
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: enemies-skeleton1_idle_5
+      name: enemies-vampire_idle_5
       rect:
         serializedVersion: 2
         x: 166
         y: 2
-        width: 17
-        height: 17
+        width: 14
+        height: 18
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -240,8 +240,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: f9c8456a4884d4410800000000000000
-      internalID: 1462905188528721055
+      spriteID: 8dc21594063cb5ac0800000000000000
+      internalID: -3865281036853105448
       vertices: []
       indices: 
       edges: []
