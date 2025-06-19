@@ -10,11 +10,13 @@ public abstract class Enemy : MonoBehaviour
     [SerializeField] protected float enterDamage = 10f;
     [SerializeField] protected float stayDamage = 1f;
     [SerializeField] protected Image hpBar;
+    protected Animator animator;
     protected virtual void Start()
     {
         player = FindAnyObjectByType<Player>();
         currentHP=maxHP;
         UpdateHpBar();
+        animator = GetComponent<Animator>();
     }
     protected virtual void Update()
     {
