@@ -33,5 +33,13 @@ public class Bullet : MonoBehaviour
             }
             Destroy(gameObject);
         }
+        if (collision.CompareTag("Wall"))
+        {
+            print("Hit Wall");
+            Destroy(gameObject);
+        }
     }
+   
+      
+   
 }
