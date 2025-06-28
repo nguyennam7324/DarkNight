@@ -52,6 +52,9 @@ TagManager:
   - name: "T\u01B0\u1EDDng"
     uniqueID: 150108773
     locked: 0
+  - name: "C\u1EEDa"
+    uniqueID: 836354243
+    locked: 0
   - name: Player
     uniqueID: 3108980923
     locked: 0
@@ -81,6 +84,9 @@ TagManager:
     locked: 0
   - name: Blood
     uniqueID: 1473024721
+    locked: 0
+  - name: Items
+    uniqueID: 1928661197
     locked: 0
   - name: GameUI
     uniqueID: 2285067801

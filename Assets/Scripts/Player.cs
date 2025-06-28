@@ -101,6 +101,24 @@ public class Player : MonoBehaviour
             yield return new WaitForSeconds(ghostDelaySeconds);
         }
     }
+    public void ApplySpeedBoost(float multiplier, float duration)
+    {
+        StopCoroutine("SpeedBoostCoroutine"); // Nếu đang có buff, reset lại
+        StartCoroutine(SpeedBoostCoroutine(multiplier, duration));
+    }
+
+    private IEnumerator SpeedBoostCoroutine(float multiplier, float duration)
+    {
+        float originalSpeed = moveSpeed;
+        moveSpeed *= multiplier;
+
+        Debug.Log("Tốc độ tăng: " + moveSpeed);
+        yield return new WaitForSeconds(duration);
+
+        moveSpeed = originalSpeed;
+        Debug.Log("Tốc độ trở lại bình thường: " + moveSpeed);
+    }
+
     private void Die()
     {
         Destroy(gameObject);
@@ -122,4 +140,14 @@ public class Player : MonoBehaviour
     {
         hpBar.fillAmount = currentHP / maxHp;
     }
+    public void Heal(float amount)
+    {
+        if (currentHP >= maxHp) return; // Nếu đã đầy máu thì không hồi
+
+        currentHP += amount;
+        currentHP = Mathf.Min(currentHP, maxHp); // Không vượt quá maxHp
+        Debug.Log("Hồi máu: " + amount + ", HP hiện tại: " + currentHP);
+        UpdateHpBar();
+    }
+
 }
