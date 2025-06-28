@@ -64,7 +64,12 @@ public class Gun : MonoBehaviour
             audioManager.playReloadSound();
         }
     }
-
+    public void AddAmmo(float amount)
+    {
+        currentAmmo += amount;
+        currentAmmo = Mathf.Min(currentAmmo, maxAmmo);
+        UpdateAmmotext();
+    }
     void UpdateAmmotext()
     {
         if (ammoText != null)
