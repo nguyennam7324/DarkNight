@@ -1,8 +1,10 @@
-﻿using UnityEngine;
+﻿using System.Collections.Generic;
+using UnityEngine;
 using UnityEngine.UI;
 
 public abstract class Enemy : MonoBehaviour
 {
+    
     [SerializeField] protected float movetoPlayer = 2f;
     protected Player player;
     [SerializeField] protected float maxHP = 50f;
@@ -11,10 +13,14 @@ public abstract class Enemy : MonoBehaviour
     [SerializeField] protected float stayDamage = 1f;
     [SerializeField] protected Image hpBar;
     protected Animator animator;
+    //LootTable
+    [Header("Loot")]
+    public List<LootItem> lootTable = new List<LootItem>(); 
+    
     protected virtual void Start()
     {
         player = FindAnyObjectByType<Player>();
-        currentHP=maxHP;
+        currentHP = maxHP;
         UpdateHpBar();
         animator = GetComponent<Animator>();
     }
@@ -43,6 +49,14 @@ public abstract class Enemy : MonoBehaviour
         {
             animator.Play("Death");
         }
+        //spawn item
+        foreach (LootItem lootItem in lootTable)
+        {
+            if (Random.Range(0f, 100f) <= lootItem.dropChange)
+            {
+                InstantiateLoot(lootItem.itemPrefab);
+            }
+        }
         this.enabled = false; // Dừng script
         Destroy(gameObject, 0.5f); // Huỷ sau khi animation xong
     }
@@ -66,6 +80,9 @@ public abstract class Enemy : MonoBehaviour
         hpBar.fillAmount = currentHP / maxHP;
     }
 
-
+    void InstantiateLoot(GameObject loot)
+    {
+        GameObject droppedLoot = Instantiate(loot, transform.position, Quaternion.identity);
+    }
 
 }

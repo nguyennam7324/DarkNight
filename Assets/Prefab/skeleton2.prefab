@@ -204,6 +204,11 @@ MonoBehaviour:
   enterDamage: 10
   stayDamage: 1
   hpBar: {fileID: 5010743166206863266}
+  lootTable:
+  - itemPrefab: {fileID: 606740691954197913, guid: 8f9d153d88e8e1643b4651fbe1265db8, type: 3}
+    dropChange: 20
+  - itemPrefab: {fileID: 1455746970168925304, guid: 59bc70a8aa4752d4b8f66e4b04774392, type: 3}
+    dropChange: 80
 --- !u!1001 &2379096113881478471
 PrefabInstance:
   m_ObjectHideFlags: 0

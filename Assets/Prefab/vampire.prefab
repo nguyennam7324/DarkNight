@@ -131,6 +131,9 @@ MonoBehaviour:
   enterDamage: 10
   stayDamage: 1
   hpBar: {fileID: 3681998895457905579}
+  lootTable:
+  - itemPrefab: {fileID: 606740691954197913, guid: 8f9d153d88e8e1643b4651fbe1265db8, type: 3}
+    dropChange: 100
 --- !u!61 &2430508693705826509
 BoxCollider2D:
   m_ObjectHideFlags: 0
