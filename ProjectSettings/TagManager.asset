@@ -6,6 +6,9 @@ TagManager:
   tags:
   - Enemy
   - Wall
+  - Tag 2 Coin
+  - Gold
+  - Silver
   layers:
   - Default
   - TransparentFX
@@ -60,6 +63,9 @@ TagManager:
     locked: 0
   - name: Bullet
     uniqueID: 3808361857
+    locked: 0
+  - name: Coin
+    uniqueID: 1034852169
     locked: 0
   - name: Zombie
     uniqueID: 3918308659
