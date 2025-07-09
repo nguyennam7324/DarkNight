@@ -10,10 +10,10 @@ GameObject:
   m_Component:
   - component: {fileID: 1005841821330233752}
   - component: {fileID: 4272360363258983275}
-  - component: {fileID: 7705648182883496174}
   - component: {fileID: -1603792989826885934}
   - component: {fileID: -164463992443728210}
   - component: {fileID: 4441570334723993476}
+  - component: {fileID: 8492375026223028625}
   m_Layer: 0
   m_Name: Pistol
   m_TagString: Untagged
@@ -30,7 +30,7 @@ Transform:
   m_GameObject: {fileID: 1472807235916139261}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -0.18904084, y: -14.355736, z: 0}
+  m_LocalPosition: {x: 0.6782218, y: -15.303175, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -92,25 +92,6 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
---- !u!114 &7705648182883496174
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1472807235916139261}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c95194b4e40759948a306fc173627a5d, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  firePos: {fileID: 1478980039728682556}
-  bulletPrefabs: {fileID: 6991634654700552005, guid: f65252496c67cc44cb7138fc3a33ca9f, type: 3}
-  DelayShot: 0.15
-  currentAmmo: 0
-  maxAmmo: 24
-  ammoText: {fileID: 0}
-  audioManager: {fileID: 0}
 --- !u!114 &-1603792989826885934
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -177,7 +158,7 @@ Rigidbody2D:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1472807235916139261}
-  m_BodyType: 0
+  m_BodyType: 1
   m_Simulated: 1
   m_UseFullKinematicContacts: 0
   m_UseAutoMass: 0
@@ -196,6 +177,31 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 0
+--- !u!114 &8492375026223028625
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1472807235916139261}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0bd4a0ead90fd4448a52e3ad1cfa6b26, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  firePos: {fileID: 1478980039728682556}
+  bulletPrefabs: {fileID: 6991634654700552005, guid: f65252496c67cc44cb7138fc3a33ca9f, type: 3}
+  DelayShot: 0.16
+  maxAmmo: 12
+  currentAmmo: 0
+  ammoText: {fileID: 0}
+  audioManager: {fileID: 0}
+  isEquipped: 0
+  baseSpread: 4
+  distanceSpreadMultiplier: 0.5
+  reloadDuration: 1
+  recoilDistance: 0.1
+  recoilReturnSpeed: 5
 --- !u!1 &6380938209816038639
 GameObject:
   m_ObjectHideFlags: 0

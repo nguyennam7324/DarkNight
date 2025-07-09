@@ -4,7 +4,7 @@ using UnityEngine.SceneManagement;
 public class GameManager : MonoBehaviour
 {
     [SerializeField] private GameObject mainMenu;
-    [SerializeField] private AudioManger audioManager;
+    [SerializeField] private AudioManager audioManager;
     void Start()
     {
         MainMenu();

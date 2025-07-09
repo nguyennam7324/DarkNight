@@ -134,7 +134,8 @@ TextureImporter:
     secondaryTextures: []
     spriteCustomMetadata:
       entries: []
-    nameFileIdTable: {}
+    nameFileIdTable:
+      FG_Cellar_B_0: -8663151974460346808
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

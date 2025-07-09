@@ -334,7 +334,16 @@ TextureImporter:
     secondaryTextures: []
     spriteCustomMetadata:
       entries: []
-    nameFileIdTable: {}
+    nameFileIdTable:
+      2D Pickups v6.2 spritesheet_0: -2442376644214155571
+      2D Pickups v6.2 spritesheet_1: 3207372165212617614
+      2D Pickups v6.2 spritesheet_2: -2837727968435297238
+      2D Pickups v6.2 spritesheet_3: -7173003525342006096
+      2D Pickups v6.2 spritesheet_4: 593741455082068849
+      2D Pickups v6.2 spritesheet_5: 6066325612735239030
+      2D Pickups v6.2 spritesheet_6: 4590031244058766364
+      2D Pickups v6.2 spritesheet_7: 6495033326967414993
+      2D Pickups v6.2 spritesheet_8: 5714641426185769055
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

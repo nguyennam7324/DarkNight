@@ -209,7 +209,11 @@ TextureImporter:
     secondaryTextures: []
     spriteCustomMetadata:
       entries: []
-    nameFileIdTable: {}
+    nameFileIdTable:
+      Knight_10_Axe_Right_0: -6692004993683166312
+      Knight_10_Axe_Right_1: 908691272659427193
+      Knight_10_Axe_Right_2: -7348573927726351231
+      Knight_10_Axe_Right_3: -1116737002860794245
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 
