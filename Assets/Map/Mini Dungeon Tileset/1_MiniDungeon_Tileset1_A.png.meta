@@ -134,7 +134,8 @@ TextureImporter:
     secondaryTextures: []
     spriteCustomMetadata:
       entries: []
-    nameFileIdTable: {}
+    nameFileIdTable:
+      1_MiniDungeon_Tileset1_A_0: -2012266134800907010
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

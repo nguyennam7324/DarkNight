@@ -134,7 +134,8 @@ TextureImporter:
     secondaryTextures: []
     spriteCustomMetadata:
       entries: []
-    nameFileIdTable: {}
+    nameFileIdTable:
+      FG_Cellar_A5_0: 2509129078871656598
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

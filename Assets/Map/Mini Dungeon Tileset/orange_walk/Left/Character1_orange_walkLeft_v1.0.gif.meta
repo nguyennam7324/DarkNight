@@ -134,7 +134,8 @@ TextureImporter:
     secondaryTextures: []
     spriteCustomMetadata:
       entries: []
-    nameFileIdTable: {}
+    nameFileIdTable:
+      Character1_orange_walkLeft_v1.0_0: -8368295064938432186
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 
