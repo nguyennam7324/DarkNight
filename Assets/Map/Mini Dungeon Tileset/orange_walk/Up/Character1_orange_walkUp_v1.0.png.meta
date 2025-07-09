@@ -234,7 +234,12 @@ TextureImporter:
     secondaryTextures: []
     spriteCustomMetadata:
       entries: []
-    nameFileIdTable: {}
+    nameFileIdTable:
+      Character1_orange_walkUp_v1.0_0: 7263380737797267064
+      Character1_orange_walkUp_v1.0_1: 5439972376493834528
+      Character1_orange_walkUp_v1.0_2: 7624325282077032868
+      Character1_orange_walkUp_v1.0_3: -6750320310620298402
+      Character1_orange_walkUp_v1.0_4: 5312390250367071755
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

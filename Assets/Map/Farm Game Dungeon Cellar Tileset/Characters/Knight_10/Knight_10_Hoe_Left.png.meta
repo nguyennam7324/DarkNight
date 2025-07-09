@@ -209,7 +209,11 @@ TextureImporter:
     secondaryTextures: []
     spriteCustomMetadata:
       entries: []
-    nameFileIdTable: {}
+    nameFileIdTable:
+      Knight_10_Hoe_Left_0: 2051994151244579890
+      Knight_10_Hoe_Left_1: 9220095694314549513
+      Knight_10_Hoe_Left_2: -3889813584188613972
+      Knight_10_Hoe_Left_3: 2029303930826212791
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 
