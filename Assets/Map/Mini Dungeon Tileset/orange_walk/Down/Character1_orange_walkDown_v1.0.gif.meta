@@ -134,7 +134,8 @@ TextureImporter:
     secondaryTextures: []
     spriteCustomMetadata:
       entries: []
-    nameFileIdTable: {}
+    nameFileIdTable:
+      Character1_orange_walkDown_v1.0_0: -1696590266738514043
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

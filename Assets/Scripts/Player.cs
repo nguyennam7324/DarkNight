@@ -18,6 +18,7 @@ public class Player : MonoBehaviour
     public GameObject ghostEffect;
     public float ghostDelaySeconds;
     private Coroutine dashEffectCoroutine;
+    public GameManager gameManager;
     private void Awake()
     {
         rb = GetComponent<Rigidbody2D>();
@@ -133,6 +134,7 @@ public class Player : MonoBehaviour
         UpdateHpBar();
         if (currentHP <= 0)
         {
+            gameManager.GameOver();
             Die();
         }
     }

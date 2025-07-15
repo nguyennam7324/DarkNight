@@ -79,7 +79,7 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: -1749205521
-  m_SortingLayer: 12
+  m_SortingLayer: 14
   m_SortingOrder: 0
   m_Sprite: {fileID: -2168655384976774199, guid: 2b871a6dd445141479d9f697ac73428d, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -132,7 +132,7 @@ MonoBehaviour:
   stayDamage: 1
   hpBar: {fileID: 3681998895457905579}
   lootTable:
-  - itemPrefab: {fileID: 606740691954197913, guid: 8f9d153d88e8e1643b4651fbe1265db8, type: 3}
+  - itemPrefab: {fileID: 1455746970168925304, guid: 59bc70a8aa4752d4b8f66e4b04774392, type: 3}
     dropChange: 100
 --- !u!61 &2430508693705826509
 BoxCollider2D:
