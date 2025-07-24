@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 4375547466434320773}
   - component: {fileID: 2430508693705826509}
   - component: {fileID: 8867993364170977196}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: vampire
   m_TagString: Enemy
   m_Icon: {fileID: 0}
@@ -295,9 +295,21 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 2548462291017196293, guid: d989b61fafdc47e4188703a15b378aee, type: 3}
+      propertyPath: m_Layer
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 3878491750710085758, guid: d989b61fafdc47e4188703a15b378aee, type: 3}
+      propertyPath: m_Layer
+      value: 3
+      objectReference: {fileID: 0}
     - target: {fileID: 8982808494024351438, guid: d989b61fafdc47e4188703a15b378aee, type: 3}
       propertyPath: m_Name
       value: Hpp
+      objectReference: {fileID: 0}
+    - target: {fileID: 8982808494024351438, guid: d989b61fafdc47e4188703a15b378aee, type: 3}
+      propertyPath: m_Layer
+      value: 3
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

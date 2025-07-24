@@ -6,7 +6,6 @@ using UnityEngine.UI;
 
 
 public class itemCollector : MonoBehaviour
-
 {
     [SerializeField] private TextMeshProUGUI levelText;
     [SerializeField] private TextMeshProUGUI experienceText;
@@ -15,6 +14,9 @@ public class itemCollector : MonoBehaviour
     [SerializeField] private float targetXp;
     [SerializeField] private Image xpProgressBar;
     private int gold = 0;
+    public UpgradeUI upgradeUI;
+
+    public float xpMultiplier = 1f; // ✨ thêm multiplier mặc định = 100%
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
@@ -24,23 +26,30 @@ public class itemCollector : MonoBehaviour
             gold++;
             Debug.Log("Gold: " + gold);
         }
+
         if (collision.gameObject.CompareTag("Silver"))
         {
             Destroy(collision.gameObject);
-            CurrentXp += 12;
+            float gainedXp = 12 * xpMultiplier; // ✨ tính theo multiplier
+            CurrentXp += gainedXp;
+            Debug.Log($"Nhận được {gainedXp} XP (x{xpMultiplier})");
         }
+
         experienceText.text = CurrentXp + " / " + targetXp;
         experienceController();
     }
+
     public void experienceController()
     {
         levelText.text = "Level : " + level.ToString();
         xpProgressBar.fillAmount = (CurrentXp / targetXp);
-        if (CurrentXp >= targetXp)
+        if (CurrentXp >= targetXp) // ✨ dùng >= thay vì ==
         {
-            CurrentXp = CurrentXp - targetXp;
+            CurrentXp = 0;
             level++;
-            targetXp += 50;
+            targetXp *= 1.2f;
+            Time.timeScale = 0;
+            upgradeUI.ShowUpgradeOptions();
         }
     }
 }
