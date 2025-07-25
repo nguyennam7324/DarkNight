@@ -17,10 +17,11 @@ public class AmmoItem : MonoBehaviour
 
         if (other.CompareTag("Player"))
         {
-            Gun gun = other.GetComponentInChildren<Gun>(); // Tìm trong con của player
+            // Tìm bất kỳ script nào gắn interface IGun trong con của Player
+            IGun gun = other.GetComponentInChildren<IGun>();
             if (gun != null)
             {
-                gun.AddAmmo(ammoAmount);
+                gun.AddAmmo(ammoAmount); // Gọi qua interface
                 collected = true;
 
                 // Ẩn hình & collider
