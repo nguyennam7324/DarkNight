@@ -6,20 +6,36 @@ public class Bullet : MonoBehaviour
     [SerializeField] private float timeDestroy = 0.15f;
     [SerializeField] private float damage = 10f;
     [SerializeField] private GameObject bloodPrefab;
+
     void Start()
     {
+        // Tìm player
+        Player player = GameObject.FindWithTag("Player").GetComponent<Player>();
+
+        // Tính damage có crit
+        damage = player.CalculateDamage(player.baseDamage);
+
+        // Hồi máu nếu có hút máu
+        if (player.lifeSteal > 0)
+        {
+            float healAmount = damage * player.lifeSteal;
+            player.Heal(healAmount);
+            Debug.Log($"🩸 Hút máu: {healAmount}");
+        }
+
         Destroy(gameObject, timeDestroy);
     }
 
-  
     void Update()
     {
         MoveBullet();
     }
+
     void MoveBullet()
     {
         transform.Translate(Vector2.right * moveBullet * Time.deltaTime);
     }
+
     private void OnTriggerEnter2D(Collider2D collision)
     {
         if (collision.CompareTag("Enemy"))
@@ -33,13 +49,11 @@ public class Bullet : MonoBehaviour
             }
             Destroy(gameObject);
         }
+
         if (collision.CompareTag("Wall"))
         {
-            print("Hit Wall");
+            Debug.Log("💥 Hit Wall");
             Destroy(gameObject);
         }
     }
-   
-      
-   
 }

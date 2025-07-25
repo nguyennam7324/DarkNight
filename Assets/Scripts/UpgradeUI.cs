@@ -24,6 +24,7 @@ public class UpgradeUI : MonoBehaviour
     public GameObject panel;
     public Button[] upgradeButtons;
     public TextMeshProUGUI[] upgradeTexts;
+    public UpgradePopup upgradePopup;
 
     private List<Upgrade> allUpgrades = new List<Upgrade>();
 
@@ -35,64 +36,117 @@ public class UpgradeUI : MonoBehaviour
 
     void LoadUpgrades()
     {
-        allUpgrades.Add(new Upgrade {
+        allUpgrades.Add(new Upgrade
+        {
             upgradeName = "Tăng Damage",
             description = "+20% Damage",
             rarity = Rarity.Common,
             applyEffect = () => {
-                Debug.Log("Damage +20%");
-            }
+            GameObject.FindWithTag("Player").GetComponent<Player>().baseDamage += 5f;
+}
+
         });
 
-        allUpgrades.Add(new Upgrade {
+        allUpgrades.Add(new Upgrade
+        {
             upgradeName = "Tăng Speed",
             description = "+10% Speed",
             rarity = Rarity.Common,
-            applyEffect = () => {
+            applyEffect = () =>
+            {
                 GameObject.FindWithTag("Player").GetComponent<Player>().ApplySpeedBoost(1.1f, 5f);
             }
         });
 
-        allUpgrades.Add(new Upgrade {
+        allUpgrades.Add(new Upgrade
+        {
             upgradeName = "Tăng Crit",
             description = "+10% Tỉ lệ chí mạng",
             rarity = Rarity.Rare,
-            applyEffect = () => {
+            applyEffect = () =>
+            {
                 GameObject.FindWithTag("Player").GetComponent<Player>().critChance += 0.1f;
             }
         });
 
-        allUpgrades.Add(new Upgrade {
+        allUpgrades.Add(new Upgrade
+        {
             upgradeName = "Hồi máu",
             description = "Hồi 50% máu",
             rarity = Rarity.Rare,
-            applyEffect = () => {
+            applyEffect = () =>
+            {
                 var player = GameObject.FindWithTag("Player").GetComponent<Player>();
                 player.Heal(player.maxHp * 0.5f);
             }
         });
 
-        allUpgrades.Add(new Upgrade {
+        allUpgrades.Add(new Upgrade
+        {
             upgradeName = "Tăng Max HP",
-            description = "+25 HP",
+            description = "+25 HP tối đa",
             rarity = Rarity.Epic,
-            applyEffect = () => {
+            applyEffect = () =>
+            {
                 var player = GameObject.FindWithTag("Player").GetComponent<Player>();
-                player.Heal(25f);
-                // Tuỳ chỉnh nếu muốn tăng luôn maxHP thật
+                player.maxHp += 25f;
+
+                // Tùy: hồi đầy máu hoặc giữ nguyên máu cũ
+                player.currentHP += 25f; // hoặc: player.currentHp = player.maxHp;
+
+                Debug.Log("Tăng giới hạn HP thêm 25!");
             }
         });
+        allUpgrades.Add(new Upgrade
+        {
+            upgradeName = "Hồi máu",
+            description = "Hồi 10% máu",
+            rarity = Rarity.Common,
+            applyEffect = () =>
+            {
+                var player = GameObject.FindWithTag("Player").GetComponent<Player>();
+                player.Heal(player.maxHp * 0.1f);
+            }
+        });
+        allUpgrades.Add(new Upgrade
+        {
+            upgradeName = "Tăng Max HP",
+            description = "+10 HP tối đa",
+            rarity = Rarity.Rare,
+            applyEffect = () =>
+            {
+                var player = GameObject.FindWithTag("Player").GetComponent<Player>();
+                player.maxHp += 10f;
 
-        allUpgrades.Add(new Upgrade {
-    upgradeName = "Tăng EXP",
-    description = "+25% XP nhận được",
+                // Tùy: hồi đầy máu hoặc giữ nguyên máu cũ
+                player.currentHP += 10f; // hoặc: player.currentHp = player.maxHp;
+
+                Debug.Log("Tăng giới hạn HP thêm 10!");
+            }
+        });
+        // Khiên tự hồi
+    allUpgrades.Add(new Upgrade {
+    upgradeName = "Khiên Năng Lượng",
+    description = "Tăng 50 khiên hồi phục tự động",
     rarity = Rarity.Rare,
     applyEffect = () => {
-        GameObject.FindWithTag("Player")
-            .GetComponent<itemCollector>().xpMultiplier += 0.25f;
-        Debug.Log("Tăng EXP multiplier lên 25%");
+        var player = GameObject.FindWithTag("Player").GetComponent<Player>();
+        player.maxShield += 50f;
+        player.shield = player.maxShield;
     }
 });
+
+// Hút máu
+    allUpgrades.Add(new Upgrade {
+    upgradeName = "Hút Máu",
+    description = "Hồi 10% máu theo sát thương gây ra",
+    rarity = Rarity.Rare,
+    applyEffect = () => {
+        var player = GameObject.FindWithTag("Player").GetComponent<Player>();
+        player.lifeSteal += 0.1f;
+    }
+});
+
     }
 
     public void ShowUpgradeOptions()
@@ -119,13 +173,21 @@ public class UpgradeUI : MonoBehaviour
         }
     }
 
-    void SelectUpgrade(Upgrade upgrade)
+void SelectUpgrade(Upgrade upgrade)
+{
+    Debug.Log("Selected upgrade: " + upgrade.upgradeName);
+
+    upgrade.applyEffect?.Invoke();
+
+    if (upgradePopup != null)
     {
-        Debug.Log("Selected upgrade: " + upgrade.upgradeName);
-        upgrade.applyEffect?.Invoke();
-        panel.SetActive(false);
-        Time.timeScale = 1f;
+        string msg = upgrade.upgradeName;
+        upgradePopup.Show(msg);
     }
+
+    panel.SetActive(false);
+    Time.timeScale = 1f;
+}
 
     Color GetColorByRarity(Rarity rarity)
     {

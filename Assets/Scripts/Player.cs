@@ -11,7 +11,7 @@ public class Player : MonoBehaviour
 
     [SerializeField] public float maxHp = 100f;
     [SerializeField] private Image hpBar;
-    private float currentHP;
+    public float currentHP = 100f;
 
     public float dashBoost;
     public float dashTime;
@@ -26,6 +26,16 @@ public class Player : MonoBehaviour
     // ⭐ THÊM MỚI:
     public float expMultiplier = 1f; // Tăng EXP
     public float critChance = 0f;    // Tỉ lệ chí mạng
+    public float baseDamage = 10f;
+
+    // ⭐ THÊM KHIÊN
+    public float shield = 0f;
+    public float maxShield = 50f;
+    public float shieldRegenDelay = 10f;
+    private float lastDamageTime = -999f;
+
+    // ⭐ THÊM HÚT MÁU
+    public float lifeSteal = 0f; // VD: 0.1 = 10% sát thương hút máu
 
     private void Awake()
     {
@@ -37,6 +47,7 @@ public class Player : MonoBehaviour
     void Start()
     {
         currentHP = maxHp;
+        shield = maxShield;
         UpdateHpBar();
     }
 
@@ -44,6 +55,7 @@ public class Player : MonoBehaviour
     {
         MovePlayer();
         Dash();
+        RegenerateShield(); // ⭐ HỒI KHIÊN
     }
 
     void MovePlayer()
@@ -52,7 +64,6 @@ public class Player : MonoBehaviour
         rb.linearVelocity = playerInput.normalized * moveSpeed;
 
         spriteRenderer.flipX = playerInput.x < 0;
-
         animator.SetBool("isRun", playerInput != Vector2.zero);
     }
 
@@ -116,13 +127,32 @@ public class Player : MonoBehaviour
 
     public void TakeDamage(float damage)
     {
+        lastDamageTime = Time.time; // ⭐ RESET HỒI KHIÊN
+
+        if (shield > 0)
+        {
+            float shieldAbsorb = Mathf.Min(shield, damage);
+            shield -= shieldAbsorb;
+            damage -= shieldAbsorb;
+        }
+
         currentHP -= damage;
         currentHP = Mathf.Max(currentHP, 0);
         UpdateHpBar();
+
         if (currentHP <= 0)
         {
             gameManager.GameOver();
             Die();
+        }
+    }
+
+    private void RegenerateShield()
+    {
+        if (Time.time - lastDamageTime >= shieldRegenDelay && shield < maxShield)
+        {
+            shield = Mathf.MoveTowards(shield, maxShield, 10f * Time.deltaTime); // Tăng 10 mỗi giây
+            UpdateHpBar(); // Có thể dùng thêm 1 thanh shield UI riêng
         }
     }
 
@@ -144,14 +174,20 @@ public class Player : MonoBehaviour
         hpBar.fillAmount = currentHP / maxHp;
     }
 
-    // ⭐ Ví dụ dùng crit (nếu Sensei muốn dùng thử)
-    public float CalculateDamage(float baseDamage)
+    // ⭐ GÂY SÁT THƯƠNG
+// Chỉ trích đoạn CalculateDamage được sửa lại cho rõ ràng
+        public float CalculateDamage(float baseDamage)
+{
+    float finalDamage = baseDamage;
+
+    if (Random.value < critChance)
     {
-        if (Random.value < critChance)
-        {
-            Debug.Log("Chí mạng!");
-            return baseDamage * 2f;
-        }
-        return baseDamage;
+        Debug.Log("⚡ Chí mạng!");
+        finalDamage *= 2f;
     }
+
+    // ❌ Không hút máu ở đây nữa
+    return finalDamage;
+}
+
 }
