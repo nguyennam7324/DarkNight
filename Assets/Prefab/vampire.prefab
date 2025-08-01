@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 4375547466434320773}
   - component: {fileID: 2430508693705826509}
   - component: {fileID: 8867993364170977196}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: vampire
   m_TagString: Enemy
   m_Icon: {fileID: 0}
@@ -79,7 +79,7 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: -1749205521
-  m_SortingLayer: 12
+  m_SortingLayer: 14
   m_SortingOrder: 0
   m_Sprite: {fileID: -2168655384976774199, guid: 2b871a6dd445141479d9f697ac73428d, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -132,7 +132,7 @@ MonoBehaviour:
   stayDamage: 1
   hpBar: {fileID: 3681998895457905579}
   lootTable:
-  - itemPrefab: {fileID: 606740691954197913, guid: 8f9d153d88e8e1643b4651fbe1265db8, type: 3}
+  - itemPrefab: {fileID: 1455746970168925304, guid: 59bc70a8aa4752d4b8f66e4b04774392, type: 3}
     dropChange: 100
 --- !u!61 &2430508693705826509
 BoxCollider2D:
@@ -295,9 +295,21 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 2548462291017196293, guid: d989b61fafdc47e4188703a15b378aee, type: 3}
+      propertyPath: m_Layer
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 3878491750710085758, guid: d989b61fafdc47e4188703a15b378aee, type: 3}
+      propertyPath: m_Layer
+      value: 3
+      objectReference: {fileID: 0}
     - target: {fileID: 8982808494024351438, guid: d989b61fafdc47e4188703a15b378aee, type: 3}
       propertyPath: m_Name
       value: Hpp
+      objectReference: {fileID: 0}
+    - target: {fileID: 8982808494024351438, guid: d989b61fafdc47e4188703a15b378aee, type: 3}
+      propertyPath: m_Layer
+      value: 3
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
