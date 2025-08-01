@@ -9,6 +9,7 @@ TagManager:
   - Tag 2 Coin
   - Gold
   - Silver
+  - EnemyBullet
   layers:
   - Default
   - TransparentFX
