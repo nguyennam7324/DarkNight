@@ -134,7 +134,8 @@ TextureImporter:
     secondaryTextures: []
     spriteCustomMetadata:
       entries: []
-    nameFileIdTable: {}
+    nameFileIdTable:
+      background_den_20_c224ecad2b_0: -273798243450327731
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 
