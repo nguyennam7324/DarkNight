@@ -15,6 +15,18 @@ public class Login : MonoBehaviour
         //Chuyển scene
         UnityEngine.SceneManagement.SceneManager.LoadScene("Scene1");
     }
+    public void GoToForgotPassword()
+    {
+        SceneManager.LoadScene("ForgotPassword");
+    }
+    public void GotoResgister()
+    {
+        SceneManager.LoadScene("Register");
+    }
+    public void GotoLoginn()
+    {
+        SceneManager.LoadScene("Login");
+    }
 
     public void OnLoginClick()
     {
