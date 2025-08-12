@@ -23,6 +23,10 @@ public class Login : MonoBehaviour
     {
         SceneManager.LoadScene("Register");
     }
+    public void GotoLoginn()
+    {
+        SceneManager.LoadScene("Login");
+    }
 
     public void OnLoginClick()
     {
