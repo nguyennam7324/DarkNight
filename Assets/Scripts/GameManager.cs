@@ -7,14 +7,13 @@ public class GameManager : MonoBehaviour
 {
     [SerializeField] private GameObject mainMenu;
     public GameObject gameOver;
-    //[SerializeField] private AudioManger audioManager;
+   
 
     [SerializeField] private AudioManager audioManager;
 
     void Start()
     {
         MainMenu();
-
     }
     public void MainMenu()
     {
@@ -25,6 +24,7 @@ public class GameManager : MonoBehaviour
     public void StartGame()
     {
         mainMenu.SetActive(false);
+       
         Time.timeScale = 1f;
         audioManager.DefaultAudioManager();
 
