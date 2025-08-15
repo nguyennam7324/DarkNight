@@ -26,6 +26,8 @@ public class Shotgun : MonoBehaviour, IGun
     [Header("Reload Delay")]
     [SerializeField] private float fullReloadDelay = 2f;
     private bool isReloading = false;
+    private Vector3 originalLocalPos;
+
 
     void Start()
     {
@@ -101,12 +103,18 @@ public class Shotgun : MonoBehaviour, IGun
         UpdateAmmotext();
         isReloading = false;
     }
+    public void SetOriginalLocalPos()
+    {
+        originalLocalPos = transform.localPosition;
+    }
+
 
 
     void HandleRecoil()
     {
         transform.localPosition = Vector3.Lerp(transform.localPosition, Vector3.zero, Time.deltaTime * recoilReturnSpeed);
     }
+
 
     void UpdateAmmotext()
     {

@@ -25,6 +25,8 @@ public class Pistol : MonoBehaviour, IGun
     [Header("Recoil")]
     [SerializeField] private float recoilDistance = 0.1f;
     [SerializeField] private float recoilReturnSpeed = 5f;
+    private Vector3 originalLocalPos;
+
 
     void Start()
     {
@@ -84,6 +86,11 @@ public class Pistol : MonoBehaviour, IGun
             Invoke(nameof(FinishReload), reloadDuration);
         }
     }
+    public void SetOriginalLocalPos()
+    {
+        originalLocalPos = transform.localPosition;
+    }
+
 
     void FinishReload()
     {

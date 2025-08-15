@@ -1,4 +1,4 @@
-using UnityEngine;
+﻿using UnityEngine;
 
 public class AudioManager : MonoBehaviour
 {
@@ -17,6 +17,22 @@ public class AudioManager : MonoBehaviour
     {
         effectAudioSource.PlayOneShot(reloadSound);
     }
+    public void Play(string soundName)
+    {
+        switch (soundName.ToLower())
+        {
+            case "reload":
+                playReloadSound();
+                break;
+            case "shot":
+                playShotSound();
+                break;
+            default:
+                Debug.LogWarning($"⚠️ Âm thanh '{soundName}' chưa được định nghĩa trong AudioManager.");
+                break;
+        }
+    }
+
 
     public void DefaultAudioManager()
     {

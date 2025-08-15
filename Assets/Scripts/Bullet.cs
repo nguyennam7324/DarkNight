@@ -9,22 +9,29 @@ public class Bullet : MonoBehaviour
 
     void Start()
     {
-        // Tìm player
-        Player player = GameObject.FindWithTag("Player").GetComponent<Player>();
+        Player player = GameObject.FindWithTag("Player")?.GetComponent<Player>();
 
-        // Tính damage có crit
-        damage = player.CalculateDamage(player.baseDamage);
-
-        // Hồi máu nếu có hút máu
-        if (player.lifeSteal > 0)
+        if (player != null)
         {
-            float healAmount = damage * player.lifeSteal;
-            player.Heal(healAmount);
-            Debug.Log($"🩸 Hút máu: {healAmount}");
+            // Tính damage có crit
+            damage = player.CalculateDamage(player.baseDamage);
+
+            // Hồi máu nếu có hút máu
+            if (player.lifeSteal > 0)
+            {
+                float healAmount = damage * player.lifeSteal;
+                player.Heal(healAmount);
+                Debug.Log($"🩸 Hút máu: {healAmount}");
+            }
+        }
+        else
+        {
+            Debug.LogWarning("⚠️ Không tìm thấy Player trong scene để tính damage cho bullet.");
         }
 
         Destroy(gameObject, timeDestroy);
     }
+
 
     void Update()
     {
@@ -35,6 +42,11 @@ public class Bullet : MonoBehaviour
     {
         transform.Translate(Vector2.right * moveBullet * Time.deltaTime);
     }
+    public void SetDamage(float damage)
+    {
+        this.damage = damage;
+    }
+
 
     private void OnTriggerEnter2D(Collider2D collision)
     {

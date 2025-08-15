@@ -25,6 +25,8 @@ public class Rifle : MonoBehaviour, IGun
     [Header("Recoil")]
     [SerializeField] private float recoilDistance = 0.05f;
     [SerializeField] private float recoilReturnSpeed = 8f;
+    private Vector3 originalLocalPos;
+
 
     void Start()
     {
@@ -74,6 +76,11 @@ public class Rifle : MonoBehaviour, IGun
             transform.localPosition -= transform.right * recoilDistance;
         }
     }
+    public void SetOriginalLocalPos()
+    {
+        originalLocalPos = transform.localPosition;
+    }
+
 
     void Reload()
     {

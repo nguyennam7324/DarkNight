@@ -26,7 +26,7 @@ public class GunHolder : MonoBehaviour
         pickupGun.SetActive(true);
         currentGun = pickupGun;
 
- 
+
         // 4. Thiết lập biến
         IGun gunScript = currentGun.GetComponent<IGun>();
         if (gunScript != null)
@@ -34,6 +34,7 @@ public class GunHolder : MonoBehaviour
             gunScript.SetEquipped(true);
             gunScript.SetAmmoText(FindObjectOfType<TextMeshProUGUI>());
             gunScript.SetAudioManager(FindObjectOfType<AudioManager>());
+            gunScript.SetOriginalLocalPos();
         }
 
         // 5. Xoá pickup nếu khác instance
