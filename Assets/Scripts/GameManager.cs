@@ -7,6 +7,8 @@ public class GameManager : MonoBehaviour
 {
     [SerializeField] private GameObject mainMenu;
     public GameObject gameOver;
+    public OverdriveSystem overdriveSystem; // Kéo thả trong Inspector
+
     //[SerializeField] private AudioManger audioManager;
 
     [SerializeField] private AudioManager audioManager;
