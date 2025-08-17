@@ -52,7 +52,7 @@ public class Pistol : MonoBehaviour, IGun
         UpdateAmmotext();
     }
 
-    void RotationGun()
+    void RotationGun()  
     {
         Vector3 displacement = transform.position - Camera.main.ScreenToWorldPoint(Input.mousePosition);
         float angle = Mathf.Atan2(displacement.y, displacement.x) * Mathf.Rad2Deg;

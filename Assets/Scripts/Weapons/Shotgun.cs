@@ -31,6 +31,10 @@ public class Shotgun : MonoBehaviour, IGun
     [SerializeField] private AudioClip shootClip;
     [SerializeField] private AudioClip reloadClip;
 
+    [Header("Reload Settings")]
+    [SerializeField] private float reloadTime = 2f; // thời gian nạp
+    private bool isReloading = false;
+
     void Start()
     {
         currentAmmo = maxAmmo;
@@ -45,6 +49,8 @@ public class Shotgun : MonoBehaviour, IGun
 
         HandleRecoil();
 
+        if (isReloading) return; // đang reload thì không làm gì khác
+
         if (Time.time >= nextShot)
         {
             RotationGun();
@@ -54,7 +60,7 @@ public class Shotgun : MonoBehaviour, IGun
         // Bấm R để reload thủ công
         if (Input.GetKeyDown(KeyCode.R) && currentAmmo < maxAmmo)
         {
-            Reload();
+            StartCoroutine(ReloadCoroutine());
         }
 
         UpdateAmmoText();
@@ -94,13 +100,20 @@ public class Shotgun : MonoBehaviour, IGun
         }
     }
 
-    public void Reload()
+    private System.Collections.IEnumerator ReloadCoroutine()
     {
-        currentAmmo = maxAmmo;
-        UpdateAmmoText();
+        isReloading = true;
 
         if (audioSource && reloadClip)
             audioSource.PlayOneShot(reloadClip);
+
+        // chờ hết thời gian reload
+        yield return new WaitForSeconds(reloadTime);
+
+        currentAmmo = maxAmmo;
+        UpdateAmmoText();
+
+        isReloading = false;
     }
 
     void HandleRecoil()
@@ -111,7 +124,9 @@ public class Shotgun : MonoBehaviour, IGun
     void UpdateAmmoText()
     {
         if (ammoText != null)
-            ammoText.text = currentAmmo > 0 ? currentAmmo.ToString() : "EMPTY";
+            ammoText.text = isReloading
+                ? "RELOADING..."
+                : (currentAmmo > 0 ? currentAmmo.ToString() : "EMPTY");
     }
 
     public void AddAmmo(float amount)
@@ -123,7 +138,5 @@ public class Shotgun : MonoBehaviour, IGun
 
     public void SetEquipped(bool equipped) => isEquipped = equipped;
     public void SetAmmoText(TextMeshProUGUI text) => ammoText = text;
-
-    // IGun yêu cầu nhưng bỏ AudioManager → để trống
     public void SetAudioManager(AudioManager audio) { }
 }
