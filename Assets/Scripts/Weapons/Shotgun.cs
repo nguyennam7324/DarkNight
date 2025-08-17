@@ -45,10 +45,18 @@ public class Shotgun : MonoBehaviour, IGun
 
         HandleRecoil();
 
-        if (Time.time < nextShot) return;
+        if (Time.time >= nextShot)
+        {
+            RotationGun();
+            Shot();
+        }
 
-        RotationGun();
-        Shot();
+        // Bấm R để reload thủ công
+        if (Input.GetKeyDown(KeyCode.R) && currentAmmo < maxAmmo)
+        {
+            Reload();
+        }
+
         UpdateAmmoText();
     }
 
@@ -83,10 +91,6 @@ public class Shotgun : MonoBehaviour, IGun
                 audioSource.PlayOneShot(shootClip);
 
             transform.localPosition -= transform.right * recoilDistance;
-
-            // nếu muốn reload thủ công: bấm R để nạp
-            if (currentAmmo <= 0)
-                Reload();
         }
     }
 
