@@ -4,15 +4,16 @@ using UnityEngine;
 public class Shotgun : MonoBehaviour, IGun
 {
     private float rotationOffSet = 180f;
+
+    [Header("Thiết lập súng")]
     [SerializeField] private Transform firePos;
     [SerializeField] private GameObject bulletPrefabs;
-    [SerializeField] private float DelayShot = 1.0f;
+    [SerializeField] private float delayShot = 1.0f;
     [SerializeField] private float maxAmmo = 8f;
     public float currentAmmo;
     private float nextShot;
 
     [SerializeField] public TextMeshProUGUI ammoText;
-    [SerializeField] public AudioManager audioManager;
     public bool isEquipped = false;
 
     [Header("Spread")]
@@ -23,13 +24,19 @@ public class Shotgun : MonoBehaviour, IGun
     [SerializeField] private float recoilDistance = 0.15f;
     [SerializeField] private float recoilReturnSpeed = 4f;
 
-    [Header("Reload Delay")]
-    [SerializeField] private float fullReloadDelay = 2f;
-    private bool isReloading = false;
+    private Vector3 originalLocalPos;
+
+    [Header("Âm thanh riêng")]
+    [SerializeField] private AudioSource audioSource;
+    [SerializeField] private AudioClip shootClip;
+    [SerializeField] private AudioClip reloadClip;
 
     void Start()
     {
         currentAmmo = maxAmmo;
+
+        if (audioSource == null)
+            audioSource = GetComponent<AudioSource>();
     }
 
     void Update()
@@ -38,11 +45,11 @@ public class Shotgun : MonoBehaviour, IGun
 
         HandleRecoil();
 
-        if (isReloading || Time.time < nextShot) return;
+        if (Time.time < nextShot) return;
 
         RotationGun();
         Shot();
-        UpdateAmmotext();
+        UpdateAmmoText();
     }
 
     void RotationGun()
@@ -57,7 +64,7 @@ public class Shotgun : MonoBehaviour, IGun
     {
         if (Input.GetMouseButtonDown(0) && currentAmmo > 0)
         {
-            nextShot = Time.time + DelayShot;
+            nextShot = Time.time + delayShot;
 
             float startAngle = -totalSpreadAngle / 2f;
             float angleStep = totalSpreadAngle / (pelletsPerShot - 1);
@@ -70,45 +77,34 @@ public class Shotgun : MonoBehaviour, IGun
             }
 
             currentAmmo--;
-            UpdateAmmotext();
+            UpdateAmmoText();
 
-            audioManager.playShotSound();     // Bắn
-            audioManager.playReloadSound();   // Nhồi đạn (từng viên)
+            if (audioSource && shootClip)
+                audioSource.PlayOneShot(shootClip);
 
             transform.localPosition -= transform.right * recoilDistance;
 
+            // nếu muốn reload thủ công: bấm R để nạp
             if (currentAmmo <= 0)
-            {
-                StartCoroutine(FullReload());
-            }
+                Reload();
         }
     }
 
-    private System.Collections.IEnumerator FullReload()
+    public void Reload()
     {
-        isReloading = true;
-
-        int steps = 3; // số lần nạp đạn
-        float delayPerStep = 0.6f; // thời gian giữa mỗi tiếng
-
-        for (int i = 0; i < steps; i++)
-        {
-            audioManager.playReloadSound();
-            yield return new WaitForSeconds(delayPerStep);
-        }
-
         currentAmmo = maxAmmo;
-        UpdateAmmotext();
-        isReloading = false;
-    }
+        UpdateAmmoText();
 
+        if (audioSource && reloadClip)
+            audioSource.PlayOneShot(reloadClip);
+    }
 
     void HandleRecoil()
     {
         transform.localPosition = Vector3.Lerp(transform.localPosition, Vector3.zero, Time.deltaTime * recoilReturnSpeed);
     }
 
-    void UpdateAmmotext()
+    void UpdateAmmoText()
     {
         if (ammoText != null)
             ammoText.text = currentAmmo > 0 ? currentAmmo.ToString() : "EMPTY";
@@ -118,10 +114,12 @@ public class Shotgun : MonoBehaviour, IGun
     {
         currentAmmo += amount;
         currentAmmo = Mathf.Min(currentAmmo, maxAmmo);
-        UpdateAmmotext();
+        UpdateAmmoText();
     }
 
     public void SetEquipped(bool equipped) => isEquipped = equipped;
     public void SetAmmoText(TextMeshProUGUI text) => ammoText = text;
-    public void SetAudioManager(AudioManager audio) => audioManager = audio;
+
+    // IGun yêu cầu nhưng bỏ AudioManager → để trống
+    public void SetAudioManager(AudioManager audio) { }
 }
