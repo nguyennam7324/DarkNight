@@ -24,6 +24,12 @@ public class LoadingScene : MonoBehaviour
 
     public void StartGameWithLoading(GameManager gameManager)
     {
+        // ẨN MAIN MENU TRƯỚC KHI HIỆN LOADING
+        if (gameManager != null)
+        {
+            gameManager.HideMainMenu(); // Cần thêm method này
+        }
+
         m_LoadingScreenObject.SetActive(true);
         ProgressBar.value = 0;
         StartCoroutine(LoadingCoroutine(gameManager));
