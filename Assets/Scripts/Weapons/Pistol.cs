@@ -11,7 +11,6 @@ public class Pistol : MonoBehaviour, IGun
     public float currentAmmo;
     private float nextShot;
     [SerializeField] public TextMeshProUGUI ammoText;
-    [SerializeField] public AudioManager audioManager;
     public bool isEquipped = false;
 
     [Header("Bắn lệch")]
@@ -26,9 +25,17 @@ public class Pistol : MonoBehaviour, IGun
     [SerializeField] private float recoilDistance = 0.1f;
     [SerializeField] private float recoilReturnSpeed = 5f;
 
+    [Header("Âm thanh riêng cho súng")]
+    [SerializeField] private AudioSource audioSource;
+    [SerializeField] private AudioClip shootClip;
+    [SerializeField] private AudioClip reloadClip;
+
     void Start()
     {
         currentAmmo = maxAmmo;
+
+        if (audioSource == null)
+            audioSource = GetComponent<AudioSource>();
     }
 
     void Update()
@@ -45,7 +52,7 @@ public class Pistol : MonoBehaviour, IGun
         UpdateAmmotext();
     }
 
-    void RotationGun()
+    void RotationGun()  
     {
         Vector3 displacement = transform.position - Camera.main.ScreenToWorldPoint(Input.mousePosition);
         float angle = Mathf.Atan2(displacement.y, displacement.x) * Mathf.Rad2Deg;
@@ -68,7 +75,10 @@ public class Pistol : MonoBehaviour, IGun
 
             currentAmmo--;
             UpdateAmmotext();
-            audioManager.playShotSound();
+
+            // Âm thanh bắn
+            if (audioSource && shootClip)
+                audioSource.PlayOneShot(shootClip);
 
             // Giật súng (theo local X)
             transform.localPosition -= transform.right * recoilDistance;
@@ -80,7 +90,11 @@ public class Pistol : MonoBehaviour, IGun
         if (Input.GetKeyDown(KeyCode.R) && currentAmmo < maxAmmo && !isReloading)
         {
             isReloading = true;
-            audioManager.playReloadSound();
+
+            // Âm thanh reload
+            if (audioSource && reloadClip)
+                audioSource.PlayOneShot(reloadClip);
+
             Invoke(nameof(FinishReload), reloadDuration);
         }
     }
@@ -110,7 +124,8 @@ public class Pistol : MonoBehaviour, IGun
         UpdateAmmotext();
     }
 
+    // IGun yêu cầu, nhưng Pistol giờ không dùng AudioManager nữa
     public void SetEquipped(bool equipped) => isEquipped = equipped;
     public void SetAmmoText(TextMeshProUGUI text) => ammoText = text;
-    public void SetAudioManager(AudioManager audio) => audioManager = audio;
+    public void SetAudioManager(AudioManager audio) { }
 }

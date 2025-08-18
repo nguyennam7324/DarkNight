@@ -4,15 +4,16 @@ using UnityEngine;
 public class Shotgun : MonoBehaviour, IGun
 {
     private float rotationOffSet = 180f;
+
+    [Header("Thiết lập súng")]
     [SerializeField] private Transform firePos;
     [SerializeField] private GameObject bulletPrefabs;
-    [SerializeField] private float DelayShot = 1.0f;
+    [SerializeField] private float delayShot = 1.0f;
     [SerializeField] private float maxAmmo = 8f;
     public float currentAmmo;
     private float nextShot;
 
     [SerializeField] public TextMeshProUGUI ammoText;
-    [SerializeField] public AudioManager audioManager;
     public bool isEquipped = false;
 
     [Header("Spread")]
@@ -23,13 +24,23 @@ public class Shotgun : MonoBehaviour, IGun
     [SerializeField] private float recoilDistance = 0.15f;
     [SerializeField] private float recoilReturnSpeed = 4f;
 
-    [Header("Reload Delay")]
-    [SerializeField] private float fullReloadDelay = 2f;
+    private Vector3 originalLocalPos;
+
+    [Header("Âm thanh riêng")]
+    [SerializeField] private AudioSource audioSource;
+    [SerializeField] private AudioClip shootClip;
+    [SerializeField] private AudioClip reloadClip;
+
+    [Header("Reload Settings")]
+    [SerializeField] private float reloadTime = 2f; // thời gian nạp
     private bool isReloading = false;
 
     void Start()
     {
         currentAmmo = maxAmmo;
+
+        if (audioSource == null)
+            audioSource = GetComponent<AudioSource>();
     }
 
     void Update()
@@ -38,11 +49,21 @@ public class Shotgun : MonoBehaviour, IGun
 
         HandleRecoil();
 
-        if (isReloading || Time.time < nextShot) return;
+        if (isReloading) return; // đang reload thì không làm gì khác
 
-        RotationGun();
-        Shot();
-        UpdateAmmotext();
+        if (Time.time >= nextShot)
+        {
+            RotationGun();
+            Shot();
+        }
+
+        // Bấm R để reload thủ công
+        if (Input.GetKeyDown(KeyCode.R) && currentAmmo < maxAmmo)
+        {
+            StartCoroutine(ReloadCoroutine());
+        }
+
+        UpdateAmmoText();
     }
 
     void RotationGun()
@@ -57,7 +78,7 @@ public class Shotgun : MonoBehaviour, IGun
     {
         if (Input.GetMouseButtonDown(0) && currentAmmo > 0)
         {
-            nextShot = Time.time + DelayShot;
+            nextShot = Time.time + delayShot;
 
             float startAngle = -totalSpreadAngle / 2f;
             float angleStep = totalSpreadAngle / (pelletsPerShot - 1);
@@ -70,58 +91,52 @@ public class Shotgun : MonoBehaviour, IGun
             }
 
             currentAmmo--;
-            UpdateAmmotext();
+            UpdateAmmoText();
 
-            audioManager.playShotSound();     // Bắn
-            audioManager.playReloadSound();   // Nhồi đạn (từng viên)
+            if (audioSource && shootClip)
+                audioSource.PlayOneShot(shootClip);
 
             transform.localPosition -= transform.right * recoilDistance;
-
-            if (currentAmmo <= 0)
-            {
-                StartCoroutine(FullReload());
-            }
         }
     }
 
-    private System.Collections.IEnumerator FullReload()
+    private System.Collections.IEnumerator ReloadCoroutine()
     {
         isReloading = true;
 
-        int steps = 3; // số lần nạp đạn
-        float delayPerStep = 0.6f; // thời gian giữa mỗi tiếng
+        if (audioSource && reloadClip)
+            audioSource.PlayOneShot(reloadClip);
 
-        for (int i = 0; i < steps; i++)
-        {
-            audioManager.playReloadSound();
-            yield return new WaitForSeconds(delayPerStep);
-        }
+        // chờ hết thời gian reload
+        yield return new WaitForSeconds(reloadTime);
 
         currentAmmo = maxAmmo;
-        UpdateAmmotext();
+        UpdateAmmoText();
+
         isReloading = false;
     }
-
 
     void HandleRecoil()
     {
         transform.localPosition = Vector3.Lerp(transform.localPosition, Vector3.zero, Time.deltaTime * recoilReturnSpeed);
     }
 
-    void UpdateAmmotext()
+    void UpdateAmmoText()
     {
         if (ammoText != null)
-            ammoText.text = currentAmmo > 0 ? currentAmmo.ToString() : "EMPTY";
+            ammoText.text = isReloading
+                ? "RELOADING..."
+                : (currentAmmo > 0 ? currentAmmo.ToString() : "EMPTY");
     }
 
     public void AddAmmo(float amount)
     {
         currentAmmo += amount;
         currentAmmo = Mathf.Min(currentAmmo, maxAmmo);
-        UpdateAmmotext();
+        UpdateAmmoText();
     }
 
     public void SetEquipped(bool equipped) => isEquipped = equipped;
     public void SetAmmoText(TextMeshProUGUI text) => ammoText = text;
-    public void SetAudioManager(AudioManager audio) => audioManager = audio;
+    public void SetAudioManager(AudioManager audio) { }
 }
