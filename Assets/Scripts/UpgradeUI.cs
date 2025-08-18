@@ -18,7 +18,6 @@ public class UpgradeUI : MonoBehaviour
         public string upgradeName;
         public string description;
         public Rarity rarity;
-        public Sprite icon;   // 🖼 icon của buff
         public System.Action applyEffect;
     }
 
@@ -26,10 +25,6 @@ public class UpgradeUI : MonoBehaviour
     public Button[] upgradeButtons;
     public TextMeshProUGUI[] upgradeTexts;
     public UpgradePopup upgradePopup;
-    public Image[] upgradeIcons;
-
-    [Header("Optional Default Icon")]
-    public Sprite defaultIcon;   // icon fallback khi không load được
 
     private List<Upgrade> allUpgrades = new List<Upgrade>();
 
@@ -41,106 +36,117 @@ public class UpgradeUI : MonoBehaviour
 
     void LoadUpgrades()
     {
-        allUpgrades.Add(new Upgrade {
+        allUpgrades.Add(new Upgrade
+        {
             upgradeName = "Tăng Damage",
             description = "+20% Damage",
             rarity = Rarity.Common,
-            icon = Resources.Load<Sprite>("Assets/Violet Theme Ui/Colored Icons/Sword_0.png"),
             applyEffect = () => {
-                GameObject.FindWithTag("Player").GetComponent<Player>().baseDamage += 5f;
-            }
+            GameObject.FindWithTag("Player").GetComponent<Player>().baseDamage += 5f;
+}
+
         });
 
-        allUpgrades.Add(new Upgrade {
+        allUpgrades.Add(new Upgrade
+        {
             upgradeName = "Tăng Speed",
             description = "+10% Speed",
             rarity = Rarity.Common,
-            icon = Resources.Load<Sprite>("Assets/Violet Theme Ui/Colored Icons/Sword_0.png"),
-            applyEffect = () => {
+            applyEffect = () =>
+            {
                 GameObject.FindWithTag("Player").GetComponent<Player>().ApplySpeedBoost(1.1f, 5f);
             }
         });
 
-        allUpgrades.Add(new Upgrade {
+        allUpgrades.Add(new Upgrade
+        {
             upgradeName = "Tăng Crit",
             description = "+10% Tỉ lệ chí mạng",
             rarity = Rarity.Rare,
-            icon = Resources.Load<Sprite>("Assets/Violet Theme Ui/Colored Icons/Sword_0.png"),
-            applyEffect = () => {
+            applyEffect = () =>
+            {
                 GameObject.FindWithTag("Player").GetComponent<Player>().critChance += 0.1f;
             }
         });
 
-        allUpgrades.Add(new Upgrade {
+        allUpgrades.Add(new Upgrade
+        {
             upgradeName = "Hồi máu",
             description = "Hồi 50% máu",
             rarity = Rarity.Rare,
-            icon = Resources.Load<Sprite>("Assets/Violet Theme Ui/Colored Icons/Sword_0.png"),
-            applyEffect = () => {
+            applyEffect = () =>
+            {
                 var player = GameObject.FindWithTag("Player").GetComponent<Player>();
                 player.Heal(player.maxHp * 0.5f);
             }
         });
 
-        allUpgrades.Add(new Upgrade {
+        allUpgrades.Add(new Upgrade
+        {
             upgradeName = "Tăng Max HP",
             description = "+25 HP tối đa",
             rarity = Rarity.Epic,
-            icon = Resources.Load<Sprite>("Assets/Violet Theme Ui/Colored Icons/Sword_0.png"),
-            applyEffect = () => {
+            applyEffect = () =>
+            {
                 var player = GameObject.FindWithTag("Player").GetComponent<Player>();
                 player.maxHp += 25f;
-                player.currentHP += 25f;
+
+                // Tùy: hồi đầy máu hoặc giữ nguyên máu cũ
+                player.currentHP += 25f; // hoặc: player.currentHp = player.maxHp;
+
                 Debug.Log("Tăng giới hạn HP thêm 25!");
             }
         });
-
-        allUpgrades.Add(new Upgrade {
+        allUpgrades.Add(new Upgrade
+        {
             upgradeName = "Hồi máu",
             description = "Hồi 10% máu",
             rarity = Rarity.Common,
-            icon = Resources.Load<Sprite>("Assets/Violet Theme Ui/Colored Icons/Sword_0.png"),
-            applyEffect = () => {
+            applyEffect = () =>
+            {
                 var player = GameObject.FindWithTag("Player").GetComponent<Player>();
                 player.Heal(player.maxHp * 0.1f);
             }
         });
-
-        allUpgrades.Add(new Upgrade {
+        allUpgrades.Add(new Upgrade
+        {
             upgradeName = "Tăng Max HP",
             description = "+10 HP tối đa",
             rarity = Rarity.Rare,
-            icon = Resources.Load<Sprite>("Assets/Violet Theme Ui/Colored Icons/Sword_0.png"),
-            applyEffect = () => {
+            applyEffect = () =>
+            {
                 var player = GameObject.FindWithTag("Player").GetComponent<Player>();
                 player.maxHp += 10f;
-                player.currentHP += 10f;
+
+                // Tùy: hồi đầy máu hoặc giữ nguyên máu cũ
+                player.currentHP += 10f; // hoặc: player.currentHp = player.maxHp;
+
                 Debug.Log("Tăng giới hạn HP thêm 10!");
             }
         });
+        // Khiên tự hồi
+    allUpgrades.Add(new Upgrade {
+    upgradeName = "Khiên Năng Lượng",
+    description = "Tăng 50 khiên hồi phục tự động",
+    rarity = Rarity.Rare,
+    applyEffect = () => {
+        var player = GameObject.FindWithTag("Player").GetComponent<Player>();
+        player.maxShield += 50f;
+        player.shield = player.maxShield;
+    }
+});
 
-        allUpgrades.Add(new Upgrade {
-            upgradeName = "Khiên Năng Lượng",
-            description = "Tăng 50 khiên hồi phục tự động",
-            rarity = Rarity.Rare,
-            icon = Resources.Load<Sprite>("Assets/Violet Theme Ui/Colored Icons/Sword_0.png"),
-            applyEffect = () => {
-                var player = GameObject.FindWithTag("Player").GetComponent<Player>();
-                player.maxShield += 50f;
-                player.shield = player.maxShield;
-            }
-        });
+// Hút máu
+    allUpgrades.Add(new Upgrade {
+    upgradeName = "Hút Máu",
+    description = "Hồi 10% máu theo sát thương gây ra",
+    rarity = Rarity.Rare,
+    applyEffect = () => {
+        var player = GameObject.FindWithTag("Player").GetComponent<Player>();
+        player.lifeSteal += 0.1f;
+    }
+});
 
-        allUpgrades.Add(new Upgrade {
-            upgradeName = "Hút Máu",
-            description = "Hồi 10% máu theo sát thương gây ra",
-            rarity = Rarity.Rare,
-            icon = Resources.Load<Sprite>("Assets/Violet Theme Ui/Colored Icons/Sword_0.png"),
-            applyEffect = () => {
-                var player = GameObject.FindWithTag("Player").GetComponent<Player>();
-                player.lifeSteal += 0.1f;
-            }
-        });
     }
 
     public void ShowUpgradeOptions()
@@ -158,55 +164,30 @@ public class UpgradeUI : MonoBehaviour
             Upgrade chosen = randomUpgrades[randomIndex];
             randomUpgrades.RemoveAt(randomIndex);
 
-            // text
             string colorHex = ColorUtility.ToHtmlStringRGB(GetColorByRarity(chosen.rarity));
             upgradeTexts[i].text = $"<color=#{colorHex}>{chosen.upgradeName}</color>\n{chosen.description}";
             upgradeTexts[i].color = GetColorByRarity(chosen.rarity);
 
-            // icon
-            if (upgradeIcons.Length > i && upgradeIcons[i] != null)
-            {
-                if (chosen.icon != null)
-                {
-                    upgradeIcons[i].sprite = chosen.icon;
-                    upgradeIcons[i].preserveAspect = true;
-                }
-                else
-                {
-                    Debug.LogWarning($"⚠️ Upgrade '{chosen.upgradeName}' chưa có icon! Dùng icon mặc định.");
-                    if (defaultIcon != null)
-                    {
-                        upgradeIcons[i].sprite = defaultIcon;
-                        upgradeIcons[i].preserveAspect = true;
-                    }
-                }
-            }
-            else
-            {
-                Debug.LogError($"❌ Không tìm thấy upgradeIcons[{i}] trong Inspector!");
-            }
-
-            // click
             upgradeButtons[i].onClick.RemoveAllListeners();
             upgradeButtons[i].onClick.AddListener(() => SelectUpgrade(chosen));
         }
     }
 
-    void SelectUpgrade(Upgrade upgrade)
+void SelectUpgrade(Upgrade upgrade)
+{
+    Debug.Log("Selected upgrade: " + upgrade.upgradeName);
+
+    upgrade.applyEffect?.Invoke();
+
+    if (upgradePopup != null)
     {
-        Debug.Log("Selected upgrade: " + upgrade.upgradeName);
-
-        upgrade.applyEffect?.Invoke();
-
-        if (upgradePopup != null)
-        {
-            string msg = upgrade.upgradeName;
-            upgradePopup.Show(msg);
-        }
-
-        panel.SetActive(false);
-        Time.timeScale = 1f;
+        string msg = upgrade.upgradeName;
+        upgradePopup.Show(msg);
     }
+
+    panel.SetActive(false);
+    Time.timeScale = 1f;
+}
 
     Color GetColorByRarity(Rarity rarity)
     {

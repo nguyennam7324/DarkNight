@@ -12,8 +12,6 @@ public abstract class Enemy : MonoBehaviour
     [SerializeField] protected float enterDamage = 10f;
     [SerializeField] protected float stayDamage = 1f;
     [SerializeField] protected Image hpBar;
-    private GameManager gameManager;
-
     protected Animator animator;
     //LootTable
     [Header("Loot")]
@@ -23,7 +21,6 @@ public abstract class Enemy : MonoBehaviour
     {
         player = FindAnyObjectByType<Player>();
         currentHP = maxHP;
-        gameManager = FindAnyObjectByType<GameManager>(); // Lấy tham chiếu GameManager
         UpdateHpBar();
         animator = GetComponent<Animator>();
     }
@@ -52,10 +49,6 @@ public abstract class Enemy : MonoBehaviour
         {
             animator.Play("Death");
         }
-        if (gameManager != null && gameManager.overdriveSystem != null)
-        {
-            gameManager.overdriveSystem.OnEnemyKilled();
-        }
         //spawn item
         foreach (LootItem lootItem in lootTable)
         {
@@ -75,7 +68,6 @@ public abstract class Enemy : MonoBehaviour
         currentHP -= damage;
         currentHP = Mathf.Max(currentHP, 0);
         UpdateHpBar();
-        
 
         if (currentHP <= 0)
         {

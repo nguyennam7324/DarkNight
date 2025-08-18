@@ -375,7 +375,6 @@ GameObject:
   - component: {fileID: 2277149130740917373}
   - component: {fileID: 7382349122070104244}
   - component: {fileID: 813662512270994854}
-  - component: {fileID: -7344892775402616019}
   m_Layer: 0
   m_Name: Player
   m_TagString: Player
@@ -543,19 +542,10 @@ MonoBehaviour:
   moveSpeed: 5
   maxHp: 100
   hpBar: {fileID: 842049770145669554}
-  currentHP: 100
   dashBoost: 20
   dashTime: 0.2
   ghostEffect: {fileID: 7914191400908453952, guid: 2d2c99144c4a6d94ea4df62bd3b31cb3, type: 3}
   ghostDelaySeconds: 0.04
-  gameManager: {fileID: 0}
-  expMultiplier: 1
-  critChance: 0
-  baseDamage: 10
-  shield: 0
-  maxShield: 50
-  shieldRegenDelay: 10
-  lifeSteal: 0
 --- !u!95 &7382349122070104244
 Animator:
   serializedVersion: 7
@@ -590,29 +580,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 04cc38f42a58e3f41966ec696b882fc0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  levelText: {fileID: 0}
-  experienceText: {fileID: 0}
-  level: 0
-  CurrentXp: 0
-  targetXp: 0
-  xpProgressBar: {fileID: 0}
-  upgradeUI: {fileID: 0}
-  xpMultiplier: 1
---- !u!114 &-7344892775402616019
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5054170892744747592}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9d5a57415906a09469f88ac53faf7a4b, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  damageMultiplier: 1.75
-  moveSpeedMultiplier: 1.4
-  fireRateMultiplier: 0.66
 --- !u!1 &6930071045292506913
 GameObject:
   m_ObjectHideFlags: 0

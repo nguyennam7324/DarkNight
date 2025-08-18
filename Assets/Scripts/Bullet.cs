@@ -7,13 +7,8 @@ public class Bullet : MonoBehaviour
     [SerializeField] private float damage = 10f;
     [SerializeField] private GameObject bloodPrefab;
 
-    private GameManager gameManager; // ✅ Thêm biến GameManager
-
     void Start()
     {
-        // Lấy tham chiếu GameManager
-        gameManager = FindAnyObjectByType<GameManager>();
-
         // Tìm player
         Player player = GameObject.FindWithTag("Player").GetComponent<Player>();
 
@@ -46,21 +41,12 @@ public class Bullet : MonoBehaviour
         if (collision.CompareTag("Enemy"))
         {
             Enemy enemy = collision.GetComponent<Enemy>();
-           if (enemy != null)
-        {
-        enemy.TakeDamage(damage);
-
-    // ✅ Cộng Overdrive khi bắn trúng
-            if (gameManager != null && gameManager.overdriveSystem != null)
-        {
-        gameManager.overdriveSystem.OnEnemyHit();
-        }   
-
-    // Hiệu ứng máu
-        GameObject blood = Instantiate(bloodPrefab, transform.position, Quaternion.identity);
-        Destroy(blood, 1f);
-        }
-
+            if (enemy != null)
+            {
+                enemy.TakeDamage(damage);
+                GameObject blood = Instantiate(bloodPrefab, transform.position, Quaternion.identity);
+                Destroy(blood, 1f);
+            }
             Destroy(gameObject);
         }
 
@@ -70,5 +56,4 @@ public class Bullet : MonoBehaviour
             Destroy(gameObject);
         }
     }
-    
 }

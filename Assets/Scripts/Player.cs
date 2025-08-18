@@ -5,11 +5,6 @@ using UnityEngine.UI;
 public class Player : MonoBehaviour
 {
     [SerializeField] private float moveSpeed = 3f;
-public float MoveSpeed
-{
-    get => moveSpeed;
-    set => moveSpeed = value;
-}
     private Rigidbody2D rb;
     private SpriteRenderer spriteRenderer;
     private Animator animator;
