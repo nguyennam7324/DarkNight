@@ -1,11 +1,11 @@
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 public class GameManager : MonoBehaviour
 {
     [SerializeField] private GameObject mainMenu;
-    [SerializeField] private GameObject expUI; // 👈 thêm exp UI
+    [SerializeField] private GameObject expUI; // 👈 exp UI panel
     public GameObject gameOver;
 
     [SerializeField] private AudioManager audioManager;
@@ -23,11 +23,17 @@ public class GameManager : MonoBehaviour
         audioManager.Mute();
     }
 
-    public void StartGame()
+    // 👉 Method này chỉ dùng để ẩn menu nếu cần gọi ở nơi khác
+    public void HideMainMenu()
     {
         mainMenu.SetActive(false);
-        expUI.SetActive(true);   // 👈 hiện exp UI khi bắt đầu game
-        Time.timeScale = 1f;
+    }
+
+    public void StartGame()
+    {
+        HideMainMenu();           // ẩn menu
+        expUI.SetActive(true);    // bật exp UI
+        Time.timeScale = 1f;      // cho game chạy lại
         audioManager.DefaultAudioManager();
     }
 
