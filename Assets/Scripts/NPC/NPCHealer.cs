@@ -26,7 +26,7 @@ public class NPCHealer : MonoBehaviour
         {
             if (!isInteracting)
             {
-                chatText.text = "Bạn có muốn hồi máu không? (E để đồng ý / Esc để bỏ)";
+                chatText.text = "Bạn có muốn hồi máu không? (E để đồng ý / Z để bỏ)";
                 chatText.gameObject.SetActive(true);
                 isInteracting = true;
             }
@@ -37,7 +37,7 @@ public class NPCHealer : MonoBehaviour
                 EndInteraction();
             }
 
-            if (Input.GetKeyDown(KeyCode.Escape))
+            if (Input.GetKeyDown(KeyCode.Z))
             {
                 EndInteraction();
             }

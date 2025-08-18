@@ -28,6 +28,7 @@ public class GameUI : MonoBehaviour
     }
     public void Quit()
     {
+        Debug.Log("Đang thoát game nè:");
         Application.Quit();
     }
     //public void MainMenu()
