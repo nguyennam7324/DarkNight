@@ -6,4 +6,8 @@ public interface IGun
     void SetAmmoText(TextMeshProUGUI text);
     void SetAudioManager(AudioManager audioManager);
     void AddAmmo(float amount);
+
+    // ✨ mới
+    bool CanShoot(); // kiểm tra đủ mana + ammo không
+    void SetManaSystem(ManaSystem manaSystem); // gắn mana system
 }

@@ -1,55 +1,47 @@
 using UnityEngine;
-using System.Collections;
-using System.Collections.Generic;
 using TMPro;
-using UnityEngine.UI;
 
-
-public class itemCollector : MonoBehaviour
+public class ItemCollector : MonoBehaviour
 {
-    [SerializeField] private TextMeshProUGUI levelText;
-    [SerializeField] private TextMeshProUGUI experienceText;
-    [SerializeField] private int level;
-    public float CurrentXp;
-    [SerializeField] private float targetXp;
-    [SerializeField] private Image xpProgressBar;
     private int gold = 0;
-    public UpgradeUI upgradeUI;
+    private IGun currentGun;
+    private ManaSystem manaSystem;
 
-    public float xpMultiplier = 1f; // ✨ thêm multiplier mặc định = 100%
+    [Header("UI References")]
+    [SerializeField] private TextMeshProUGUI goldText; // hiển thị vàng trên UI
+
+    private void Start()
+    {
+        currentGun = GetComponentInChildren<IGun>();
+        manaSystem = ManaSystem.instance;
+
+        UpdateGoldUI();
+    }
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (collision.gameObject.CompareTag("Gold"))
+        // Nhặt vàng
+        if (collision.CompareTag("Gold"))
         {
             Destroy(collision.gameObject);
             gold++;
-            Debug.Log("Gold: " + gold);
+            Debug.Log("💰 Gold: " + gold);
+            UpdateGoldUI();
         }
 
-        if (collision.gameObject.CompareTag("Silver"))
+        // Nhặt bạc → hồi Mana
+        if (collision.CompareTag("Silver"))
         {
             Destroy(collision.gameObject);
-            float gainedXp = 12 * xpMultiplier; // ✨ tính theo multiplier
-            CurrentXp += gainedXp;
-            Debug.Log($"Nhận được {gainedXp} XP (x{xpMultiplier})");
+            manaSystem?.AddMana(20); // hồi 20 mana
+            Debug.Log("🔮 Hồi 20 Mana");
         }
-
-        experienceText.text = CurrentXp + " / " + targetXp;
-        experienceController();
     }
-
-    public void experienceController()
+    private void UpdateGoldUI()
     {
-        levelText.text = "Level : " + level.ToString();
-        xpProgressBar.fillAmount = (CurrentXp / targetXp);
-        if (CurrentXp >= targetXp) // ✨ dùng >= thay vì ==
+        if (goldText != null)
         {
-            CurrentXp = 0;
-            level++;
-            targetXp *= 1.2f;
-            Time.timeScale = 0;
-            upgradeUI.ShowUpgradeOptions();
+            goldText.text = "Gold: " + gold.ToString();
         }
     }
 }
