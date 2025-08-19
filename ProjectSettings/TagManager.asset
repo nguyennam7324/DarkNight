@@ -101,5 +101,8 @@ TagManager:
   - name: GameUI
     uniqueID: 2285067801
     locked: 0
+  - name: PlayerFX
+    uniqueID: 2786774547
+    locked: 0
   m_RenderingLayers:
   - Default
