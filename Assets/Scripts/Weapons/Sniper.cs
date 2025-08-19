@@ -1,4 +1,4 @@
-﻿using TMPro;
+﻿﻿using TMPro;
 using UnityEngine;
 
 public class Sniper : MonoBehaviour, IGun
@@ -17,8 +17,9 @@ public class Sniper : MonoBehaviour, IGun
     public bool isEquipped = false;
 
     [Header("Recoil")]
-    [SerializeField] private float recoilDistance = 0.25f; 
+    [SerializeField] private float recoilDistance = 0.25f; // mạnh hơn shotgun 1 chút
     [SerializeField] private float recoilReturnSpeed = 4f;
+    private Vector3 originalLocalPos;
 
     [Header("Âm thanh riêng")]
     [SerializeField] private AudioSource audioSource;
@@ -28,10 +29,6 @@ public class Sniper : MonoBehaviour, IGun
     [Header("Reload Settings")]
     [SerializeField] private float reloadTime = 2.8f;
     private bool isReloading = false;
-
-    [Header("Mana Cost")]
-    [SerializeField] private float manaCostPerShot = 15f; // mỗi viên tốn mana
-    private ManaSystem manaSystem;
 
     void Start()
     {
@@ -73,24 +70,27 @@ public class Sniper : MonoBehaviour, IGun
 
     void Shot()
     {
-        if (Input.GetMouseButtonDown(0) && CanShoot()) // kiểm tra cả ammo + mana
+        if (Input.GetMouseButtonDown(0) && currentAmmo > 0) // chỉ bắn 1 phát mỗi lần click
         {
             nextShot = Time.time + delayShot;
 
+            // Tạo đạn sniper
             GameObject bullet = Instantiate(bulletPrefab, firePos.position, firePos.rotation);
 
+            // nếu đạn có Rigidbody2D thì set tốc độ ra nòng nhanh
             Rigidbody2D rb = bullet.GetComponent<Rigidbody2D>();
             if (rb != null)
-                rb.linearVelocity = firePos.right * 30f;
+            {
+                rb.linearVelocity = firePos.right * 30f; // tốc độ cao (có thể chỉnh theo ý)
+            }
 
             currentAmmo--;
-            manaSystem.UseMana(manaCostPerShot); // trừ mana
-
             UpdateAmmoText();
 
             if (audioSource && shootClip)
                 audioSource.PlayOneShot(shootClip);
 
+            // recoil mạnh hơn các súng khác
             transform.localPosition -= transform.right * recoilDistance;
         }
     }
@@ -123,7 +123,6 @@ public class Sniper : MonoBehaviour, IGun
                 : (currentAmmo > 0 ? currentAmmo.ToString() : "EMPTY");
     }
 
-    // ================= IGun Implement =================
     public void AddAmmo(float amount)
     {
         currentAmmo += amount;
@@ -134,15 +133,4 @@ public class Sniper : MonoBehaviour, IGun
     public void SetEquipped(bool equipped) => isEquipped = equipped;
     public void SetAmmoText(TextMeshProUGUI text) => ammoText = text;
     public void SetAudioManager(AudioManager audio) { }
-
-    // mới
-    public bool CanShoot()
-    {
-        return currentAmmo > 0 && manaSystem != null && manaSystem.currentMana >= manaCostPerShot;
-    }
-
-    public void SetManaSystem(ManaSystem mana)
-    {
-        manaSystem = mana;
-    }
 }

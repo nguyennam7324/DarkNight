@@ -1,4 +1,4 @@
-﻿using TMPro;
+﻿﻿using TMPro;
 using UnityEngine;
 
 public class AutoShotgun : MonoBehaviour, IGun
@@ -17,11 +17,11 @@ public class AutoShotgun : MonoBehaviour, IGun
     public bool isEquipped = false;
 
     [Header("Spread")]
-    [SerializeField] private int pelletsPerShot = 6; 
-    [SerializeField] private float totalSpreadAngle = 15f;
+    [SerializeField] private int pelletsPerShot = 6; // bắn 6 viên cùng lúc
+    [SerializeField] private float totalSpreadAngle = 15f; // độ lệch nhỏ hơn shotgun thường
 
     [Header("Recoil")]
-    [SerializeField] private float recoilDistance = 0.1f;
+    [SerializeField] private float recoilDistance = 0.1f; // nhẹ hơn shotgun
     [SerializeField] private float recoilReturnSpeed = 6f;
 
     private Vector3 originalLocalPos;
@@ -34,10 +34,6 @@ public class AutoShotgun : MonoBehaviour, IGun
     [Header("Reload Settings")]
     [SerializeField] private float reloadTime = 2.5f;
     private bool isReloading = false;
-
-    // 🔹 Thêm mana system
-    private ManaSystem manaSystem;
-    [SerializeField] private float manaPerShot = 5f; // tốn mana mỗi lần bắn
 
     void Start()
     {
@@ -80,11 +76,9 @@ public class AutoShotgun : MonoBehaviour, IGun
 
     void Shot()
     {
-        if (Input.GetMouseButton(0) && CanShoot()) // 👈 dùng CanShoot()
+        // Auto fire -> giữ chuột trái
+        if (Input.GetMouseButton(0) && currentAmmo > 0)
         {
-            // trừ mana khi bắn
-            manaSystem.UseMana(manaPerShot);
-
             nextShot = Time.time + delayShot;
 
             float startAngle = -totalSpreadAngle / 2f;
@@ -103,6 +97,7 @@ public class AutoShotgun : MonoBehaviour, IGun
             if (audioSource && shootClip)
                 audioSource.PlayOneShot(shootClip);
 
+            // recoil nhẹ hơn shotgun
             transform.localPosition -= transform.right * recoilDistance;
         }
     }
@@ -135,7 +130,6 @@ public class AutoShotgun : MonoBehaviour, IGun
                 : (currentAmmo > 0 ? currentAmmo.ToString() : "EMPTY");
     }
 
-    // IGun methods
     public void AddAmmo(float amount)
     {
         currentAmmo += amount;
@@ -146,15 +140,4 @@ public class AutoShotgun : MonoBehaviour, IGun
     public void SetEquipped(bool equipped) => isEquipped = equipped;
     public void SetAmmoText(TextMeshProUGUI text) => ammoText = text;
     public void SetAudioManager(AudioManager audio) { }
-
-    // 👇 Thêm mấy cái còn thiếu
-    public bool CanShoot()
-    {
-        return currentAmmo > 0 && manaSystem != null && manaSystem.currentMana >= manaPerShot;
-    }
-
-    public void SetManaSystem(ManaSystem manaSystem)
-    {
-        this.manaSystem = manaSystem;
-    }
 }
