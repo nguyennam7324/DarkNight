@@ -10,6 +10,7 @@ TagManager:
   - Gold
   - Silver
   - EnemyBullet
+  - Music
   layers:
   - Default
   - TransparentFX
