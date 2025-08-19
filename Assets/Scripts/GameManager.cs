@@ -1,5 +1,6 @@
-﻿using UnityEngine;
+using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 using System.Collections;
 using System.Collections.Generic;
 using TMPro.EditorUtilities;
@@ -7,6 +8,7 @@ using TMPro.EditorUtilities;
 public class GameManager : MonoBehaviour
 {
     [SerializeField] private GameObject mainMenu;
+    [SerializeField] private GameObject expUI; // exp UI panel
     [SerializeField] private GameObject pauseMenu;
     [SerializeField] private GameObject settingsMenu;
     public GameObject gameOver;
@@ -14,50 +16,55 @@ public class GameManager : MonoBehaviour
 
     [SerializeField] private AudioManager audioManager;
     [SerializeField] private SettingsManager settingsManager; // Thêm reference
+
     void Start()
     {
         MainMenu();
         pauseMenu.SetActive(false);
         settingsMenu.SetActive(false); // Ẩn settings
     }
-     void Update()
+
+    void Update()
     {
-        if(Input.GetKeyDown(KeyCode.Escape))
+        if (Input.GetKeyDown(KeyCode.Escape))
         {
-            if(isPause)
+            if (isPause)
             {
                 ResumeGame();
             }
             else
-            {   
+            {
                 PauseGame();
             }
         }
     }
+
     public void MainMenu()
     {
         mainMenu.SetActive(true);
+        expUI.SetActive(false);   // ẩn exp UI khi vào menu
         Time.timeScale = 0f;
         audioManager.Mute();
     }
 
-    // THÊM METHOD NÀY
     public void HideMainMenu()
     {
         mainMenu.SetActive(false);
     }
+
     public void StartGame()
     {
-        // Không cần mainMenu.SetActive(false) nữa vì đã ẩn rồi
-
-        Time.timeScale = 1f;
+        HideMainMenu();           
+        expUI.SetActive(true);    // bật exp UI
+        Time.timeScale = 1f;      
         audioManager.DefaultAudioManager();
-
     }
+
     public void GameOver()
     {
         gameOver.SetActive(true);
     }
+
     public void restart()
     {
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
@@ -79,7 +86,6 @@ public class GameManager : MonoBehaviour
         audioManager.DefaultAudioManager();
     }
 
-    // Thêm method để mở settings từ pause menu
     public void OpenSettings()
     {
         if (settingsManager != null)
