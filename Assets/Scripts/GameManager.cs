@@ -1,4 +1,4 @@
-﻿using UnityEngine;
+using UnityEngine;
 using UnityEngine.SceneManagement;
 using System.Collections;
 using System.Collections.Generic;
@@ -14,22 +14,26 @@ public class GameManager : MonoBehaviour
 
     [SerializeField] private AudioManager audioManager;
     [SerializeField] private SettingsManager settingsManager; // Thêm reference
+
+
     void Start()
     {
         MainMenu();
         pauseMenu.SetActive(false);
         settingsMenu.SetActive(false); // Ẩn settings
     }
-     void Update()
+
+    void Update()
     {
-        if(Input.GetKeyDown(KeyCode.Escape))
+        if (Input.GetKeyDown(KeyCode.Escape))
         {
-            if(isPause)
+            if (isPause)
             {
                 ResumeGame();
             }
             else
-            {   
+ 
+            {
                 PauseGame();
             }
         }
@@ -37,11 +41,11 @@ public class GameManager : MonoBehaviour
     public void MainMenu()
     {
         mainMenu.SetActive(true);
+
         Time.timeScale = 0f;
         audioManager.Mute();
     }
 
-    // THÊM METHOD NÀY
     public void HideMainMenu()
     {
         mainMenu.SetActive(false);
@@ -50,10 +54,13 @@ public class GameManager : MonoBehaviour
     {
         // Không cần mainMenu.SetActive(false) nữa vì đã ẩn rồi
 
-        Time.timeScale = 1f;
+        
+        Time.timeScale = 1f;      
         audioManager.DefaultAudioManager();
-
     }
+
+
+    
     public void GameOver()
     {
         gameOver.SetActive(true);
@@ -79,7 +86,7 @@ public class GameManager : MonoBehaviour
         audioManager.DefaultAudioManager();
     }
 
-    // Thêm method để mở settings từ pause menu
+
     public void OpenSettings()
     {
         if (settingsManager != null)
@@ -88,3 +95,4 @@ public class GameManager : MonoBehaviour
         }
     }
 }
+
