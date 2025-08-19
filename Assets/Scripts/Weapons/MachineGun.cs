@@ -14,6 +14,10 @@ public class MachineGun : MonoBehaviour, IGun
     [SerializeField] private float recoilAmount = 0.15f;
     [SerializeField] private float spreadAngle = 6f;
 
+    [Header("Mana")]
+    [SerializeField] private float manaCostPerShot = 5f; // tốn mana mỗi viên
+    private ManaSystem manaSystem;                       // được gắn qua SetManaSystem
+
     [Header("Âm thanh riêng cho súng")]
     [SerializeField] private AudioSource audioSource;
     [SerializeField] private AudioClip shootClip;
@@ -25,7 +29,6 @@ public class MachineGun : MonoBehaviour, IGun
     private bool isEquipped = false;
 
     private Vector3 originalLocalPos;
-
     private TextMeshProUGUI ammoText;
 
     void Start()
@@ -47,42 +50,56 @@ public class MachineGun : MonoBehaviour, IGun
         UpdateAmmoText();
     }
 
+    // ===== IGun implementation =====
     public void SetEquipped(bool equipped)
     {
         isEquipped = equipped;
-        if (isEquipped)
-            originalLocalPos = transform.localPosition;
+        if (isEquipped) originalLocalPos = transform.localPosition;
     }
 
     public void SetAmmoText(TextMeshProUGUI text) => ammoText = text;
 
-    // IGun bắt buộc phải có → nhưng MachineGun dùng audio riêng
-    public void SetAudioManager(AudioManager manager)
+    public void SetAudioManager(AudioManager manager) { /* dùng audio riêng */ }
+
+    public void AddAmmo(float amount)
     {
-        // Không cần dùng
+        currentAmmo = Mathf.Min(currentAmmo + amount, maxAmmo);
+        UpdateAmmoText();
     }
+
+    // kiểm tra đủ ammo + (nếu có manaSystem) thì đủ mana
+    public bool CanShoot()
+    {
+        bool hasAmmo = currentAmmo > 0 && !isReloading;
+        bool hasMana = (manaSystem == null) || (manaSystem.currentMana >= manaCostPerShot);
+        return hasAmmo && hasMana;
+    }
+
+    public void SetManaSystem(ManaSystem mana) => manaSystem = mana;
+    // ===============================
 
     void RotationGun()
     {
-        if (Input.mousePosition.x < 0 || Input.mousePosition.x > Screen.width ||
-            Input.mousePosition.y < 0 || Input.mousePosition.y > Screen.height)
-            return;
-
         Vector3 displacement = transform.position - Camera.main.ScreenToWorldPoint(Input.mousePosition);
         float angle = Mathf.Atan2(displacement.y, displacement.x) * Mathf.Rad2Deg;
         transform.rotation = Quaternion.Euler(0, 0, angle + 180f);
-
-        if (angle < -90 || angle > 90)
-            transform.localScale = new Vector3(1, 1, 1);
-        else
-            transform.localScale = new Vector3(1, -1, 1);
+        transform.localScale = (angle < -90 || angle > 90) ? new Vector3(1, 1, 1) : new Vector3(1, -1, 1);
     }
 
     void Shot()
     {
-        if (Input.GetMouseButton(0) && currentAmmo > 0 && Time.time > nextShot)
+        if (Input.GetMouseButton(0) && Time.time > nextShot)
         {
+            // gate: đủ điều kiện bắn?
+            if (!CanShoot()) return;
+
+            // trừ mana (nếu có manaSystem). UseMana cần amount → truyền đúng!
+            if (manaSystem != null && !manaSystem.UseMana(manaCostPerShot))
+                return;
+
             nextShot = Time.time + delayShot;
+
+            // bắn có spread
             Vector3 spread = firePos.eulerAngles;
             spread.z += Random.Range(-spreadAngle, spreadAngle);
             Instantiate(bulletPrefab, firePos.position, Quaternion.Euler(spread));
@@ -95,17 +112,12 @@ public class MachineGun : MonoBehaviour, IGun
         }
     }
 
-    public void SetOriginalLocalPos()
-    {
-        originalLocalPos = transform.localPosition;
-    }
+    public void SetOriginalLocalPos() => originalLocalPos = transform.localPosition;
 
     void Reload()
     {
         if (Input.GetKeyDown(KeyCode.R) && currentAmmo < maxAmmo)
-        {
             StartCoroutine(ReloadRoutine());
-        }
     }
 
     private System.Collections.IEnumerator ReloadRoutine()
@@ -115,9 +127,13 @@ public class MachineGun : MonoBehaviour, IGun
         if (audioSource && reloadClip)
             audioSource.PlayOneShot(reloadClip);
 
+        UpdateAmmoText();
         yield return new WaitForSeconds(reloadTime);
+
         currentAmmo = maxAmmo;
         isReloading = false;
+        nextShot = Time.time; // reset delay sau reload
+        UpdateAmmoText();
     }
 
     private void ApplyRecoil()
@@ -128,23 +144,11 @@ public class MachineGun : MonoBehaviour, IGun
         Invoke(nameof(ResetRecoilPosition), 0.05f);
     }
 
-    private void ResetRecoilPosition()
-    {
-        transform.localPosition = originalLocalPos;
-    }
+    private void ResetRecoilPosition() => transform.localPosition = originalLocalPos;
 
     void UpdateAmmoText()
     {
-        if (ammoText != null)
-        {
-            ammoText.text = currentAmmo > 0 ? currentAmmo.ToString() : "EMPTY";
-        }
-    }
-
-    public void AddAmmo(float amount)
-    {
-        currentAmmo += amount;
-        currentAmmo = Mathf.Min(currentAmmo, maxAmmo);
-        UpdateAmmoText();
+        if (ammoText == null) return;
+        ammoText.text = isReloading ? "RELOADING..." : (currentAmmo > 0 ? currentAmmo.ToString() : "EMPTY");
     }
 }

@@ -35,6 +35,10 @@ public class Shotgun : MonoBehaviour, IGun
     [SerializeField] private float reloadTime = 2f; // thời gian nạp
     private bool isReloading = false;
 
+    [Header("Mana Cost")]
+    [SerializeField] private float manaCostPerShot = 5f; // tiêu tốn mana mỗi lần bắn
+    private ManaSystem manaSystem; // tham chiếu tới mana
+
     void Start()
     {
         currentAmmo = maxAmmo;
@@ -76,8 +80,12 @@ public class Shotgun : MonoBehaviour, IGun
 
     void Shot()
     {
-        if (Input.GetMouseButtonDown(0) && currentAmmo > 0)
+        if (Input.GetMouseButtonDown(0) && CanShoot())
         {
+            // trừ ammo + mana
+            currentAmmo--;
+            manaSystem.UseMana(manaCostPerShot);
+
             nextShot = Time.time + delayShot;
 
             float startAngle = -totalSpreadAngle / 2f;
@@ -90,7 +98,6 @@ public class Shotgun : MonoBehaviour, IGun
                 Instantiate(bulletPrefabs, firePos.position, pelletRotation);
             }
 
-            currentAmmo--;
             UpdateAmmoText();
 
             if (audioSource && shootClip)
@@ -107,7 +114,6 @@ public class Shotgun : MonoBehaviour, IGun
         if (audioSource && reloadClip)
             audioSource.PlayOneShot(reloadClip);
 
-        // chờ hết thời gian reload
         yield return new WaitForSeconds(reloadTime);
 
         currentAmmo = maxAmmo;
@@ -139,4 +145,17 @@ public class Shotgun : MonoBehaviour, IGun
     public void SetEquipped(bool equipped) => isEquipped = equipped;
     public void SetAmmoText(TextMeshProUGUI text) => ammoText = text;
     public void SetAudioManager(AudioManager audio) { }
+
+    // ✨ implement IGun mới
+    public bool CanShoot()
+    {
+        return currentAmmo > 0 &&
+               manaSystem != null &&
+               manaSystem.currentMana >= manaCostPerShot;
+    }
+
+    public void SetManaSystem(ManaSystem manaSystem)
+    {
+        this.manaSystem = manaSystem;
+    }
 }

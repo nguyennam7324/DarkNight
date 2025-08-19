@@ -7,19 +7,15 @@ public class Rifle : MonoBehaviour, IGun
     [SerializeField] private Transform firePos;
     [SerializeField] private GameObject bulletPrefabs;
     [SerializeField] private float DelayShot = 0.1f;
-    [SerializeField] private float maxAmmo = 30f;
-    public float currentAmmo;
     private float nextShot;
-    [SerializeField] public TextMeshProUGUI ammoText;
-    public bool isEquipped = false;
+
+    [Header("Mana")]
+    [SerializeField] private float manaCostPerShot = 5f; // mỗi phát bắn tốn mana
+    private ManaSystem manaSystem; // gắn từ ngoài vào
 
     [Header("Bắn lệch")]
     [SerializeField] private float baseSpread = 1f;
     [SerializeField] private float distanceSpreadMultiplier = 0.1f;
-
-    [Header("Reload")]
-    [SerializeField] private float reloadDuration = 1.5f;
-    private bool isReloading = false;
 
     [Header("Recoil")]
     [SerializeField] private float recoilDistance = 0.05f;
@@ -28,12 +24,12 @@ public class Rifle : MonoBehaviour, IGun
     [Header("Âm thanh riêng cho súng")]
     [SerializeField] private AudioSource audioSource;
     [SerializeField] private AudioClip shootClip;
-    [SerializeField] private AudioClip reloadClip;
+    [SerializeField] private AudioClip emptyManaClip; // âm thanh khi hết mana
+
+    public bool isEquipped = false;
 
     void Start()
     {
-        currentAmmo = maxAmmo;
-
         if (audioSource == null)
             audioSource = GetComponent<AudioSource>();
     }
@@ -43,13 +39,8 @@ public class Rifle : MonoBehaviour, IGun
         if (!isEquipped) return;
 
         HandleRecoil();
-
-        if (isReloading) return;
-
         RotationGun();
         AutoShot();
-        Reload();
-        UpdateAmmotext();
     }
 
     void RotationGun()
@@ -62,48 +53,35 @@ public class Rifle : MonoBehaviour, IGun
 
     void AutoShot()
     {
-        if (Input.GetMouseButton(0) && currentAmmo > 0 && Time.time > nextShot)
+        if (Input.GetMouseButton(0) && Time.time > nextShot)
         {
-            nextShot = Time.time + DelayShot;
+            if (CanShoot()) // dùng hàm interface
+            {
+                nextShot = Time.time + DelayShot;
 
-            float distance = Vector2.Distance(transform.position, Camera.main.ScreenToWorldPoint(Input.mousePosition));
-            float totalSpread = baseSpread + distance * distanceSpreadMultiplier;
-            float randomAngle = Random.Range(-totalSpread, totalSpread);
+                float distance = Vector2.Distance(transform.position, Camera.main.ScreenToWorldPoint(Input.mousePosition));
+                float totalSpread = baseSpread + distance * distanceSpreadMultiplier;
+                float randomAngle = Random.Range(-totalSpread, totalSpread);
 
-            Quaternion spreadRotation = firePos.rotation * Quaternion.Euler(0, 0, randomAngle);
-            Instantiate(bulletPrefabs, firePos.position, spreadRotation);
+                Quaternion spreadRotation = firePos.rotation * Quaternion.Euler(0, 0, randomAngle);
+                Instantiate(bulletPrefabs, firePos.position, spreadRotation);
 
-            currentAmmo--;
-            UpdateAmmotext();
+                manaSystem.UseMana(manaCostPerShot);
 
-            // Âm thanh bắn
-            if (audioSource && shootClip)
-                audioSource.PlayOneShot(shootClip);
+                // Âm thanh bắn
+                if (audioSource && shootClip)
+                    audioSource.PlayOneShot(shootClip);
 
-            // Giật súng (theo local X)
-            transform.localPosition -= transform.right * recoilDistance;
+                // Giật súng (theo local X)
+                transform.localPosition -= transform.right * recoilDistance;
+            }
+            else
+            {
+                // Hết mana thì play âm thanh báo
+                if (audioSource && emptyManaClip)
+                    audioSource.PlayOneShot(emptyManaClip);
+            }
         }
-    }
-
-    void Reload()
-    {
-        if (Input.GetKeyDown(KeyCode.R) && currentAmmo < maxAmmo && !isReloading)
-        {
-            isReloading = true;
-
-            // Âm thanh reload
-            if (audioSource && reloadClip)
-                audioSource.PlayOneShot(reloadClip);
-
-            Invoke(nameof(FinishReload), reloadDuration);
-        }
-    }
-
-    void FinishReload()
-    {
-        currentAmmo = maxAmmo;
-        UpdateAmmotext();
-        isReloading = false;
     }
 
     void HandleRecoil()
@@ -111,21 +89,13 @@ public class Rifle : MonoBehaviour, IGun
         transform.localPosition = Vector3.Lerp(transform.localPosition, Vector3.zero, Time.deltaTime * recoilReturnSpeed);
     }
 
-    void UpdateAmmotext()
-    {
-        if (ammoText != null)
-            ammoText.text = currentAmmo > 0 ? currentAmmo.ToString() : "EMPTY";
-    }
-
-    public void AddAmmo(float amount)
-    {
-        currentAmmo += amount;
-        currentAmmo = Mathf.Min(currentAmmo, maxAmmo);
-        UpdateAmmotext();
-    }
-
-    // IGun yêu cầu, nhưng Rifle giờ không dùng AudioManager nữa
+    // ===============================
+    // IGun interface implementation
+    // ===============================
     public void SetEquipped(bool equipped) => isEquipped = equipped;
-    public void SetAmmoText(TextMeshProUGUI text) => ammoText = text;
+    public void SetAmmoText(TextMeshProUGUI text) { } // Rifle không dùng ammo
     public void SetAudioManager(AudioManager audio) { }
+    public void AddAmmo(float amount) { } // Rifle không dùng ammo
+    public bool CanShoot() => manaSystem != null && manaSystem.currentMana >= manaCostPerShot;
+    public void SetManaSystem(ManaSystem mana) => manaSystem = mana;
 }

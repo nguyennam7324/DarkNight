@@ -30,6 +30,8 @@ public class Pistol : MonoBehaviour, IGun
     [SerializeField] private AudioClip shootClip;
     [SerializeField] private AudioClip reloadClip;
 
+    private ManaSystem manaSystem; // tham chiếu mana
+
     void Start()
     {
         currentAmmo = maxAmmo;
@@ -62,7 +64,8 @@ public class Pistol : MonoBehaviour, IGun
 
     void Shot()
     {
-        if (Input.GetMouseButtonDown(0) && currentAmmo > 0 && Time.time > nextShot)
+        // giờ phải check cả ammo + mana
+        if (Input.GetMouseButtonDown(0) && CanShoot() && Time.time > nextShot)
         {
             nextShot = Time.time + DelayShot;
 
@@ -74,13 +77,12 @@ public class Pistol : MonoBehaviour, IGun
             Instantiate(bulletPrefabs, firePos.position, spreadRotation);
 
             currentAmmo--;
+            manaSystem?.UseMana(5f); // ví dụ mỗi phát tốn 5 mana
             UpdateAmmotext();
 
-            // Âm thanh bắn
             if (audioSource && shootClip)
                 audioSource.PlayOneShot(shootClip);
 
-            // Giật súng (theo local X)
             transform.localPosition -= transform.right * recoilDistance;
         }
     }
@@ -91,7 +93,6 @@ public class Pistol : MonoBehaviour, IGun
         {
             isReloading = true;
 
-            // Âm thanh reload
             if (audioSource && reloadClip)
                 audioSource.PlayOneShot(reloadClip);
 
@@ -124,8 +125,18 @@ public class Pistol : MonoBehaviour, IGun
         UpdateAmmotext();
     }
 
-    // IGun yêu cầu, nhưng Pistol giờ không dùng AudioManager nữa
+    // ================= IGun Implementation =================
     public void SetEquipped(bool equipped) => isEquipped = equipped;
     public void SetAmmoText(TextMeshProUGUI text) => ammoText = text;
     public void SetAudioManager(AudioManager audio) { }
+
+    public bool CanShoot()
+    {
+        // kiểm tra đủ đạn và mana
+        bool hasAmmo = currentAmmo > 0;
+        bool hasMana = manaSystem == null || manaSystem.currentMana >= 5f; // ví dụ tốn 5 mana
+        return hasAmmo && hasMana;
+    }
+
+    public void SetManaSystem(ManaSystem manaSys) => manaSystem = manaSys;
 }

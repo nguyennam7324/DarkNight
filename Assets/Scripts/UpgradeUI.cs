@@ -24,10 +24,6 @@ public class UpgradeUI : MonoBehaviour
     public GameObject panel;
     public Button[] upgradeButtons;
     public TextMeshProUGUI[] upgradeTexts;
-
-        public GameObject atkEffectPrefab;  // 👈 hiệu ứng buff Damage mới
-    public GameObject healEffectPrefab; // 👈 Drag prefab HealingEffect vào đây
-
     public UpgradePopup upgradePopup;
 
     private List<Upgrade> allUpgrades = new List<Upgrade>();
@@ -46,16 +42,9 @@ public class UpgradeUI : MonoBehaviour
             description = "+20% Damage",
             rarity = Rarity.Common,
             applyEffect = () => {
-                var player = GameObject.FindWithTag("Player").GetComponent<Player>();
-                player.baseDamage += 5f;
+            GameObject.FindWithTag("Player").GetComponent<Player>().baseDamage += 5f;
+}
 
-                // 👇 Spawn hiệu ứng Damage Buff
-                if (atkEffectPrefab != null)
-                {
-                    GameObject effect = Instantiate(atkEffectPrefab, player.transform.position, Quaternion.identity);
-                    Destroy(effect, 2f); // tự hủy sau 2 giây
-                }
-            }
         });
 
         allUpgrades.Add(new Upgrade
@@ -81,24 +70,16 @@ public class UpgradeUI : MonoBehaviour
         });
 
         allUpgrades.Add(new Upgrade
-{
-        upgradeName = "Hồi máu",
-        description = "Hồi 50% máu",
-        rarity = Rarity.Rare,
-        applyEffect = () =>
-    {
-        var player = GameObject.FindWithTag("Player").GetComponent<Player>();
-        player.Heal(player.maxHp * 0.5f);
-
-        // 👇 Spawn hiệu ứng Heal ngay vị trí Player
-        if (healEffectPrefab != null)
         {
-            GameObject effect = Instantiate(healEffectPrefab, player.transform.position, Quaternion.identity);
-            Destroy(effect, 2f); // tự xóa sau 2 giây
-        }
-    }
-});
-
+            upgradeName = "Hồi máu",
+            description = "Hồi 50% máu",
+            rarity = Rarity.Rare,
+            applyEffect = () =>
+            {
+                var player = GameObject.FindWithTag("Player").GetComponent<Player>();
+                player.Heal(player.maxHp * 0.5f);
+            }
+        });
 
         allUpgrades.Add(new Upgrade
         {
@@ -122,17 +103,10 @@ public class UpgradeUI : MonoBehaviour
             description = "Hồi 10% máu",
             rarity = Rarity.Common,
             applyEffect = () =>
-{
-    var player = GameObject.FindWithTag("Player").GetComponent<Player>();
-    player.Heal(player.maxHp * 0.1f);
-
-    if (healEffectPrefab != null)
-    {
-        GameObject effect = Instantiate(healEffectPrefab, player.transform.position, Quaternion.identity);
-        Destroy(effect, 2f);
-    }
-}
-
+            {
+                var player = GameObject.FindWithTag("Player").GetComponent<Player>();
+                player.Heal(player.maxHp * 0.1f);
+            }
         });
         allUpgrades.Add(new Upgrade
         {
@@ -163,22 +137,14 @@ public class UpgradeUI : MonoBehaviour
 });
 
 // Hút máu
-    allUpgrades.Add(new Upgrade
-    {
-        upgradeName = "Hút Máu",
-        description = "Hồi 10% máu theo sát thương gây ra",
-        rarity = Rarity.Rare,
-        applyEffect = () =>
-        {
-            var player = GameObject.FindWithTag("Player").GetComponent<Player>();
-            player.lifeSteal += 0.1f;
-            if (atkEffectPrefab != null)
-                {
-                    GameObject effect = Instantiate(atkEffectPrefab, player.transform.position, Quaternion.identity);
-                    Destroy(effect, 2f); // tự hủy sau 2 giây
-                }
-        }
-    
+    allUpgrades.Add(new Upgrade {
+    upgradeName = "Hút Máu",
+    description = "Hồi 10% máu theo sát thương gây ra",
+    rarity = Rarity.Rare,
+    applyEffect = () => {
+        var player = GameObject.FindWithTag("Player").GetComponent<Player>();
+        player.lifeSteal += 0.1f;
+    }
 });
 
     }
