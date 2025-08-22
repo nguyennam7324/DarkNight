@@ -384,7 +384,18 @@ TextureImporter:
     secondaryTextures: []
     spriteCustomMetadata:
       entries: []
-    nameFileIdTable: {}
+    nameFileIdTable:
+      WhiteCat_0: 1774318226260575771
+      WhiteCat_1: 1938151881372013144
+      WhiteCat_10: 5671007451199119331
+      WhiteCat_2: -1851343251798965291
+      WhiteCat_3: -1306046158586985923
+      WhiteCat_4: 5771694186064597813
+      WhiteCat_5: -2883076343873627403
+      WhiteCat_6: 2863982237940651437
+      WhiteCat_7: 8624140515444204191
+      WhiteCat_8: -8700722430037057662
+      WhiteCat_9: -979365599234707290
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 
