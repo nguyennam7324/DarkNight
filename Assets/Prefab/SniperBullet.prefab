@@ -147,7 +147,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4c68a02c5e5eacd4bb90e2a95d8f53cc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  moveSpeed: 35
+  moveSpeed: 50
   lifeTime: 2.5
   baseDamage: 120
   pierceCount: 7
