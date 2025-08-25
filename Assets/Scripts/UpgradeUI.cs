@@ -59,8 +59,8 @@ public class UpgradeUI : MonoBehaviour
         });
 
         allUpgrades.Add(new Upgrade
-            {
-                upgradeName = "Tăng Crit",
+        {
+            upgradeName = "Tăng Crit",
             description = "+10% Tỉ lệ chí mạng",
             rarity = Rarity.Rare,
             applyEffect = () =>

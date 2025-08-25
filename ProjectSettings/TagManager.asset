@@ -22,7 +22,7 @@ TagManager:
   - Icons
   - Player
   - Maps
-  - 
+  - Lighting
   - 
   - 
   - 
@@ -101,6 +101,9 @@ TagManager:
     locked: 0
   - name: GameUI
     uniqueID: 2285067801
+    locked: 0
+  - name: New Layer 19
+    uniqueID: 3749910823
     locked: 0
   m_RenderingLayers:
   - Default

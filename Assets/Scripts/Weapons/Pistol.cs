@@ -1,18 +1,17 @@
+﻿
 ﻿using TMPro;
 using UnityEngine;
 
 public class Pistol : MonoBehaviour, IGun
 {
     private float rotationOffSet = 180f;
-
     [SerializeField] private Transform firePos;
     [SerializeField] private GameObject bulletPrefabs;
     [SerializeField] private float DelayShot = 0.2f;
     [SerializeField] private float maxAmmo = 12f;
     public float currentAmmo;
     private float nextShot;
-
-    [SerializeField] private TextMeshProUGUI ammoText;
+    [SerializeField] public TextMeshProUGUI ammoText;
     public bool isEquipped = false;
 
     [Header("Bắn lệch")]
@@ -35,7 +34,9 @@ public class Pistol : MonoBehaviour, IGun
     void Start()
     {
         currentAmmo = maxAmmo;
-        if (audioSource == null) audioSource = GetComponent<AudioSource>();
+
+        if (audioSource == null)
+            audioSource = GetComponent<AudioSource>();
     }
 
     void Update()
@@ -43,15 +44,16 @@ public class Pistol : MonoBehaviour, IGun
         if (!isEquipped) return;
 
         HandleRecoil();
+
         if (isReloading) return;
 
         RotationGun();
         Shot();
         Reload();
-        UpdateAmmoText();
+        UpdateAmmotext();
     }
 
-    void RotationGun()
+    void RotationGun()  
     {
         Vector3 displacement = transform.position - Camera.main.ScreenToWorldPoint(Input.mousePosition);
         float angle = Mathf.Atan2(displacement.y, displacement.x) * Mathf.Rad2Deg;
@@ -73,10 +75,13 @@ public class Pistol : MonoBehaviour, IGun
             Instantiate(bulletPrefabs, firePos.position, spreadRotation);
 
             currentAmmo--;
-            UpdateAmmoText();
+            UpdateAmmotext();
 
-            if (audioSource && shootClip) audioSource.PlayOneShot(shootClip);
+            // Âm thanh bắn
+            if (audioSource && shootClip)
+                audioSource.PlayOneShot(shootClip);
 
+            // Giật súng (theo local X)
             transform.localPosition -= transform.right * recoilDistance;
         }
     }
@@ -87,7 +92,10 @@ public class Pistol : MonoBehaviour, IGun
         {
             isReloading = true;
 
-            if (audioSource && reloadClip) audioSource.PlayOneShot(reloadClip);
+            // Âm thanh reload
+            if (audioSource && reloadClip)
+                audioSource.PlayOneShot(reloadClip);
+
             Invoke(nameof(FinishReload), reloadDuration);
         }
     }
@@ -95,7 +103,7 @@ public class Pistol : MonoBehaviour, IGun
     void FinishReload()
     {
         currentAmmo = maxAmmo;
-        UpdateAmmoText();
+        UpdateAmmotext();
         isReloading = false;
     }
 
@@ -104,20 +112,21 @@ public class Pistol : MonoBehaviour, IGun
         transform.localPosition = Vector3.Lerp(transform.localPosition, Vector3.zero, Time.deltaTime * recoilReturnSpeed);
     }
 
-    void UpdateAmmoText()
+    void UpdateAmmotext()
     {
         if (ammoText != null)
-            ammoText.text = isReloading ? "RELOADING..." : (currentAmmo > 0 ? currentAmmo.ToString() : "EMPTY");
+            ammoText.text = currentAmmo > 0 ? currentAmmo.ToString() : "EMPTY";
     }
 
     public void AddAmmo(float amount)
     {
-        currentAmmo = Mathf.Min(currentAmmo + amount, maxAmmo);
-        UpdateAmmoText();
+        currentAmmo += amount;
+        currentAmmo = Mathf.Min(currentAmmo, maxAmmo);
+        UpdateAmmotext();
     }
 
-    // IGun
+    // IGun yêu cầu, nhưng Pistol giờ không dùng AudioManager nữa
     public void SetEquipped(bool equipped) => isEquipped = equipped;
     public void SetAmmoText(TextMeshProUGUI text) => ammoText = text;
-    public void SetAudioManager(AudioManager audio) { } // không dùng
+    public void SetAudioManager(AudioManager audio) { }
 }
