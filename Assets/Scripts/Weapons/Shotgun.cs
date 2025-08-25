@@ -1,4 +1,4 @@
-﻿using TMPro;
+﻿﻿using TMPro;
 using UnityEngine;
 
 public class Shotgun : MonoBehaviour, IGun
@@ -13,7 +13,7 @@ public class Shotgun : MonoBehaviour, IGun
     public float currentAmmo;
     private float nextShot;
 
-    [SerializeField] private TextMeshProUGUI ammoText;
+    [SerializeField] public TextMeshProUGUI ammoText;
     public bool isEquipped = false;
 
     [Header("Spread")]
@@ -24,19 +24,23 @@ public class Shotgun : MonoBehaviour, IGun
     [SerializeField] private float recoilDistance = 0.15f;
     [SerializeField] private float recoilReturnSpeed = 4f;
 
+    private Vector3 originalLocalPos;
+
     [Header("Âm thanh riêng")]
     [SerializeField] private AudioSource audioSource;
     [SerializeField] private AudioClip shootClip;
     [SerializeField] private AudioClip reloadClip;
 
     [Header("Reload Settings")]
-    [SerializeField] private float reloadTime = 2f;
+    [SerializeField] private float reloadTime = 2f; // thời gian nạp
     private bool isReloading = false;
 
     void Start()
     {
         currentAmmo = maxAmmo;
-        if (audioSource == null) audioSource = GetComponent<AudioSource>();
+
+        if (audioSource == null)
+            audioSource = GetComponent<AudioSource>();
     }
 
     void Update()
@@ -44,7 +48,8 @@ public class Shotgun : MonoBehaviour, IGun
         if (!isEquipped) return;
 
         HandleRecoil();
-        if (isReloading) return;
+
+        if (isReloading) return; // đang reload thì không làm gì khác
 
         if (Time.time >= nextShot)
         {
@@ -52,6 +57,7 @@ public class Shotgun : MonoBehaviour, IGun
             Shot();
         }
 
+        // Bấm R để reload thủ công
         if (Input.GetKeyDown(KeyCode.R) && currentAmmo < maxAmmo)
         {
             StartCoroutine(ReloadCoroutine());
@@ -87,7 +93,8 @@ public class Shotgun : MonoBehaviour, IGun
             currentAmmo--;
             UpdateAmmoText();
 
-            if (audioSource && shootClip) audioSource.PlayOneShot(shootClip);
+            if (audioSource && shootClip)
+                audioSource.PlayOneShot(shootClip);
 
             transform.localPosition -= transform.right * recoilDistance;
         }
@@ -97,12 +104,15 @@ public class Shotgun : MonoBehaviour, IGun
     {
         isReloading = true;
 
-        if (audioSource && reloadClip) audioSource.PlayOneShot(reloadClip);
+        if (audioSource && reloadClip)
+            audioSource.PlayOneShot(reloadClip);
 
+        // chờ hết thời gian reload
         yield return new WaitForSeconds(reloadTime);
 
         currentAmmo = maxAmmo;
         UpdateAmmoText();
+
         isReloading = false;
     }
 
@@ -114,16 +124,18 @@ public class Shotgun : MonoBehaviour, IGun
     void UpdateAmmoText()
     {
         if (ammoText != null)
-            ammoText.text = isReloading ? "RELOADING..." : (currentAmmo > 0 ? currentAmmo.ToString() : "EMPTY");
+            ammoText.text = isReloading
+                ? "RELOADING..."
+                : (currentAmmo > 0 ? currentAmmo.ToString() : "EMPTY");
     }
 
     public void AddAmmo(float amount)
     {
-        currentAmmo = Mathf.Min(currentAmmo + amount, maxAmmo);
+        currentAmmo += amount;
+        currentAmmo = Mathf.Min(currentAmmo, maxAmmo);
         UpdateAmmoText();
     }
 
-    // IGun
     public void SetEquipped(bool equipped) => isEquipped = equipped;
     public void SetAmmoText(TextMeshProUGUI text) => ammoText = text;
     public void SetAudioManager(AudioManager audio) { }
