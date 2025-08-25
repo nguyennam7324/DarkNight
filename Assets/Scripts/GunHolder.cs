@@ -1,23 +1,25 @@
 ﻿using UnityEngine;
 using TMPro;
-using System.Collections;
 
 public class GunHolder : MonoBehaviour
 {
-    [Header("Điểm gắn súng (nên đặt ở tay)")]
+    [Header("Điểm gắn súng (tay Player)")]
     public Transform gunHoldPoint;
+
+    [Header("UI hiển thị đạn")]
+    [SerializeField] private TextMeshProUGUI ammoText;
 
     private GameObject currentGun;
 
     public void EquipGun(GameObject pickupGun)
     {
-        // 1. Nếu đang có súng → drop
+        // Drop súng cũ nếu có
         if (currentGun != null)
         {
             DropCurrentGun();
         }
 
-        // 2. Gắn súng mới vào tay
+        // Gắn súng mới vào tay
         pickupGun.transform.SetParent(gunHoldPoint);
         pickupGun.transform.localPosition = Vector3.zero;
         pickupGun.transform.localRotation = Quaternion.identity;
@@ -26,25 +28,20 @@ public class GunHolder : MonoBehaviour
         pickupGun.SetActive(true);
         currentGun = pickupGun;
 
- 
-        // 4. Thiết lập biến
+        // Thiết lập IGun
         IGun gunScript = currentGun.GetComponent<IGun>();
         if (gunScript != null)
         {
             gunScript.SetEquipped(true);
-            gunScript.SetAmmoText(FindObjectOfType<TextMeshProUGUI>());
+            gunScript.SetAmmoText(ammoText); // 👉 Truyền đúng ammoText
             gunScript.SetAudioManager(FindObjectOfType<AudioManager>());
-        }
-
-        // 5. Xoá pickup nếu khác instance
-        if (pickupGun != currentGun)
-        {
-            Destroy(pickupGun);
         }
     }
 
     private void DropCurrentGun()
     {
+        if (currentGun == null) return;
+
         currentGun.transform.SetParent(null);
 
         Collider2D col = currentGun.GetComponent<Collider2D>();
