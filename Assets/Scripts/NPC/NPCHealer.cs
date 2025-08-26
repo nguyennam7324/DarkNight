@@ -22,41 +22,24 @@ public class NPCHealer : MonoBehaviour
 
     void Update()
     {
-        if (playerInRange)
+        if (playerInRange && Time.time >= nextInteractTime)
         {
-            if (Time.time >= nextInteractTime)
+            if (!isInteracting)
             {
-                if (!isInteracting)
-                {
-                    chatText.text = "Nhấn E để hỏi?";
-                    chatText.gameObject.SetActive(true);
-
-                    if (Input.GetKeyDown(KeyCode.E))
-                    {
-                        isInteracting = true;
-                        chatText.text = "Bạn có muốn hồi máu không? (E để đồng ý / Z để bỏ)";
-                    }
-                }
-                else
-                {
-                    if (Input.GetKeyDown(KeyCode.E))
-                    {
-                        DropPotion();
-                        EndInteraction();
-                    }
-
-                    if (Input.GetKeyDown(KeyCode.Z))
-                    {
-                        EndInteraction();
-                    }
-                }
-            }
-            else
-            {
-                // hiển thị thời gian còn lại
-                float remain = Mathf.Ceil(nextInteractTime - Time.time);
-                chatText.text = $"⏳ Chờ {remain}s để có thể hồi máu tiếp";
+                chatText.text = "Bạn có muốn hồi máu không? (E để đồng ý / Z để bỏ)";
                 chatText.gameObject.SetActive(true);
+                isInteracting = true;
+            }
+
+            if (Input.GetKeyDown(KeyCode.E))
+            {
+                DropPotion();
+                EndInteraction();
+            }
+
+            if (Input.GetKeyDown(KeyCode.Z))
+            {
+                EndInteraction();
             }
         }
     }
@@ -82,8 +65,6 @@ public class NPCHealer : MonoBehaviour
         if (collision.CompareTag("Player"))
         {
             playerInRange = true;
-            chatText.text = "Nhấn E để hỏi?";
-            chatText.gameObject.SetActive(true);
         }
     }
 
