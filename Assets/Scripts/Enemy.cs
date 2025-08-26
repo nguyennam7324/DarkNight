@@ -28,7 +28,7 @@ public abstract class Enemy : MonoBehaviour
     {
         MoveEnemy();
     }
-    protected void MoveEnemy()
+    protected virtual void MoveEnemy()
     {
         if (player != null)
         {
@@ -61,7 +61,7 @@ public abstract class Enemy : MonoBehaviour
         Destroy(gameObject, 0.5f); // Huỷ sau khi animation xong
     }
 
-    public void TakeDamage(float damage)
+    public  virtual void TakeDamage(float damage)
     {
         if (currentHP <= 0) return ; // Đã chết thì không nhận damage
 
