@@ -9,7 +9,7 @@ public class GameManager : MonoBehaviour
     [SerializeField] private GameObject mainMenu;
     [SerializeField] private GameObject pauseMenu;
     [SerializeField] private GameObject settingsMenu;
-    [SerializeField] private GameObject goldUI; // Thêm tham chiếu đến Gold UI
+   
     public GameObject gameOver;
     public static bool isPause;
 
@@ -45,11 +45,7 @@ public class GameManager : MonoBehaviour
 
         Time.timeScale = 0f;
         audioManager.Mute();
-        // Ẩn Gold UI khi ở main menu
-        if (goldUI != null)
-        {
-            goldUI.SetActive(false);
-        }
+      
     }
 
     public void HideMainMenu()
@@ -63,11 +59,7 @@ public class GameManager : MonoBehaviour
         
         Time.timeScale = 1f;      
         audioManager.DefaultAudioManager();
-        // Hiện Gold UI khi bắt đầu game
-        if (goldUI != null)
-        {
-            goldUI.SetActive(true);
-        }
+       
     }
 
 
@@ -75,11 +67,8 @@ public class GameManager : MonoBehaviour
     public void GameOver()
     {
         gameOver.SetActive(true);
-        // Có thể ẩn Gold UI khi game over nếu muốn
-        if (goldUI != null)
-        {
-            goldUI.SetActive(false);
-        }
+        
+       
     }
     public void restart()
     {
@@ -92,10 +81,7 @@ public class GameManager : MonoBehaviour
         Time.timeScale = 0f;
         isPause = true;
         audioManager.Mute();
-        if (goldUI != null)
-        {
-            goldUI.SetActive(false);
-        }
+       
     }
 
     public void ResumeGame()
@@ -104,11 +90,7 @@ public class GameManager : MonoBehaviour
         Time.timeScale = 1f;
         isPause = false;
         audioManager.DefaultAudioManager();
-        // Hiện lại Gold UI khi resume
-        if (goldUI != null)
-        {
-            goldUI.SetActive(true);
-        }
+       
     }
 
 
