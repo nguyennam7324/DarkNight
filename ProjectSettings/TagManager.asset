@@ -11,6 +11,7 @@ TagManager:
   - Silver
   - EnemyBullet
   - Music
+  - Explosion
   layers:
   - Default
   - TransparentFX
@@ -107,6 +108,9 @@ TagManager:
     locked: 0
   - name: Enemy
     uniqueID: 1375217175
+    locked: 0
+  - name: ExplosionEnemy
+    uniqueID: 2364107477
     locked: 0
   m_RenderingLayers:
   - Default
