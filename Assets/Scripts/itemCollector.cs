@@ -8,7 +8,7 @@ public class itemCollector : MonoBehaviour
 {
     [SerializeField] private TextMeshProUGUI levelText;
     [SerializeField] private TextMeshProUGUI experienceText;
-    [SerializeField] private TextMeshProUGUI goldText;
+    
     [SerializeField] private int level;
     public float CurrentXp;
     [SerializeField] private float targetXp;
@@ -18,21 +18,21 @@ public class itemCollector : MonoBehaviour
     public float xpMultiplier = 1f; // ✨ thêm multiplier mặc định = 100%
     void Start()
     {
-        goldText.SetText(gold.ToString());
+      
     }
     private void OnTriggerEnter2D(Collider2D collision)
     {
         if (collision.gameObject.CompareTag("Gold"))
         {
             gold++;
-            goldText.SetText(gold.ToString());
+        
             Destroy(collision.gameObject);
             Debug.Log("Gold: " + gold);
         }
         if (collision.gameObject.CompareTag("Silver"))
         {
             gold++;
-            goldText.SetText(gold.ToString());
+          
             Destroy(collision.gameObject);
             float gainedXp = 12 * xpMultiplier; // ✨ tính theo multiplier
             CurrentXp += gainedXp;
@@ -55,3 +55,5 @@ public class itemCollector : MonoBehaviour
         }
     }
 }
+
+
