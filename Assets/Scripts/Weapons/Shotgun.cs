@@ -16,6 +16,8 @@ public class Shotgun : MonoBehaviour, IGun
     [SerializeField] public TextMeshProUGUI ammoText;
     public bool isEquipped = false;
 
+    public int manaCost = 0;
+
     [Header("Spread")]
     [SerializeField] private int pelletsPerShot = 8;
     [SerializeField] private float totalSpreadAngle = 25f;
@@ -63,7 +65,7 @@ public class Shotgun : MonoBehaviour, IGun
             StartCoroutine(ReloadCoroutine());
         }
 
-        UpdateAmmoText();
+       // UpdateAmmoText();
     }
 
     void RotationGun()
@@ -89,9 +91,9 @@ public class Shotgun : MonoBehaviour, IGun
                 Quaternion pelletRotation = firePos.rotation * Quaternion.Euler(0, 0, angleOffset);
                 Instantiate(bulletPrefabs, firePos.position, pelletRotation);
             }
-
-            currentAmmo--;
-            UpdateAmmoText();
+            SubTractMana();
+           // currentAmmo--;
+           // UpdateAmmoText();
 
             if (audioSource && shootClip)
                 audioSource.PlayOneShot(shootClip);
@@ -139,4 +141,10 @@ public class Shotgun : MonoBehaviour, IGun
     public void SetEquipped(bool equipped) => isEquipped = equipped;
     public void SetAmmoText(TextMeshProUGUI text) => ammoText = text;
     public void SetAudioManager(AudioManager audio) { }
+
+    public void SubTractMana()
+    {
+        var player = GameObject.FindGameObjectWithTag("Player").GetComponent<Player>();
+        player.SubtractMana(manaCost);
+    }
 }

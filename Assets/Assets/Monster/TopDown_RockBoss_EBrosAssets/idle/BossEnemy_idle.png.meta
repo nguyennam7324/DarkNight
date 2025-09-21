@@ -177,6 +177,19 @@ TextureImporter:
     ignorePlatformSupport: 0
     androidETC2FallbackOverride: 0
     forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: WebGL
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
   spriteSheet:
     serializedVersion: 2
     sprites:
@@ -809,7 +822,35 @@ TextureImporter:
     secondaryTextures: []
     spriteCustomMetadata:
       entries: []
-    nameFileIdTable: {}
+    nameFileIdTable:
+      BossEnemy_idle_0: -8981247684576609471
+      BossEnemy_idle_1: -1174491184154936860
+      BossEnemy_idle_10: -4032542175945463231
+      BossEnemy_idle_11: 4797739711593884050
+      BossEnemy_idle_12: 1914012824833133253
+      BossEnemy_idle_13: -5235764197135925376
+      BossEnemy_idle_14: 2285297490913234970
+      BossEnemy_idle_15: 2506799069144987784
+      BossEnemy_idle_16: 5248746815840973892
+      BossEnemy_idle_17: 6605811397511168683
+      BossEnemy_idle_18: 9105490660317504551
+      BossEnemy_idle_19: -7355069971776383706
+      BossEnemy_idle_2: 190655463719909300
+      BossEnemy_idle_20: -5037650576154282500
+      BossEnemy_idle_21: -8570464810368527961
+      BossEnemy_idle_22: 2371637669367722737
+      BossEnemy_idle_23: -8252522445681633562
+      BossEnemy_idle_24: -3493466307910159251
+      BossEnemy_idle_25: -5213909861165334188
+      BossEnemy_idle_26: 7621415496578137685
+      BossEnemy_idle_27: -626277590055374437
+      BossEnemy_idle_3: 6170320015937632611
+      BossEnemy_idle_4: 2149470143219207204
+      BossEnemy_idle_5: 4136281031225635579
+      BossEnemy_idle_6: -3717335957700228065
+      BossEnemy_idle_7: 1420366159882023861
+      BossEnemy_idle_8: 2540965645972235919
+      BossEnemy_idle_9: 806084325859357215
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

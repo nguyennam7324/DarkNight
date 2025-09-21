@@ -6,4 +6,5 @@ public interface IGun
     void SetAmmoText(TextMeshProUGUI text);
     void SetAudioManager(AudioManager audioManager);
     void AddAmmo(float amount);
+    void SubTractMana();
 }

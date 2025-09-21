@@ -1,0 +1,24 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a132750ee6dd73442b26106e8449794a, type: 3}
+  m_Name: Rifile
+  m_EditorClassIdentifier: Assembly-CSharp::InventoryItemSO
+  tile: {fileID: 0}
+  itemName: Rifle
+  icon: {fileID: -761887118410055393, guid: a569606abd3390c45ba662083f900e6e, type: 3}
+  description: 
+  itemType: 3
+  actionType: 0
+  Amount: -4
+  Value: 0
+  audioSource: {fileID: 0}
+  objectPrefab: {fileID: 1268037340590699213, guid: dcfefa13893a43d4f8bf3d8e36557511, type: 3}

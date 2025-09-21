@@ -1,0 +1,19 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 347a3619c9cb62246bc878e8ea30365f, type: 3}
+  m_Name: Crit
+  m_EditorClassIdentifier: Assembly-CSharp::SkillItemSO
+  id: 0
+  upgradeName: "T\u0103ng Crit"
+  description: "+10% T\u1EC9 l\u1EC7 ch\xED m\u1EA1ng"
+  rarity: 1
+  icon: {fileID: 1708141900530535132, guid: c210d250e048a2547ae289051c804cfd, type: 3}

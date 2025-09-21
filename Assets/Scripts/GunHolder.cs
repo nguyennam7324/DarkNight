@@ -11,6 +11,7 @@ public class GunHolder : MonoBehaviour
 
     public void EquipGun(GameObject pickupGun)
     {
+
         // 1. Nếu đang có súng → drop
         if (currentGun != null)
         {
@@ -26,8 +27,20 @@ public class GunHolder : MonoBehaviour
         pickupGun.SetActive(true);
         currentGun = pickupGun;
 
- 
-        // 4. Thiết lập biến
+
+        // 3. Vô hiệu hóa Collider2D và Rigidbody2D
+        Collider2D col = currentGun.GetComponent<Collider2D>();
+        if (col) col.enabled = false;
+
+        Rigidbody2D rb = currentGun.GetComponent<Rigidbody2D>();
+        if (rb != null) rb.simulated = false;
+
+        // 4. Vô hiệu hóa GunPickup script để không bị nhặt lại
+        GunPickup pickupScript = currentGun.GetComponent<GunPickup>();
+        if (pickupScript != null)
+            pickupScript.enabled = false;
+
+        // 5. Thiết lập biến
         IGun gunScript = currentGun.GetComponent<IGun>();
         if (gunScript != null)
         {
@@ -35,21 +48,19 @@ public class GunHolder : MonoBehaviour
             gunScript.SetAmmoText(FindObjectOfType<TextMeshProUGUI>());
             gunScript.SetAudioManager(FindObjectOfType<AudioManager>());
         }
-
-        // 5. Xoá pickup nếu khác instance
-        if (pickupGun != currentGun)
-        {
-            Destroy(pickupGun);
-        }
     }
 
     private void DropCurrentGun()
     {
+        if (currentGun == null) return;
+
         currentGun.transform.SetParent(null);
 
+        // Kích hoạt lại Collider2D
         Collider2D col = currentGun.GetComponent<Collider2D>();
         if (col) col.enabled = true;
 
+        // Kích hoạt lại Rigidbody2D
         Rigidbody2D rb = currentGun.GetComponent<Rigidbody2D>();
         if (rb != null)
         {
@@ -58,6 +69,7 @@ public class GunHolder : MonoBehaviour
             rb.AddForce(new Vector2(Random.Range(-1f, 1f), 1f) * 3f, ForceMode2D.Impulse);
         }
 
+        // Kích hoạt lại GunPickup script
         GunPickup pickup = currentGun.GetComponent<GunPickup>();
         if (pickup != null)
             pickup.enabled = true;
