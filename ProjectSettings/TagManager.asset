@@ -12,6 +12,8 @@ TagManager:
   - EnemyBullet
   - Music
   - Explosion
+  - InventoryItem
+  - Checkpoint
   layers:
   - Default
   - TransparentFX
@@ -25,7 +27,7 @@ TagManager:
   - Maps
   - Lighting
   - Wall
-  - 
+  - Checkpoint
   - 
   - 
   - 

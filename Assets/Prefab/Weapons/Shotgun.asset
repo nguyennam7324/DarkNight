@@ -1,0 +1,24 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a132750ee6dd73442b26106e8449794a, type: 3}
+  m_Name: Shotgun
+  m_EditorClassIdentifier: Assembly-CSharp::InventoryItemSO
+  tile: {fileID: 0}
+  itemName: Shotgun
+  icon: {fileID: 5601323976189978565, guid: a569606abd3390c45ba662083f900e6e, type: 3}
+  description: 
+  itemType: 3
+  actionType: 0
+  Amount: 64
+  Value: 0
+  audioSource: {fileID: 0}
+  objectPrefab: {fileID: 1627599747215137719, guid: 2e1ae3cb1d3df38439517cd3a2206f42, type: 3}

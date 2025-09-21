@@ -87,7 +87,7 @@ public class MachineGun : MonoBehaviour, IGun
             spread.z += Random.Range(-spreadAngle, spreadAngle);
             Instantiate(bulletPrefab, firePos.position, Quaternion.Euler(spread));
 
-            currentAmmo--;
+           // currentAmmo--;
             ApplyRecoil();
 
             if (audioSource && shootClip)
@@ -146,5 +146,10 @@ public class MachineGun : MonoBehaviour, IGun
         currentAmmo += amount;
         currentAmmo = Mathf.Min(currentAmmo, maxAmmo);
         UpdateAmmoText();
+    }
+
+    public void SubTractMana()
+    {
+        throw new System.NotImplementedException();
     }
 }

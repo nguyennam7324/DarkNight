@@ -5,7 +5,7 @@ public class CursorManger : MonoBehaviour
     [SerializeField] private Texture2D cursorNormal;
     [SerializeField] private Texture2D cursorShot;
     [SerializeField] private Texture2D cursorReload;
-    private Vector2 hostpot = new Vector2(16, 48);
+    private Vector2 hostpot = new Vector2(16, 18);
     void Start()
     {
         Cursor.SetCursor(cursorNormal, hostpot, CursorMode.Auto);

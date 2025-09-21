@@ -1,0 +1,19 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 347a3619c9cb62246bc878e8ea30365f, type: 3}
+  m_Name: Armo
+  m_EditorClassIdentifier: Assembly-CSharp::SkillItemSO
+  id: 0
+  upgradeName: "Khi\xEAn N\u0103ng L\u01B0\u1EE3ng"
+  description: "T\u0103ng 50 khi\xEAn h\u1ED3i ph\u1EE5c t\u1EF1 \u0111\u1ED9ng"
+  rarity: 1
+  icon: {fileID: 7232748329181079804, guid: 171a86e96de25ca4eb563b35ce394853, type: 3}

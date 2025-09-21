@@ -91,8 +91,8 @@ public class AutoShotgun : MonoBehaviour, IGun
                 Instantiate(bulletPrefabs, firePos.position, pelletRotation);
             }
 
-            currentAmmo--;
-            UpdateAmmoText();
+            //currentAmmo--;
+           // UpdateAmmoText();
 
             if (audioSource && shootClip)
                 audioSource.PlayOneShot(shootClip);
@@ -140,4 +140,9 @@ public class AutoShotgun : MonoBehaviour, IGun
     public void SetEquipped(bool equipped) => isEquipped = equipped;
     public void SetAmmoText(TextMeshProUGUI text) => ammoText = text;
     public void SetAudioManager(AudioManager audio) { }
+
+    public void SubTractMana()
+    {
+        throw new System.NotImplementedException();
+    }
 }

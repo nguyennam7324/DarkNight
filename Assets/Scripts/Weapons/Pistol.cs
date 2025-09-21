@@ -14,6 +14,8 @@ public class Pistol : MonoBehaviour, IGun
     [SerializeField] public TextMeshProUGUI ammoText;
     public bool isEquipped = false;
 
+    public int manaCost = 0;
+
     [Header("Bắn lệch")]
     [SerializeField] private float baseSpread = 2f;
     [SerializeField] private float distanceSpreadMultiplier = 0.2f;
@@ -73,9 +75,9 @@ public class Pistol : MonoBehaviour, IGun
 
             Quaternion spreadRotation = firePos.rotation * Quaternion.Euler(0, 0, randomAngle);
             Instantiate(bulletPrefabs, firePos.position, spreadRotation);
-
-            currentAmmo--;
-            UpdateAmmotext();
+            SubTractMana();
+            //currentAmmo--;
+            //UpdateAmmotext();
 
             // Âm thanh bắn
             if (audioSource && shootClip)
@@ -129,4 +131,10 @@ public class Pistol : MonoBehaviour, IGun
     public void SetEquipped(bool equipped) => isEquipped = equipped;
     public void SetAmmoText(TextMeshProUGUI text) => ammoText = text;
     public void SetAudioManager(AudioManager audio) { }
+
+    public void SubTractMana()
+    {
+        var player = GameObject.FindGameObjectWithTag("Player").GetComponent<Player>();
+        player.SubtractMana(manaCost);
+    }
 }
