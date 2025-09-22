@@ -631327,6 +631327,10 @@ PrefabInstance:
       propertyPath: m_Layer
       value: 8
       objectReference: {fileID: 0}
+    - target: {fileID: 4292051763170204630, guid: 72e8dea63a0ac45429e4f1cc161dd9a2, type: 3}
+      propertyPath: ammoText
+      value: 
+      objectReference: {fileID: 1967578623}
     - target: {fileID: 4475982880090069336, guid: 72e8dea63a0ac45429e4f1cc161dd9a2, type: 3}
       propertyPath: m_Layer
       value: 8

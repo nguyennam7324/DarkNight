@@ -1109,7 +1109,47 @@ TextureImporter:
     secondaryTextures: []
     spriteCustomMetadata:
       entries: []
-    nameFileIdTable: {}
+    nameFileIdTable:
+      BossEnemy_swipe_0: 2657655733391361688
+      BossEnemy_swipe_1: 1403688112273225871
+      BossEnemy_swipe_10: 928099958815668050
+      BossEnemy_swipe_11: -5003097107589643738
+      BossEnemy_swipe_12: -8745086447307401555
+      BossEnemy_swipe_13: -1228758814699017156
+      BossEnemy_swipe_14: -7894021515314201731
+      BossEnemy_swipe_15: -5009974987361620282
+      BossEnemy_swipe_16: 7002822766709675553
+      BossEnemy_swipe_17: -9124208748258441772
+      BossEnemy_swipe_18: -7625812582446884856
+      BossEnemy_swipe_19: 6911642122415874203
+      BossEnemy_swipe_2: 4414726657482544831
+      BossEnemy_swipe_20: -8358940246644984222
+      BossEnemy_swipe_21: 3907081551202796912
+      BossEnemy_swipe_22: 5461971626556063103
+      BossEnemy_swipe_23: 900593253228912699
+      BossEnemy_swipe_24: 7540370428399445664
+      BossEnemy_swipe_25: 2084041178955358083
+      BossEnemy_swipe_26: 6286523471575988446
+      BossEnemy_swipe_27: -7154930759455848099
+      BossEnemy_swipe_28: 9215156298770485511
+      BossEnemy_swipe_29: -6950008208689862372
+      BossEnemy_swipe_3: 7501692198260261007
+      BossEnemy_swipe_30: -1319467227449956349
+      BossEnemy_swipe_31: -6284046728108651384
+      BossEnemy_swipe_32: -770302242469620538
+      BossEnemy_swipe_33: -4556805211951108297
+      BossEnemy_swipe_34: 2444369923909702035
+      BossEnemy_swipe_35: 1719957589257010403
+      BossEnemy_swipe_36: -1801676153083677629
+      BossEnemy_swipe_37: -5327346783310067685
+      BossEnemy_swipe_38: 2292375847928871977
+      BossEnemy_swipe_39: 8283904219988728368
+      BossEnemy_swipe_4: 3831773858573824669
+      BossEnemy_swipe_5: 6228069452435650439
+      BossEnemy_swipe_6: -8422244365473231590
+      BossEnemy_swipe_7: 3299779470602581757
+      BossEnemy_swipe_8: 9157345040501604513
+      BossEnemy_swipe_9: -8607169214461105329
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 
