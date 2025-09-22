@@ -97,4 +97,7 @@ InitTestScene*.unity*
 
 # Auto-generated scenes by play mode tests
 /[Aa]ssets/[Ii]nit[Tt]est[Ss]cene*.unity*
+Assets/Firebase/Plugins/x86_64/FirebaseCppApp-13_2_0.so.meta
+Assets/Firebase/Plugins/x86_64/FirebaseCppApp-13_2_0.so
+Assets/Firebase/Plugins/x86_64/FirebaseCppApp-13_2_0.bundle.meta
 Assets/Firebase/Plugins/x86_64/FirebaseCppApp-13_2_0.bundle
