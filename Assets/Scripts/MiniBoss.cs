@@ -149,7 +149,7 @@ public class MiniBoss : MonoBehaviour
         if (player == null) return false;
 
         // Kiểm tra player có nằm ngang hoặc bằng với boss không
-        float heightDifference = Mathf.Abs(player.position.y - transform.position.y + 2);
+        float heightDifference = Mathf.Abs(player.position.y - transform.position.y);
         return heightDifference <= 0.2f; // Cho phép sai số 1 unit
     }
 
