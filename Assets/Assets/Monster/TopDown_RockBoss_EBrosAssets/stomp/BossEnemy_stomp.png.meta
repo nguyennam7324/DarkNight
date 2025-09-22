@@ -1409,7 +1409,59 @@ TextureImporter:
     secondaryTextures: []
     spriteCustomMetadata:
       entries: []
-    nameFileIdTable: {}
+    nameFileIdTable:
+      BossEnemy_stomp_0: 2245331822321493046
+      BossEnemy_stomp_1: -6764528280642084118
+      BossEnemy_stomp_10: -3451943937937659793
+      BossEnemy_stomp_11: -7363900992540617038
+      BossEnemy_stomp_12: -4566342050250636755
+      BossEnemy_stomp_13: 6063338205041730609
+      BossEnemy_stomp_14: 1982666789554275007
+      BossEnemy_stomp_15: 5849942571175753985
+      BossEnemy_stomp_16: -7720286158429549862
+      BossEnemy_stomp_17: -6033336965816648655
+      BossEnemy_stomp_18: 1220979735196836686
+      BossEnemy_stomp_19: -2158391066038670903
+      BossEnemy_stomp_2: 7323201524726000348
+      BossEnemy_stomp_20: 2248756185356381765
+      BossEnemy_stomp_21: -9088705334723066376
+      BossEnemy_stomp_22: 3003918551375158218
+      BossEnemy_stomp_23: 2073364477032926814
+      BossEnemy_stomp_24: -1562049858719118682
+      BossEnemy_stomp_25: 5079074123817764787
+      BossEnemy_stomp_26: -1398984240672444179
+      BossEnemy_stomp_27: -4504911367888729194
+      BossEnemy_stomp_28: 8200166401016420863
+      BossEnemy_stomp_29: -8213960962811453116
+      BossEnemy_stomp_3: -4777062285914193997
+      BossEnemy_stomp_30: -376633646099832489
+      BossEnemy_stomp_31: -5965172415613042047
+      BossEnemy_stomp_32: -7730026194218475242
+      BossEnemy_stomp_33: -5529303618025324753
+      BossEnemy_stomp_34: 2592643974976754207
+      BossEnemy_stomp_35: -430692671784313257
+      BossEnemy_stomp_36: 6743499733002215326
+      BossEnemy_stomp_37: 4706406396330506679
+      BossEnemy_stomp_38: -2241257688636703117
+      BossEnemy_stomp_39: -3454253485527262810
+      BossEnemy_stomp_4: -1201878765035611582
+      BossEnemy_stomp_40: -707135330549789379
+      BossEnemy_stomp_41: -5324378080656659860
+      BossEnemy_stomp_42: -2084961973771369347
+      BossEnemy_stomp_43: -5490857908919330270
+      BossEnemy_stomp_44: -1061447579415288756
+      BossEnemy_stomp_45: -8107378407068233631
+      BossEnemy_stomp_46: -4422542388759636
+      BossEnemy_stomp_47: 159306765061197818
+      BossEnemy_stomp_48: -8488648702764636419
+      BossEnemy_stomp_49: 2336461227243566636
+      BossEnemy_stomp_5: -1159204808244886926
+      BossEnemy_stomp_50: 802440799967019224
+      BossEnemy_stomp_51: 3712025717329882233
+      BossEnemy_stomp_6: -2174861630687972416
+      BossEnemy_stomp_7: 8105489105713429758
+      BossEnemy_stomp_8: -2446569597261627102
+      BossEnemy_stomp_9: 6275278653533569686
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

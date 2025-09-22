@@ -7,10 +7,15 @@ public class GunHolder : MonoBehaviour
     [Header("Điểm gắn súng (nên đặt ở tay)")]
     public Transform gunHoldPoint;
 
+    [Header("UI hiển thị đạn")]
+    [SerializeField] private TextMeshProUGUI ammoText; // Kéo text UI từ Canvas vào đây
+
     private GameObject currentGun;
 
     public void EquipGun(GameObject pickupGun)
     {
+        if (pickupGun == null) return;
+
         // 1. Nếu đang có súng → drop
         if (currentGun != null)
         {
@@ -26,17 +31,16 @@ public class GunHolder : MonoBehaviour
         pickupGun.SetActive(true);
         currentGun = pickupGun;
 
- 
-        // 4. Thiết lập biến
+        // 3. Thiết lập biến cho súng
         IGun gunScript = currentGun.GetComponent<IGun>();
         if (gunScript != null)
         {
+            gunScript.SetAmmoText(ammoText);  // Gán UI ammo
             gunScript.SetEquipped(true);
-            gunScript.SetAmmoText(FindObjectOfType<TextMeshProUGUI>());
             gunScript.SetAudioManager(FindObjectOfType<AudioManager>());
         }
 
-        // 5. Xoá pickup nếu khác instance
+        // 4. Xoá pickup nếu khác instance
         if (pickupGun != currentGun)
         {
             Destroy(pickupGun);
@@ -45,6 +49,8 @@ public class GunHolder : MonoBehaviour
 
     private void DropCurrentGun()
     {
+        if (currentGun == null) return;
+
         currentGun.transform.SetParent(null);
 
         Collider2D col = currentGun.GetComponent<Collider2D>();
@@ -64,7 +70,14 @@ public class GunHolder : MonoBehaviour
 
         IGun gunScript = currentGun.GetComponent<IGun>();
         if (gunScript != null)
+        {
             gunScript.SetEquipped(false);
+            gunScript.SetAmmoText(null); // Clear UI ammo
+        }
+
+        // Khi drop súng → reset text về EMPTY
+        if (ammoText != null)
+            ammoText.text = "EMPTY";
 
         currentGun = null;
     }

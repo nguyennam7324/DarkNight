@@ -1109,7 +1109,47 @@ TextureImporter:
     secondaryTextures: []
     spriteCustomMetadata:
       entries: []
-    nameFileIdTable: {}
+    nameFileIdTable:
+      BossEnemy_walk_0: 6269062056359117214
+      BossEnemy_walk_1: -5109876583032847050
+      BossEnemy_walk_10: 2613256366267279899
+      BossEnemy_walk_11: -9137158942569692261
+      BossEnemy_walk_12: 3393885574317072652
+      BossEnemy_walk_13: -6441897034617079398
+      BossEnemy_walk_14: -1995347996826087211
+      BossEnemy_walk_15: -5391530704155139585
+      BossEnemy_walk_16: 3940652232662299720
+      BossEnemy_walk_17: -5976828159580030504
+      BossEnemy_walk_18: -3523424010847430815
+      BossEnemy_walk_19: 2576173121512146990
+      BossEnemy_walk_2: -5407971588927646338
+      BossEnemy_walk_20: 8453762646843879391
+      BossEnemy_walk_21: -1052586539193037886
+      BossEnemy_walk_22: -4403960113136544377
+      BossEnemy_walk_23: -8772262015046989819
+      BossEnemy_walk_24: 7271556752231532951
+      BossEnemy_walk_25: 8649016273078718454
+      BossEnemy_walk_26: -4031690259478541331
+      BossEnemy_walk_27: 5744424020484579368
+      BossEnemy_walk_28: 9115055743014372939
+      BossEnemy_walk_29: 8297041487413963162
+      BossEnemy_walk_3: -6432348546964502326
+      BossEnemy_walk_30: 1632311165910250853
+      BossEnemy_walk_31: 8659397188921548362
+      BossEnemy_walk_32: -4036448667600558770
+      BossEnemy_walk_33: -79189687774674651
+      BossEnemy_walk_34: -7979170674665887865
+      BossEnemy_walk_35: 7066775207068910215
+      BossEnemy_walk_36: 3935033205579707222
+      BossEnemy_walk_37: 7337311115551419034
+      BossEnemy_walk_38: 8945706408638858717
+      BossEnemy_walk_39: 4153229742579882926
+      BossEnemy_walk_4: -3559292804945885269
+      BossEnemy_walk_5: 495829080048652719
+      BossEnemy_walk_6: -449344096196072889
+      BossEnemy_walk_7: -1189952803908995894
+      BossEnemy_walk_8: -2186873161323684378
+      BossEnemy_walk_9: 8688617219115443815
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 
