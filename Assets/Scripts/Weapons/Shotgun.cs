@@ -78,7 +78,8 @@ public class Shotgun : MonoBehaviour, IGun
 
     void Shot()
     {
-        if (Input.GetMouseButtonDown(0) && currentAmmo > 0)
+        var player = GameObject.FindGameObjectWithTag("Player").GetComponent<Player>();
+        if (Input.GetMouseButtonDown(0) && player.currentMana > 0)
         {
             nextShot = Time.time + delayShot;
 

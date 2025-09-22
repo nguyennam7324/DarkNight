@@ -284,4 +284,9 @@ public class Player : MonoBehaviour
             case "Suck": lifeSteal += 0.1f; break;
         }
     }
+
+    internal void SubtractMana(object manaCost)
+    {
+        throw new System.NotImplementedException();
+    }
 }

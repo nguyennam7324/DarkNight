@@ -43,6 +43,12 @@ public class DoubleDoorController : MonoBehaviour
 
     public void OpenNextDoor()
     {
+        if(selectedDoorIndex >= doubleDoors.Count)
+        {
+            Debug.LogWarning("❌ Không còn cửa nào để mở!");
+            spawnEnemy.Instance.SpawnBoss();
+            return;
+        }
         OpenDoor(selectedDoorIndex);
         selectedDoorIndex++;
     }

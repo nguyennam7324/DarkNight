@@ -14,9 +14,25 @@ public class GameManager : MonoBehaviour
     public GameObject gameOver;
     public static bool isPause;
 
+    public static Vector3 bossPosition = new Vector3(50f, 0f, 0f);
+    public static GameObject boss;
+
     [SerializeField] private AudioManager audioManager;
     [SerializeField] private SettingsManager settingsManager; // Thêm reference
     internal static bool IsSpawnedCheckpoint;
+    public static GameManager instance;
+    private void Awake()
+    {
+        instance = this;
+        if (audioManager == null)
+        {
+            audioManager = FindObjectOfType<AudioManager>();
+        }
+        if (settingsManager == null)
+        {
+            settingsManager = FindObjectOfType<SettingsManager>();
+        }
+    }
 
     void Start()
     {
@@ -114,6 +130,7 @@ public class GameManager : MonoBehaviour
             settingsManager.ShowSettings();
         }
     }
-    
+
+   
 }
 

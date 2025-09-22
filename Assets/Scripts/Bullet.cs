@@ -50,6 +50,18 @@ public class Bullet : MonoBehaviour
             Destroy(gameObject);
         }
 
+        if(collision.CompareTag("MiniBoss"))
+        {
+            MiniBoss miniBoss = collision.GetComponent<MiniBoss>();
+            if (miniBoss != null)
+            {
+                miniBoss.TakeDamage(damage);
+                GameObject blood = Instantiate(bloodPrefab, transform.position, Quaternion.identity);
+                Destroy(blood, 1f);
+            }
+            Destroy(gameObject);
+        }
+
         if (collision.CompareTag("Wall"))
         {
             Debug.Log("💥 Hit Wall");

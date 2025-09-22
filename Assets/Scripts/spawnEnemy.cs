@@ -7,6 +7,7 @@ using System.Collections;
 
 public class spawnEnemy : MonoBehaviour
 {
+    public static spawnEnemy Instance;
     public int maxEnemys = 10;          // Số quái tối đa trên bản đồ
     public int enemyPerSpawn = 2;      // Số quái spawn mỗi lần
     [SerializeField] private GameObject[] enemies;          // Quái thường
@@ -20,6 +21,18 @@ public class spawnEnemy : MonoBehaviour
     private float timer = 0f;                // Thời gian chơi tổng cộng
     private bool miniBossSpawned = false;    // Kiểm tra đã spawn mini boss chưa
     private bool bossSpawned = false;        // Kiểm tra đã spawn boss chưa
+    
+    private void Awake()
+    {
+        if (Instance == null)
+        {
+            Instance = this;
+        }
+        else
+        {
+            Destroy(gameObject);
+        }
+    }
 
     void Start()
     {
@@ -71,7 +84,7 @@ public class spawnEnemy : MonoBehaviour
         Debug.Log("Mini Boss đã xuất hiện! ⚔️");
     }
 
-    private void SpawnBoss()
+    public void SpawnBoss()
     {
         Vector2 spawnPosition = (Vector2)player.position + new Vector2(spawnRadius, 0); // Spawn boss ở vị trí cố định
         Instantiate(bossPrefab, spawnPosition, Quaternion.identity);

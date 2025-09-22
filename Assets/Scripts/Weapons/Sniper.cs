@@ -15,6 +15,8 @@ public class Sniper : MonoBehaviour, IGun
 
     [SerializeField] public TextMeshProUGUI ammoText;
     public bool isEquipped = false;
+    private int manaCost;
+
 
     [Header("Recoil")]
     [SerializeField] private float recoilDistance = 0.25f; // mạnh hơn shotgun 1 chút
@@ -70,7 +72,8 @@ public class Sniper : MonoBehaviour, IGun
 
     void Shot()
     {
-        if (Input.GetMouseButtonDown(0) && currentAmmo > 0) // chỉ bắn 1 phát mỗi lần click
+        var player = GameObject.FindGameObjectWithTag("Player").GetComponent<Player>();
+        if (Input.GetMouseButtonDown(0) && player.currentMana > 0) // chỉ bắn 1 phát mỗi lần click
         {
             nextShot = Time.time + delayShot;
 
@@ -84,7 +87,7 @@ public class Sniper : MonoBehaviour, IGun
                 rb.linearVelocity = firePos.right * 30f; // tốc độ cao (có thể chỉnh theo ý)
             }
 
-            currentAmmo--;
+            SubTractMana();
             UpdateAmmoText();
 
             if (audioSource && shootClip)
@@ -136,6 +139,7 @@ public class Sniper : MonoBehaviour, IGun
 
     public void SubTractMana()
     {
-        throw new System.NotImplementedException();
+        var player = GameObject.FindGameObjectWithTag("Player").GetComponent<Player>();
+        player.SubtractMana(manaCost);
     }
 }

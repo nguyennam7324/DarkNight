@@ -64,7 +64,8 @@ public class Rifle : MonoBehaviour, IGun
 
     void AutoShot()
     {
-        if (Input.GetMouseButton(0) && currentAmmo > 0 && Time.time > nextShot)
+        var player = GameObject.FindGameObjectWithTag("Player").GetComponent<Player>();
+        if (Input.GetMouseButton(0) && player.currentMana > 0 && Time.time > nextShot)
         {
             nextShot = Time.time + DelayShot;
 

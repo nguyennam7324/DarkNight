@@ -19,6 +19,8 @@ public class MachineGun : MonoBehaviour, IGun
     [SerializeField] private AudioClip shootClip;
     [SerializeField] private AudioClip reloadClip;
 
+    private int manaCost = 1;
+
     private float currentAmmo;
     private float nextShot;
     private bool isReloading = false;
@@ -80,14 +82,16 @@ public class MachineGun : MonoBehaviour, IGun
 
     void Shot()
     {
-        if (Input.GetMouseButton(0) && currentAmmo > 0 && Time.time > nextShot)
+        var player = GameObject.FindGameObjectWithTag("Player").GetComponent<Player>();
+        if (Input.GetMouseButton(0) && player.currentMana > 0 && Time.time > nextShot)
         {
             nextShot = Time.time + delayShot;
             Vector3 spread = firePos.eulerAngles;
             spread.z += Random.Range(-spreadAngle, spreadAngle);
             Instantiate(bulletPrefab, firePos.position, Quaternion.Euler(spread));
 
-           // currentAmmo--;
+            SubTractMana();
+            // currentAmmo--;
             ApplyRecoil();
 
             if (audioSource && shootClip)
@@ -150,6 +154,7 @@ public class MachineGun : MonoBehaviour, IGun
 
     public void SubTractMana()
     {
-        throw new System.NotImplementedException();
+        var player = GameObject.FindGameObjectWithTag("Player").GetComponent<Player>();
+        player.SubtractMana(manaCost);
     }
 }

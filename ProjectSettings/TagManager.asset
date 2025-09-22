@@ -12,6 +12,9 @@ TagManager:
   - EnemyBullet
   - Music
   - Explosion
+  - Checkpoint
+  - InventoryItem
+  - MiniBoss
   layers:
   - Default
   - TransparentFX

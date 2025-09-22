@@ -39,7 +39,7 @@ public class itemCollector : MonoBehaviour
             Debug.Log($"Nhận được {gainedXp} XP (x{xpMultiplier})");
         }
         experienceText.text = CurrentXp + " / " + targetXp;
-       // experienceController();
+        experienceController();
     }
     public void experienceController()
     {
@@ -50,8 +50,8 @@ public class itemCollector : MonoBehaviour
             CurrentXp = 0;
             level++;
             targetXp *= 1.2f;
-            Time.timeScale = 0;
-            upgradeUI.ShowUpgradeOptions();
+            //Time.timeScale = 0;
+           // upgradeUI.ShowUpgradeOptions();
         }
     }
 }

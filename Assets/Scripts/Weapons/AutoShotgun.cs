@@ -15,6 +15,7 @@ public class AutoShotgun : MonoBehaviour, IGun
 
     [SerializeField] public TextMeshProUGUI ammoText;
     public bool isEquipped = false;
+    public int manaCost = 5;
 
     [Header("Spread")]
     [SerializeField] private int pelletsPerShot = 6; // bắn 6 viên cùng lúc
@@ -77,7 +78,8 @@ public class AutoShotgun : MonoBehaviour, IGun
     void Shot()
     {
         // Auto fire -> giữ chuột trái
-        if (Input.GetMouseButton(0) && currentAmmo > 0)
+        var player = GameObject.FindGameObjectWithTag("Player").GetComponent<Player>();
+        if (Input.GetMouseButton(0) && player.currentMana > 0 && currentAmmo > 0)
         {
             nextShot = Time.time + delayShot;
 
@@ -91,8 +93,10 @@ public class AutoShotgun : MonoBehaviour, IGun
                 Instantiate(bulletPrefabs, firePos.position, pelletRotation);
             }
 
+            SubTractMana();
+
             //currentAmmo--;
-           // UpdateAmmoText();
+            // UpdateAmmoText();
 
             if (audioSource && shootClip)
                 audioSource.PlayOneShot(shootClip);
@@ -143,6 +147,7 @@ public class AutoShotgun : MonoBehaviour, IGun
 
     public void SubTractMana()
     {
-        throw new System.NotImplementedException();
+        var player = GameObject.FindGameObjectWithTag("Player").GetComponent<Player>();
+        player.SubtractMana(manaCost);
     }
 }
