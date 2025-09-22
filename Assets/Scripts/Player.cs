@@ -1,9 +1,14 @@
 ﻿using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Audio;
 using UnityEngine.UI;
 
 public class Player : MonoBehaviour
 {
+
+    public static Player instance;
+
     [SerializeField] private float moveSpeed = 3f;
     private Rigidbody2D rb;
     private SpriteRenderer spriteRenderer;
@@ -11,8 +16,13 @@ public class Player : MonoBehaviour
 
     [SerializeField] public float maxHp = 100f;
     [SerializeField] private Image hpBar;
-    public float currentHP = 100f;
+    
+    [SerializeField] public float maxMana = 100f;
 
+    public float currentHP = 100f;
+    public float currentMana = 100f;
+
+    public GunHolder gunHolder;
     public float dashBoost;
     public float dashTime;
     private float _dashTime;
@@ -36,9 +46,15 @@ public class Player : MonoBehaviour
 
     // ⭐ THÊM HÚT MÁU
     public float lifeSteal = 0f; // VD: 0.1 = 10% sát thương hút máu
+    public List<GameObject> gunPrefabs = new List<GameObject>();
 
+    [Header("Mana Regeneration")]
+    [SerializeField] private float manaRegenRate = 5f; // Lượng mana hồi mỗi lần
+    [SerializeField] private float manaRegenInterval = 10f;
+    private float manaRegenTimer = 0f;
     private void Awake()
     {
+        instance = this;
         rb = GetComponent<Rigidbody2D>();
         spriteRenderer = GetComponent<SpriteRenderer>();
         animator = GetComponent<Animator>();
@@ -56,8 +72,28 @@ public class Player : MonoBehaviour
         MovePlayer();
         Dash();
         RegenerateShield(); // ⭐ HỒI KHIÊN
+        HealMana();
     }
 
+    private void HealMana()
+    {
+        // Đếm thời gian
+        manaRegenTimer += Time.deltaTime;
+
+        // Kiểm tra nếu đã đủ 2 giây
+        if (manaRegenTimer >= manaRegenInterval)
+        {
+            // Hồi mana
+            currentMana += manaRegenRate;
+
+            // Đảm bảo mana không vượt quá giới hạn tối đa
+            currentMana = Mathf.Min(currentMana, maxMana);
+
+            // Reset bộ đếm
+            manaRegenTimer = 0f;
+
+        }
+    }
     void MovePlayer()
     {
         Vector2 playerInput = new Vector2(Input.GetAxisRaw("Horizontal"), Input.GetAxisRaw("Vertical"));
@@ -75,6 +111,7 @@ public class Player : MonoBehaviour
             _dashTime = dashTime;
             isDashing = true;
             StartDashEffect();
+            SubtractMana(10);
         }
 
         if (_dashTime <= 0 && isDashing)
@@ -99,7 +136,11 @@ public class Player : MonoBehaviour
     {
         if (dashEffectCoroutine != null) StopCoroutine(dashEffectCoroutine);
     }
-
+     
+    public void SubtractMana(int mana)
+    {
+        currentMana -= mana;
+    }
     IEnumerator DashEffectCoroutine()
     {
         while (true)
@@ -190,4 +231,57 @@ public class Player : MonoBehaviour
     return finalDamage;
 }
 
+    internal void UseItem(InventoryItemSO itemSO)
+    {
+        switch(itemSO.itemType)
+        {
+            case ItemType.HP: UseHP(itemSO); break;
+            case ItemType.Speed: ApplySpeedBoost(itemSO.Value, 5f); itemSO.audioSource.Play(); break;
+            // case ItemType.MP: UseMP(itemSO); break;
+            case ItemType.Gun: ChangeGun(itemSO); break;
+        }
+    }
+
+    private void ChangeGun(InventoryItemSO itemSO)
+    {
+        var newGun = Instantiate(FindGunPrefabByName(itemSO.itemName), transform.position, Quaternion.identity, gunHolder.transform);
+        gunHolder.EquipGun(newGun);
+        //gameObject.transform.GetChild(1).GetComponent<GunHolder>().EquipGun(newGun);
+        //itemSO.audioSource.Play();
+        
+
+    }
+    private GameObject FindGunPrefabByName(string gunName)
+    {
+        foreach (GameObject prefab in gunPrefabs)
+        {
+            if (prefab.name == gunName)
+            {
+                return prefab;
+            }
+        }
+        return null;
+    }
+
+    private void UseHP(InventoryItemSO itemSO)
+    {
+        Heal(itemSO.Value);
+       /* itemSO.audioSource.Play();*/
+    }
+
+    internal void UseSkill(SkillItemSO skillItemSO)
+    {
+        switch(skillItemSO.name)
+        {   
+            case "Damage": baseDamage += 5f; break;
+            case "Speed": ApplySpeedBoost(1.1f, 5f); break;
+            case "Crit": critChance += 0.1f; break;
+            case "Armo": maxShield += 50f; shield = maxShield; break;
+            case "Heal10": Heal(maxHp * 0.1f); break;
+            case "Heal50": Heal(maxHp * 0.5f); break;
+            case "MaxHP10": maxHp += 10f; currentHP += 10f; UpdateHpBar(); break;
+            case "MaxHP25": maxHp += 25f; currentHP += 25f; UpdateHpBar(); break;
+            case "Suck": lifeSteal += 0.1f; break;
+        }
+    }
 }

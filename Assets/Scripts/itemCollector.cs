@@ -39,7 +39,7 @@ public class itemCollector : MonoBehaviour
             Debug.Log($"Nhận được {gainedXp} XP (x{xpMultiplier})");
         }
         experienceText.text = CurrentXp + " / " + targetXp;
-        experienceController();
+       // experienceController();
     }
     public void experienceController()
     {

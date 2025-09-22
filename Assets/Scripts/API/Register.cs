@@ -1,67 +1,126 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
+using UnityEngine.UI;
 using TMPro;
-using System.Collections;
-using UnityEngine.Networking;
-using System;
+using Firebase;
+using Firebase.Auth;
 using UnityEngine.SceneManagement;
 
 public class Register : MonoBehaviour
 {
-    public TMP_InputField emailInput;
-    public TMP_InputField passwordInput;
-    public TMP_InputField nameInput;
+    [Header("Register UI")]
+    [SerializeField] private GameObject registerPanel;
+    [SerializeField] private TMP_InputField emailInputField;
+    [SerializeField] private TMP_InputField passwordInputField;
+    [SerializeField] private TMP_InputField confirmPasswordInputField;
+    [SerializeField] private Button registerButton;
+    [SerializeField] private Button backButton;
+    [SerializeField] private TMP_Text statusText;
 
-    public void GoToLogin()
+    private void Start()
     {
-        //Chuyển scene
-        UnityEngine.SceneManagement.SceneManager.LoadScene("Login");
+        registerButton.onClick.AddListener(HandleRegisterButtonClicked);
+        backButton.onClick.AddListener(HandleBackButtonClicked);
     }
 
-    public void OnRegisterClick()
+    private void HandleRegisterButtonClicked()
     {
-        var email = emailInput.text;
-        var password = passwordInput.text;
-        var name = nameInput.text;
+        string email = emailInputField.text;
+        string password = passwordInputField.text;
+        string confirmPassword = confirmPasswordInputField.text;
 
-        var account = new Account
+        if (string.IsNullOrEmpty(email) || string.IsNullOrEmpty(password))
         {
-            Email = email,
-            Password = password,
-            Name = name,
-        };
-        var json = JsonUtility.ToJson(account);
-        Debug.Log(json);
-        StartCoroutine(Post(json));
-    }
-
-    IEnumerator Post(string json)
-    {
-
-        var url = "http://localhost:5777/api/register";
-        var request = new UnityWebRequest(url, "POST");
-        byte[] bodyRaw = System.Text.Encoding.UTF8.GetBytes(json);
-        request.uploadHandler = (UploadHandler)new UploadHandlerRaw(bodyRaw);
-        request.downloadHandler = (DownloadHandler)new DownloadHandlerBuffer();
-        request.SetRequestHeader("Content-Type", "application/json");
-        yield return request.SendWebRequest();
-
-        if (request.result == UnityWebRequest.Result.ConnectionError || request.result == UnityWebRequest.Result.ProtocolError)
-        {
-            Debug.Log(request.error);
+            statusText.text = "Please enter email and password";
+            return;
         }
-        else
+
+        if (password != confirmPassword)
         {
-            var response = JsonUtility.FromJson<RegisterModeResponse>
-            (request.downloadHandler.text);
-            Debug.Log(response.status);
-            if (response.status)
+            statusText.text = "Passwords do not match";
+            return;
+        }
+
+        if (password.Length < 6)
+        {
+            statusText.text = "Password must be at least 6 characters";
+            return;
+        }
+
+        RegisterUser(email, password);
+    }
+
+    private async void RegisterUser(string email, string password)
+    {
+        try
+        {
+            statusText.text = "Registering...";
+
+            // Đợi cho đến khi Firebase sẵn sàng
+            await FirebaseAuthManager.Instance.Auth.CreateUserWithEmailAndPasswordAsync(email, password);
+
+            statusText.text = "Registration successful!";
+
+            // Gửi email xác thực
+            if (FirebaseAuthManager.Instance.User != null)
             {
-                SceneManager.LoadScene("Login");
+                await FirebaseAuthManager.Instance.User.SendEmailVerificationAsync();
+                statusText.text = "Registration successful! Verification email sent.";
             }
 
+            // Chuyển về màn hình login sau 2 giây
+            Invoke(nameof(GoToLogin), 2f);
+        }
+        catch (Exception e)
+        {
+            statusText.text = HandleFirebaseError(e);
+            Debug.LogError(e);
+        }
+    }
+
+    private string HandleFirebaseError(Exception exception)
+    {
+        FirebaseException firebaseEx = exception as FirebaseException;
+        if (firebaseEx != null)
+        {
+            var errorCode = (AuthError)firebaseEx.ErrorCode;
+
+            switch (errorCode)
+            {
+                case AuthError.EmailAlreadyInUse:
+                    return "Email is already in use";
+                case AuthError.WeakPassword:
+                    return "Password is too weak";
+                case AuthError.InvalidEmail:
+                    return "Invalid email address";
+                case AuthError.MissingEmail:
+                    return "Please enter an email address";
+                case AuthError.MissingPassword:
+                    return "Please enter a password";
+                default:
+                    return "Registration failed. Please try again";
+            }
         }
 
+        return "Registration failed. Please try again";
+    }
 
+    private void HandleBackButtonClicked()
+    {
+        SceneManager.LoadScene("Login");
+    }
+
+    private void GoToLogin()
+    {
+        
+    }
+
+    public void ShowRegisterPanel()
+    {
+        registerPanel.SetActive(true);
+        emailInputField.text = "";
+        passwordInputField.text = "";
+        confirmPasswordInputField.text = "";
+        statusText.text = "";
     }
 }
-

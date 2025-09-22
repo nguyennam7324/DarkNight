@@ -1,77 +1,111 @@
-﻿using TMPro;
+﻿using Firebase;
+using Firebase.Auth;
+using System;
+using TMPro;
 using UnityEngine;
-using UnityEngine.Networking;
 using UnityEngine.SceneManagement;
-using System.Collections;
+using UnityEngine.UI;
 
 public class Login : MonoBehaviour
 {
-    public TMP_InputField emailInput;
-    public TMP_InputField passwordInput;
+    [Header("Login UI")]
+    [SerializeField] private GameObject loginPanel;
+    [SerializeField] private TMP_InputField emailInputField;
+    [SerializeField] private TMP_InputField passwordInputField;
+    [SerializeField] private Button loginButton;
+    [SerializeField] private Button registerButton;
+    [SerializeField] private Button forgotPasswordButton;
+    [SerializeField] private TMP_Text statusText;
 
+    private void Start()
+    {
+        loginButton.onClick.AddListener(HandleLoginButtonClicked);
+        registerButton.onClick.AddListener(HandleRegisterButtonClicked);
+        forgotPasswordButton.onClick.AddListener(HandleForgotPasswordButtonClicked);
+    }
 
-    public void GoToGame()
+    private void HandleLoginButtonClicked()
     {
-        //Chuyển scene
-        UnityEngine.SceneManagement.SceneManager.LoadScene("Scene1");
+        string email = emailInputField.text;
+        string password = passwordInputField.text;
+
+        if (string.IsNullOrEmpty(email) || string.IsNullOrEmpty(password))
+        {
+            statusText.text = "Please enter email and password";
+            return;
+        }
+
+        LoginUser(email, password);
     }
-    public void GoToForgotPassword()
+
+    private async void LoginUser(string email, string password)
     {
-        SceneManager.LoadScene("ForgotPassword");
+        try
+        {
+            statusText.text = "Logging in...";
+
+            // Đợi cho đến khi Firebase sẵn sàng
+            await FirebaseAuthManager.Instance.Auth.SignInWithEmailAndPasswordAsync(email, password);
+
+            // Kiểm tra xem email đã được xác thực chưa
+            if (FirebaseAuthManager.Instance.User != null)
+            {
+                statusText.text = "Login successful!";
+                // Chuyển đến scene chính của game
+                SceneManager.LoadScene("Scene1");
+            }
+            else 
+            {
+                FirebaseAuthManager.Instance.Auth.SignOut();
+            }
+        }
+        catch (Exception e)
+        {
+            statusText.text = HandleFirebaseError(e);
+            Debug.LogError(e);
+        }
     }
-    public void GotoResgister()
+
+    private string HandleFirebaseError(Exception exception)
+    {
+        FirebaseException firebaseEx = exception as FirebaseException;
+        if (firebaseEx != null)
+        {
+            var errorCode = (AuthError)firebaseEx.ErrorCode;
+
+            switch (errorCode)
+            {
+                case AuthError.WrongPassword:
+                    return "Wrong password";
+                case AuthError.InvalidEmail:
+                    return "Invalid email address";
+                case AuthError.UserNotFound:
+                    return "Account not found";
+                case AuthError.TooManyRequests:
+                    return "Too many attempts. Try again later";
+                default:
+                    return "Login failed. Please try again";
+            }
+        }
+
+        return "Login failed. Please try again";
+    }
+
+    private void HandleRegisterButtonClicked()
     {
         SceneManager.LoadScene("Register");
     }
-    public void GotoLoginn()
+
+    private void HandleForgotPasswordButtonClicked()
     {
-        SceneManager.LoadScene("Login");
+        SceneManager.LoadScene("FogotAndChange");
     }
 
-    public void OnLoginClick()
+    public void ShowLoginPanel()
     {
-        var email = emailInput.text;
-        var password = passwordInput.text;
-
-
-        var account = new Account
-        {
-            Email = email,
-            Password = password,
-
-        };
-        var json = JsonUtility.ToJson(account);
-        Debug.Log(json);
-        StartCoroutine(Post(json));
-    }
-
-    IEnumerator Post(string json)
-    {
-
-        var url = "http://localhost:5777/api/login";
-        var request = new UnityWebRequest(url, "POST");
-        byte[] bodyRaw = System.Text.Encoding.UTF8.GetBytes(json);
-        request.uploadHandler = (UploadHandler)new UploadHandlerRaw(bodyRaw);
-        request.downloadHandler = (DownloadHandler)new DownloadHandlerBuffer();
-        request.SetRequestHeader("Content-Type", "application/json");
-        yield return request.SendWebRequest();
-
-        if (request.result == UnityWebRequest.Result.ConnectionError || request.result == UnityWebRequest.Result.ProtocolError)
-        {
-            Debug.Log(request.error);
-        }
-        else
-        {
-            var response = JsonUtility.FromJson<RegisterModeResponse>
-            (request.downloadHandler.text);
-            Debug.Log(response.status);
-            if (response.status)
-            {
-                SceneManager.LoadScene("Scene1");
-            }
-
-        }
-        
-
+        loginPanel.SetActive(true);
+        emailInputField.text = "";
+        passwordInputField.text = "";
+        statusText.text = "";
     }
 }

@@ -15,16 +15,19 @@ public class GameUI : MonoBehaviour
 
     public void Play()
     {
-        // Gọi trực tiếp loading với GameManager
-        if (LoadingScene.Instance != null)
-        {
-            LoadingScene.Instance.StartGameWithLoading(gameManager);
-        }
-        else
-        {
-            Debug.LogError("LoadingScene.Instance is null!");
-            gameManager.StartGame();
-        }
+        //// Gọi trực tiếp loading với GameManager
+        //if (LoadingScene.Instance != null)
+        //{
+        //    LoadingScene.Instance.StartGameWithLoading(gameManager);
+        //}
+        //else
+        //{
+        //    Debug.LogError("LoadingScene.Instance is null!");
+        //    gameManager.StartGame();
+        //}
+       
+        gameManager.HideMainMenu();
+        gameManager.StartGame();
     }
     public void Quit()
     {

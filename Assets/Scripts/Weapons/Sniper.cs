@@ -133,4 +133,9 @@ public class Sniper : MonoBehaviour, IGun
     public void SetEquipped(bool equipped) => isEquipped = equipped;
     public void SetAmmoText(TextMeshProUGUI text) => ammoText = text;
     public void SetAudioManager(AudioManager audio) { }
+
+    public void SubTractMana()
+    {
+        throw new System.NotImplementedException();
+    }
 }

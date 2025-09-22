@@ -1,0 +1,46 @@
+{
+  "project_info": {
+    "project_number": "371907995909",
+    "project_id": "darknight-7259f",
+    "storage_bucket": "darknight-7259f.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:371907995909:android:55864b06995876ddae6f6c",
+        "android_client_info": {
+          "package_name": "com.company.darknight"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "371907995909-8mf1g6924o3eekdbcf8qtf26l8s0d80m.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBKqYdFK5izpzwYBvkDQY9neOJHpAgAMYY"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "371907995909-8mf1g6924o3eekdbcf8qtf26l8s0d80m.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "371907995909-fq4ngf5k6rj78hb1ifq224vctgmqst8o.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.company.darknight"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

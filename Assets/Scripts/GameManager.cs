@@ -2,6 +2,7 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 using System.Collections;
 using System.Collections.Generic;
+using System;
 //using TMPro.EditorUtilities;
 
 public class GameManager : MonoBehaviour
@@ -15,13 +16,14 @@ public class GameManager : MonoBehaviour
 
     [SerializeField] private AudioManager audioManager;
     [SerializeField] private SettingsManager settingsManager; // Thêm reference
-
+    internal static bool IsSpawnedCheckpoint;
 
     void Start()
     {
         MainMenu();
         pauseMenu.SetActive(false);
         settingsMenu.SetActive(false); // Ẩn settings
+        GameManager.IsSpawnedCheckpoint = false;
     }
 
     void Update()
@@ -38,7 +40,18 @@ public class GameManager : MonoBehaviour
                 PauseGame();
             }
         }
+        if (IsSpawnedCheckpoint && GameObject.FindGameObjectsWithTag("Enemy").Length == 0)
+        {
+           ShowNPCSkillPoint();
+           IsSpawnedCheckpoint = false;
+        }
     }
+
+    private void ShowNPCSkillPoint()
+    {
+        NPCSkill.instance.Show();
+    }
+
     public void MainMenu()
     {
         mainMenu.SetActive(true);
@@ -101,5 +114,6 @@ public class GameManager : MonoBehaviour
             settingsManager.ShowSettings();
         }
     }
+    
 }
 

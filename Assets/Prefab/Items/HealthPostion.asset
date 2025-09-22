@@ -1,0 +1,23 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a132750ee6dd73442b26106e8449794a, type: 3}
+  m_Name: HealthPostion
+  m_EditorClassIdentifier: Assembly-CSharp::InventoryItemSO
+  tile: {fileID: 11400000, guid: fc2b94cad9c90e34fb2e8f4a77e91d81, type: 2}
+  itemName: 
+  icon: {fileID: -1134558663, guid: 359be6e331d06fb4bb778c46a83ee7e4, type: 3}
+  description: 
+  itemType: 0
+  actionType: 1
+  Amount: 100
+  Value: 100
+  audioSource: {fileID: 4764318911519874811, guid: 6ccd5bb67d01ea74c8dd04a8ee343ae3, type: 3}
