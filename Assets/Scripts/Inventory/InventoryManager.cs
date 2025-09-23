@@ -135,3 +135,5 @@ public class InventoryManager : MonoBehaviour
         Player.instance.UseItem(inventoryItem.item);
     }   
 }
+//SO, Manager
+//inventory behaviour

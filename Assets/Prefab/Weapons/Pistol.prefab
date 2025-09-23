@@ -205,8 +205,8 @@ MonoBehaviour:
   recoilDistance: 0.1
   recoilReturnSpeed: 5
   audioSource: {fileID: -5385836388640589726}
-  shootClip: {fileID: 0}
-  reloadClip: {fileID: 0}
+  shootClip: {fileID: 8300000, guid: e63c73291336cc845afeacf13cc88235, type: 3}
+  reloadClip: {fileID: 8300000, guid: b1e863cfa8c5a3c4694fc07af6ad17f9, type: 3}
 --- !u!82 &-5385836388640589726
 AudioSource:
   m_ObjectHideFlags: 0
