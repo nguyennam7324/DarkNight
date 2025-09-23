@@ -12,6 +12,7 @@ public class GameManager : MonoBehaviour
     [SerializeField] private GameObject settingsMenu;
    
     public GameObject gameOver;
+    public GameObject win;
     public static bool isPause;
 
     public static Vector3 bossPosition = new Vector3(50f, 0f, 0f);
@@ -22,7 +23,8 @@ public class GameManager : MonoBehaviour
     internal static bool IsSpawnedCheckpoint;
     public static GameManager instance;
     public GameObject tooltip;
-
+    public int numberDeath = 0;
+    public int level = 1;
     private void Awake()
     {
         instance = this;
@@ -42,6 +44,8 @@ public class GameManager : MonoBehaviour
         pauseMenu.SetActive(false);
         settingsMenu.SetActive(false); // Ẩn settings
         GameManager.IsSpawnedCheckpoint = false;
+        level = 0;
+        numberDeath = 0;
     }
 
     void Update()
@@ -124,7 +128,10 @@ public class GameManager : MonoBehaviour
        
     }
 
-
+    public void Win()
+    {
+        win.GetComponent<WinGameController>().PopulateData(level, numberDeath);
+    }
     public void OpenSettings()
     {
         if (settingsManager != null)

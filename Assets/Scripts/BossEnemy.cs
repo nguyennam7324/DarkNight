@@ -24,6 +24,8 @@ public class BossEnemy : Enemy
     protected override void Die()
     {
         base.Die();
+        
+        GameManager.instance.Win();
     }
 
     private void OnTriggerEnter2D(Collider2D collision)

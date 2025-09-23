@@ -59,6 +59,7 @@ public abstract class Enemy : MonoBehaviour
         }
         this.enabled = false; // Dừng script
         Destroy(gameObject, 0.5f); // Huỷ sau khi animation xong
+        GameManager.instance.numberDeath++;
     }
 
     public  virtual void TakeDamage(float damage)

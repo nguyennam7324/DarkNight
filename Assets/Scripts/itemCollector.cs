@@ -51,7 +51,8 @@ public class itemCollector : MonoBehaviour
             level++;
             targetXp *= 1.2f;
             //Time.timeScale = 0;
-           // upgradeUI.ShowUpgradeOptions();
+            // upgradeUI.ShowUpgradeOptions();
+            GameManager.instance.level = level;
         }
     }
 }
