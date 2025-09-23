@@ -137,3 +137,4 @@ public class InventoryManager : MonoBehaviour
 }
 //SO, Manager
 //inventory behaviour
+//miniBoss

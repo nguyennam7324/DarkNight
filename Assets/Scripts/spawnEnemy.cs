@@ -56,7 +56,7 @@ public class spawnEnemy : MonoBehaviour
         }
     }
 
-    private void SpawnEnemy(int enemyCount)
+    private void SpawnEnemy(int enemyCount, int[] enemyType)
     {
        
         float angleStep = 360f / enemyCount; // Góc giữa mỗi enemy
@@ -69,8 +69,8 @@ public class spawnEnemy : MonoBehaviour
             float spawnX = player.position.x + spawnRadius * Mathf.Cos(angle * Mathf.Deg2Rad);
             float spawnY = player.position.y + spawnRadius * Mathf.Sin(angle * Mathf.Deg2Rad);
             Vector2 spawnPosition = new Vector2(spawnX, spawnY);
-
-            GameObject enemy = enemies[Random.Range(0, enemies.Length)];
+            var rdIndex = enemyType[Random.Range(0, enemyType.Length)];
+            GameObject enemy = enemies[rdIndex];
             Instantiate(enemy, spawnPosition, Quaternion.identity);
 
             angle += angleStep; // Tăng góc để chia đều
@@ -91,17 +91,17 @@ public class spawnEnemy : MonoBehaviour
         Debug.Log("Boss to tổ bố xuất hiện rồi đó Sensei!! 💀💢");
     }
 
-    internal void StartSpawning(int enemyPerSpawn, int enemySpawnCount, float spawnInterval)
+    internal void StartSpawning(int enemyPerSpawn, int enemySpawnCount, float spawnInterval, int[] enemyType)
     {
-        StartCoroutine(Spawn(enemyPerSpawn, enemySpawnCount, spawnInterval));
+        StartCoroutine(Spawn(enemyPerSpawn, enemySpawnCount, spawnInterval, enemyType));
     }
 
-    public IEnumerator Spawn(int enemyPerSpawn, int enemySpawnCount, float spawnInterval)
+    public IEnumerator Spawn(int enemyPerSpawn, int enemySpawnCount, float spawnInterval, int[] enemyType)
     {
         int spawns = 0;
         while (spawns < enemySpawnCount)
         {
-            SpawnEnemy(enemyPerSpawn);
+            SpawnEnemy(enemyPerSpawn, enemyType);
             spawns++;
             if(spawns >= enemySpawnCount)
             {

@@ -11,6 +11,7 @@ public class Checkpoint : MonoBehaviour
     public int enemyPerSpawn = 5; // Số lượng enemy mỗi spawn
     public int enemySpawnCount = 5; // Số lần spawn enemy
     public float spawnInterval = 1f; // Thời gian giữa mỗi lần spawn
+    public int[] typeEnemy;
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
@@ -19,7 +20,7 @@ public class Checkpoint : MonoBehaviour
             if (enemySpawner != null)
             {
                 GameManager.IsSpawnedCheckpoint = false;
-                enemySpawner.StartSpawning(enemyPerSpawn, enemySpawnCount, spawnInterval); // Kích hoạt spawn enemy với cấu hình riêng
+                enemySpawner.StartSpawning(enemyPerSpawn, enemySpawnCount, spawnInterval, typeEnemy); // Kích hoạt spawn enemy với cấu hình riêng
                 gameObject.GetComponent<BoxCollider2D>().enabled = false;
             }
         }

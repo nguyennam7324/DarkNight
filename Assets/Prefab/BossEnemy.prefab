@@ -201,8 +201,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   movetoPlayer: 2
-  maxHP: 1200
-  enterDamage: 200
+  maxHP: 1000
+  enterDamage: 300
   stayDamage: 1
   hpBar: {fileID: 5454164419405516187}
   lootTable: []
@@ -210,9 +210,9 @@ MonoBehaviour:
   speedDanThuong: 15
   enemyBullet: {fileID: 2345633365835674998, guid: a066b8ba0a7b4b24588c3761b95b43f9, type: 3}
   speedDanVongTron: 10
-  healValue: 100
+  healValue: 50
   miniPrefabs: {fileID: 5596342018606973279, guid: c4b85226a7ebbd641a1ac183ff56ad2b, type: 3}
-  skillCoolDown: 2
+  skillCoolDown: 1.5
 --- !u!1 &7614125705861983314
 GameObject:
   m_ObjectHideFlags: 0

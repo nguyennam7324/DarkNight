@@ -22,7 +22,7 @@ public class MiniBoss : MonoBehaviour
     public int normalDamage = 10;
     public int skillDamage = 25;
     public float damageCooldown = 1f; // Thời gian chờ giữa các lần gây damage
-
+    //Imporant
     [Header("Animation Names")]
     public string idleAnimation = "idle2";
     public string shellAnimation = "shell";

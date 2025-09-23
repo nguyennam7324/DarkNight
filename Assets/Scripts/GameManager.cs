@@ -131,6 +131,7 @@ public class GameManager : MonoBehaviour
     public void Win()
     {
         win.GetComponent<WinGameController>().PopulateData(level, numberDeath);
+        win.SetActive(true);
     }
     public void OpenSettings()
     {
