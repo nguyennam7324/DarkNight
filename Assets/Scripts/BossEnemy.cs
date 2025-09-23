@@ -1,3 +1,6 @@
+﻿using NUnit.Framework;
+using System.Collections.Generic;
+using UnityEditor.Experimental.GraphView;
 using UnityEngine;
 
 public class BossEnemy : Enemy
@@ -8,15 +11,60 @@ public class BossEnemy : Enemy
     [SerializeField] private float speedDanVongTron = 10f;
     [SerializeField] private float hpValue = 100f;
     [SerializeField] private GameObject miniEnemy;
-    [SerializeField] private float skillCooldown = 2f;
+    [SerializeField] private float skillCooldown = 0.5f;
     private float nextSkillTime = 0f;
+    private List<SkillProportion> skillProps;
+
+    private void Start()
+    {
+        InitPropSkill();
+    }
+
+    private void InitPropSkill()
+    {
+        skillProps = new List<SkillProportion>();
+        skillProps.Add(new SkillProportion() { id = 0 , propValue = 0.2f });
+        skillProps.Add(new SkillProportion() { id = 1 , propValue = 0.2f });
+        skillProps.Add(new SkillProportion() { id = 2 , propValue = 0.1f });
+        skillProps.Add(new SkillProportion() { id = 3 , propValue = 0.2f });
+        skillProps.Add(new SkillProportion() { id = 4 , propValue = 0.3f });
+    }
 
     protected override void Update()
     {
-        base.Update();
-        if(Time.time >= nextSkillTime)
+
+        if (Time.time >= nextSkillTime)
         {
             SuDungSkill();
+            nextSkillTime = Time.time + 2f;
+
+        }
+        Debug.Log($"Update running - Time: {Time.time}");
+
+        if (player != null)
+        {
+            Debug.Log($"Moving towards player: {player.transform.position}");
+            transform.position = Vector2.MoveTowards(
+                transform.position,
+                player.transform.position,
+                movetoPlayer * Time.deltaTime
+            );
+        }
+        
+    }
+
+    protected override void MoveEnemy()
+    {
+        if (player != null)
+        {
+            Vector2 newPos = Vector2.MoveTowards(transform.position, player.transform.position, movetoPlayer * Time.deltaTime);
+            transform.position = newPos;
+            FlipEnemy();
+            Debug.Log($"Moving to player. Position: {transform.position}");
+        }
+        else
+        {
+            Debug.LogWarning("Player is NULL!");
         }
     }
         private void OnTriggerEnter2D(Collider2D collision)
@@ -33,7 +81,31 @@ public class BossEnemy : Enemy
             }
         }
     }
+    public int GetRandomSkill()
+    {
+        // Tính tổng tỷ lệ
+        float totalProbability = 0f;
+        foreach (var item in skillProps)
+        {
+            totalProbability += item.propValue;
+        }
 
+        // Random giá trị
+        float randomPoint = Random.Range(0f, totalProbability);
+
+        // Chọn item dựa trên tỷ lệ
+        float currentProbability = 0f;
+        foreach (var item in skillProps)
+        {
+            currentProbability += item.propValue;
+            if (randomPoint <= currentProbability)
+            {
+                return item.id;
+            }
+        }
+
+        return skillProps[skillProps.Count - 1].id; // Fallback
+    }
     private void OnTriggerStay2D(Collider2D collision)
     {
         if (collision.CompareTag("Player"))
@@ -90,7 +162,7 @@ public class BossEnemy : Enemy
     }
     private void ChonSkillNgauNhien()
     {
-        int randomSkill = Random.Range(0, 5);
+        int randomSkill = GetRandomSkill();
         switch (randomSkill)
         {
             case 0:
@@ -112,7 +184,13 @@ public class BossEnemy : Enemy
     }
     private void SuDungSkill()
     {
-        nextSkillTime = Time.time * skillCooldown;
+   
         ChonSkillNgauNhien();
     }
+}
+
+public class SkillProportion
+{
+    public int id;
+    public float propValue;
 }

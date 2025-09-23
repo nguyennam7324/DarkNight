@@ -43,6 +43,12 @@ public class SkillItem : MonoBehaviour, IPointerClickHandler, IPointerEnterHandl
     {
         if (tooltip != null)
             tooltip.HideTooltip();
+        if (GameManager.instance.tooltip == null)
+        {
+            var tooltip = GameObject.FindGameObjectWithTag("tooltip");
+            GameManager.instance.tooltip = tooltip;
+        }
+        GameManager.instance.tooltip.SetActive(true);
     }
 
     public void OnPointerEnter(PointerEventData eventData)

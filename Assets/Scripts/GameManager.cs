@@ -21,6 +21,8 @@ public class GameManager : MonoBehaviour
     [SerializeField] private SettingsManager settingsManager; // Thêm reference
     internal static bool IsSpawnedCheckpoint;
     public static GameManager instance;
+    public GameObject tooltip;
+
     private void Awake()
     {
         instance = this;

@@ -15,6 +15,7 @@ TagManager:
   - Checkpoint
   - InventoryItem
   - MiniBoss
+  - tooltip
   layers:
   - Default
   - TransparentFX

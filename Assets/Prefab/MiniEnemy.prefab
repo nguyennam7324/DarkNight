@@ -79,7 +79,7 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 811911521
-  m_SortingLayer: 12
+  m_SortingLayer: 13
   m_SortingOrder: 1
   m_Sprite: {fileID: -8716399158970266650, guid: 24bcae139c505984d9a7a73c1412324c, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -201,8 +201,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   movetoPlayer: 7
   maxHP: 20
-  enterDamage: 1
-  stayDamage: 1
+  enterDamage: 10
+  stayDamage: 10
   hpBar: {fileID: 6297869569687358730}
   lootTable: []
 --- !u!1001 &3741088393483132911

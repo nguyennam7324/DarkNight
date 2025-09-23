@@ -49,7 +49,7 @@ public class Player : MonoBehaviour
     public List<GameObject> gunPrefabs = new List<GameObject>();
 
     [Header("Mana Regeneration")]
-    [SerializeField] private float manaRegenRate = 5f; // Lượng mana hồi mỗi lần
+    [SerializeField] private float manaRegenRate = 30f; // Lượng mana hồi mỗi lần
     [SerializeField] private float manaRegenInterval = 10f;
     private float manaRegenTimer = 0f;
     private void Awake()

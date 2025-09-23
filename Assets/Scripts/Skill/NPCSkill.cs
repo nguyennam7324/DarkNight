@@ -60,6 +60,12 @@ public class NPCSkill : MonoBehaviour
         var player = GameObject.FindWithTag("Player");
         gameObject.transform.position = player.transform.position + new Vector3(0, 2.5f,0);
         gameObject.SetActive(true);
+        if(GameManager.instance.tooltip == null)
+        {
+            var tooltip = GameObject.FindGameObjectWithTag("tooltip");
+            GameManager.instance.tooltip = tooltip;
+        }
+        GameManager.instance.tooltip.SetActive(true);
         Reset();
         ShowSkill();
     }
@@ -71,6 +77,10 @@ public class NPCSkill : MonoBehaviour
             if (item != skillItem)
             {
                 item.gameObject.SetActive(false);
+                var tooltip = GameObject.FindGameObjectWithTag("tooltip");
+                GameManager.instance.tooltip.SetActive(false);
+            
+
             }
         }
         gameObject.SetActive(false);
